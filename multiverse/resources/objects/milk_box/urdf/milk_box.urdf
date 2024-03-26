@@ -3,7 +3,7 @@
     <link name="milk_box">
         <visual>
             <geometry>
-                <mesh filename="package://static_objects/milk_box/meshes/obj/milk_box.obj"/>
+                <mesh filename="file://milk_box/meshes/obj/milk_box.obj"/>
             </geometry>
         </visual>
         <collision>
