@@ -2,8 +2,6 @@
 
 CURRENT_DIR=$PWD
 
-git submodule update --init
-
 cd $(dirname $0)
 
 MULTIVERSE_DIR=$PWD/multiverse
@@ -22,71 +20,114 @@ SRC_DIR=$MULTIVERSE_DIR/src
 
 INCLUDE_DIR=$MULTIVERSE_DIR/include
 
-# Build blender
+BUILD_BLENDER=true
+BUILD_USD=true
+BUILD_MUJOCO=true
 
-BLENDER_BUILD_DIR=$BUILD_DIR/blender
-BLENDER_EXT_DIR=$EXT_DIR/blender-git
-if [ ! -d "$BLENDER_BUILD_DIR" ]; then
-    # Create the folder if it doesn't exist
-    mkdir -p "$BLENDER_BUILD_DIR"
-    echo "Folder created: $BLENDER_BUILD_DIR"
-else
-    echo "Folder already exists: $BLENDER_BUILD_DIR"
-fi
+while [ -n "$1" ]; do
+    case "$1" in
+        --excludes) echo -n "--excludes option passed"
+            shift 1
+            if [ "$#" -eq 0 ]; then
+                echo ""
+                BUILD_BLENDER=false
+                BUILD_USD=false
+                BUILD_MUJOCO=false
+            else
+                echo -n ", with value:"
+                for module in "$@"; do
+                    echo -n " $module"
+                    shift 1
+                    if [ "$module" = "blender" ]; then
+                        BUILD_BLENDER=OFF
+                    elif [ "$module" = "usd" ]; then
+                        BUILD_BLENDER=OFF
+                        BUILD_USD=OFF
+                    elif [ "$module" = "mujoco" ]; then
+                        BUILD_MUJOCO=OFF
+                    fi
+                done
+                echo ""
+            fi
+        ;;
+        *) echo "Option $1 not recognized"
+            shift 1
+        ;;
+    esac
+done
 
-if [ ! -d "$BLENDER_EXT_DIR/lib" ]; then
-    (cd $BLENDER_EXT_DIR; mkdir lib; cd lib; svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/linux_x86_64_glibc_228)
-    FILE=$BLENDER_EXT_DIR/blender/source/blender/blenlib/intern/index_mask.cc
-    if [ -f "$FILE" ]; then
-        sed -i \
-            -e 's/const int16_t gap_first = indices\[size_before_gap - 1] + 1;/const int16_t gap_first = (int16_t)(indices[size_before_gap - 1] + 1);/' \
-            -e 's/const int16_t next = indices\[size_before_gap];/const int16_t next = (int16_t)indices[size_before_gap];/' \
-            -e 's/const int16_t gap_size = next - gap_first;/const int16_t gap_size = (int16_t)(next - gap_first);/' \
-            "$FILE"
+if [ $BUILD_BLENDER = true ]; then
+    echo "Building Blender..."
+
+    # Build blender
+
+    BLENDER_BUILD_DIR=$BUILD_DIR/blender
+    BLENDER_EXT_DIR=$EXT_DIR/blender-git
+
+    git submodule update --init $BLENDER_EXT_DIR/blender
+
+    if [ ! -d "$BLENDER_BUILD_DIR" ]; then
+        # Create the folder if it doesn't exist
+        mkdir -p "$BLENDER_BUILD_DIR"
+        echo "Folder created: $BLENDER_BUILD_DIR"
     else
-        echo "Error: File does not exist: $FILE"
+        echo "Folder already exists: $BLENDER_BUILD_DIR"
     fi
-    (cd $BLENDER_EXT_DIR/blender; make update)
+
+    (cd $BLENDER_EXT_DIR/blender && make update && ./build_files/utils/make_update.py --use-linux-libraries)
+    (cd $BLENDER_BUILD_DIR && cmake -S ../../external/blender-git/blender -B . -Wno-deprecated -Wno-dev && make -j$(nproc) && make install)
+    (cd $BLENDER_BUILD_DIR/bin/4.1/python/bin;
+        ./python3.11 -m pip install --upgrade pip build --no-warn-script-location;
+        ./python3.11 -m pip install bpy Pillow --no-warn-script-location) # For blender
+    ln -sf $BLENDER_BUILD_DIR/bin/blender $BIN_DIR
+    ln -sf $BLENDER_BUILD_DIR/bin/4.1/python/bin/python3.11 $BIN_DIR
 fi
 
-(cd $BLENDER_BUILD_DIR && cmake -S ../../external/blender-git/blender -B . -Wno-deprecated -Wno-dev && make -j$(nproc) && make install)
-(cd $BLENDER_BUILD_DIR/bin/4.0/python/bin;
-    ./python3.10 -m pip install --upgrade pip build --no-warn-script-location;
-./python3.10 -m pip install bpy Pillow --no-warn-script-location) # For blender
-ln -sf $BLENDER_BUILD_DIR/bin/blender $BIN_DIR
-ln -sf $BLENDER_BUILD_DIR/bin/4.0/python/bin/python3.10 $BIN_DIR
+if [ $BUILD_USD = true ]; then
+    echo "Building USD..."
 
-# Build USD
+    # Build USD
 
-USD_BUILD_DIR=$BUILD_DIR/USD
-USD_EXT_DIR=$EXT_DIR/USD
-if [ ! -d "$USD_BUILD_DIR" ]; then
-    # Create the folder if it doesn't exist
-    mkdir -p "$USD_BUILD_DIR"
-    echo "Folder created: $USD_BUILD_DIR"
-else
-    echo "Folder already exists: $USD_BUILD_DIR"
+    USD_BUILD_DIR=$BUILD_DIR/USD
+    USD_EXT_DIR=$EXT_DIR/USD
+
+    git submodule update --init $USD_EXT_DIR
+
+    if [ ! -d "$USD_BUILD_DIR" ]; then
+        # Create the folder if it doesn't exist
+        mkdir -p "$USD_BUILD_DIR"
+        echo "Folder created: $USD_BUILD_DIR"
+    else
+        echo "Folder already exists: $USD_BUILD_DIR"
+    fi
+
+    python3 $USD_EXT_DIR/build_scripts/build_usd.py $USD_BUILD_DIR
+    ln -sf $USD_BUILD_DIR/bin/usdview $BIN_DIR
+    ln -sf $USD_BUILD_DIR/bin/usdGenSchema $BIN_DIR
+    ln -sf $USD_BUILD_DIR/bin/usdcat $BIN_DIR
 fi
 
-python3 $USD_EXT_DIR/build_scripts/build_usd.py $USD_BUILD_DIR
-ln -sf $USD_BUILD_DIR/bin/usdview $BIN_DIR
-ln -sf $USD_BUILD_DIR/bin/usdGenSchema $BIN_DIR
-ln -sf $USD_BUILD_DIR/bin/usdcat $BIN_DIR
+if [ $BUILD_MUJOCO = true ]; then
+    echo "Building MuJoCo..."
 
-# Build MuJoCo
+    # Build MuJoCo
 
-MUJOCO_BUILD_DIR=$BUILD_DIR/mujoco
-MUJOCO_EXT_DIR=$EXT_DIR/mujoco
-if [ ! -d "$MUJOCO_BUILD_DIR" ]; then
-    # Create the folder if it doesn't exist
-    mkdir -p "$MUJOCO_BUILD_DIR"
-    echo "Folder created: $MUJOCO_BUILD_DIR"
-else
-    echo "Folder already exists: $MUJOCO_BUILD_DIR"
+    MUJOCO_BUILD_DIR=$BUILD_DIR/mujoco
+    MUJOCO_EXT_DIR=$EXT_DIR/mujoco
+
+    git submodule update --init $MUJOCO_EXT_DIR
+
+    if [ ! -d "$MUJOCO_BUILD_DIR" ]; then
+        # Create the folder if it doesn't exist
+        mkdir -p "$MUJOCO_BUILD_DIR"
+        echo "Folder created: $MUJOCO_BUILD_DIR"
+    else
+        echo "Folder already exists: $MUJOCO_BUILD_DIR"
+    fi
+
+    (cd $MUJOCO_BUILD_DIR && cmake $MUJOCO_EXT_DIR -DCMAKE_INSTALL_PREFIX=$MUJOCO_BUILD_DIR -Wno-deprecated -Wno-dev && cmake --build . && cmake --install .)
+    ln -sf $MUJOCO_BUILD_DIR/bin/simulate $BIN_DIR
 fi
-
-(cd $MUJOCO_BUILD_DIR && cmake $MUJOCO_EXT_DIR -DCMAKE_INSTALL_PREFIX=$MUJOCO_BUILD_DIR -Wno-deprecated -Wno-dev && cmake --build . && cmake --install .)
-ln -sf $MUJOCO_BUILD_DIR/bin/simulate $BIN_DIR
 
 RELOAD=false
 

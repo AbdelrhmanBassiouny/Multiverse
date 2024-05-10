@@ -74,7 +74,7 @@ public:
     {
         if (in_send_data.size() != send_buffer_size)
         {
-            printf("[Client %s] The size of in_send_data (%ld) does not match with send_buffer_size (%ld).", port.c_str(), in_send_data.size(), send_buffer_size);
+            printf("[Client %s] The size of in_send_data (%ld) does not match with send_buffer_size (%ld).\n", port.c_str(), in_send_data.size(), send_buffer_size);
         }
         else
         {
@@ -240,12 +240,36 @@ private:
 
     void bind_request_meta_data() override
     {
+        if (request_meta_data_dict.contains("api_callbacks"))
+        {
+            printf("[Client %s] Send API callbacks.\n", port.c_str());
+        }
         request_meta_data_str = pybind11::str(request_meta_data_dict).cast<std::string>();
         std::replace(request_meta_data_str.begin(), request_meta_data_str.end(), '\'', '"');
     }
 
     void bind_response_meta_data() override
     {
+        if (response_meta_data_dict.contains("api_callbacks"))
+        {
+            printf("[Client %s] Receive API callbacks.\n", port.c_str());
+            bind_api_callbacks();
+        }
+        if (response_meta_data_dict.contains("api_callbacks_response"))
+        {
+            printf("[Client %s] Receive API callbacks response.\n", port.c_str());
+            bind_api_callbacks_response();
+        }
+    }
+
+    void bind_api_callbacks() override
+    {
+        
+    }
+
+    void bind_api_callbacks_response() override
+    {
+        
     }
 
     void clean_up() override
@@ -276,7 +300,7 @@ private:
     {
         if (send_buffer_size != send_data.size())
         {
-            printf("[Client %s] The size of in_send_data (%ld) does not match with send_buffer_size (%ld).", port.c_str(), send_data.size(), send_buffer_size);
+            printf("[Client %s] The size of in_send_data (%ld) does not match with send_buffer_size (%ld).\n", port.c_str(), send_data.size(), send_buffer_size);
             return;
         }
         
@@ -303,7 +327,8 @@ PYBIND11_MODULE(multiverse_client_pybind, handle)
         .def("connect", static_cast<void (MultiverseClient::*)(const std::string &, const std::string &)>(&MultiverseClient::connect))
         .def("start", &MultiverseClient::start)
         .def("communicate", &MultiverseClient::communicate)
-        .def("disconnect", &MultiverseClient::disconnect);
+        .def("disconnect", &MultiverseClient::disconnect)
+        .def("get_time_now", &MultiverseClient::get_time_now);
 
     pybind11::class_<MultiverseClientPybind, MultiverseClient>(handle, "MultiverseClientPybind")
         .def(pybind11::init<const std::string &>())

@@ -30,6 +30,7 @@ sudo apt-get install -y python3-catkin-tools
 
 # Install ROS2
 sudo apt-get install -y ros-foxy-desktop
+sudo apt-get install -y ros-foxy-joint-state-publisher-gui
 sudo apt-get install -y ros-dev-tools
 
 # Install python3-pip
@@ -49,7 +50,13 @@ sudo apt-get install -y libglfw3-dev
 sudo apt-get install -y libjsoncpp-dev
 
 # Install zmqpp
-sudo apt-get install -y libzmqpp-dev
+sudo apt-get install -y libzmq3-dev
+
+# Install boost
+sudo apt-get install -y libboost-dev libboost-filesystem-dev
+
+# Install tinyxml2
+sudo apt-get install -y libtinyxml2-dev
 
 # Install additional packages for USD
 sudo apt-get install -y libxcb-cursor0
@@ -57,19 +64,24 @@ sudo apt-get install -y libxcb-cursor0
 # Install additional packages for MuJoCo
 sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxt-dev
 
-# Install and link clang-11 for creating shared library
-sudo apt-get install -y clang-11 libc++-11-dev libstdc++-11-dev libc++abi-11-dev llvm-11-dev
+# Install and link clang-17 for creating shared library
+sudo apt-get install -y clang-17 llvm-17-dev libc++-17-dev libc++abi-17-dev libstdc++-14-dev 
 sudo ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so
 sudo update-alternatives --remove-all clang++
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang-11 100
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang-17 100
 
 # Install and link gcc-11
 sudo apt-get install -y gcc-11
 sudo update-alternatives --remove-all gcc
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100
 
+# Install and link gcc+11
+sudo apt-get install -y g++-11
+sudo update-alternatives --remove-all g++
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 100
+
 # Install additional packages for blender
-sudo apt-get install -y build-essential git subversion cmake libx11-dev libxxf86vm-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libegl-dev
+sudo apt-get install -y build-essential git git-lfs subversion cmake libx11-dev libxxf86vm-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libegl-dev
 sudo apt-get install -y libwayland-dev wayland-protocols libxkbcommon-dev libdbus-1-dev linux-libc-dev
 
 # Install pybind11
@@ -82,13 +94,13 @@ sudo apt-get install -y jupyter-notebook
 pip install --upgrade pip build
 
 # Install additional packages for USD and multiverse_knowledge
-pip install pyside6 pyopengl wheel cython owlready2 markupsafe==2.0.1 jinja2 pybind11
+pip install pyside6 pyopengl wheel cython owlready2 markupsafe==2.0.1 jinja2 pybind11 inflection
 
 # Install additional packages for multiverse_parser
 pip install urdf_parser_py
 
 # Install MuJoCo
-pip install mujoco==3.1.2
+pip install mujoco==3.1.5
 
 # Install additional packages for Jupyter Notebook
 pip install panel jupyter-server bash_kernel
