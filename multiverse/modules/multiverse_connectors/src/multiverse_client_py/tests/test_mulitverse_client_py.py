@@ -270,18 +270,18 @@ class MultiverseClientSpawnTestCase(unittest.TestCase):
         multiverse_client_test_spawn = self.create_multiverse_client_spawn("1337", "world")
 
         multiverse_client_test_spawn.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
-        # multiverse_client_test_spawn.request_meta_data["send"]["milk_box"] = ["position",
-        #                                                                       "quaternion",
-        #                                                                       "relative_velocity"]
+        multiverse_client_test_spawn.request_meta_data["send"]["milk_box"] = ["position",
+                                                                              "quaternion",
+                                                                              "relative_velocity"]
         multiverse_client_test_spawn.request_meta_data["send"]["panda"] = ["position",
                                                                            "quaternion"]
         multiverse_client_test_spawn.send_and_receive_meta_data()
 
         time_now = time() - self.time_start
         multiverse_client_test_spawn.send_data = [time_now,
-                                                  # 0, 0, 5,
-                                                  # 0.0, 0.0, 0.0, 1.0,
-                                                  # 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0, 0, 5,
+                                                  0.0, 0.0, 0.0, 1.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                                                   0, 0, 3,
                                                   0.0, 0.0, 0.0, 1.0]
         multiverse_client_test_spawn.send_and_receive_data()
