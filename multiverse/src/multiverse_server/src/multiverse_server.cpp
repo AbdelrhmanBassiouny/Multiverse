@@ -258,7 +258,7 @@ void MultiverseServer::start()
 
         case EMultiverseServerState::BindObjects:
         {
-            // printf("[Server] Received meta data from socket %s:\n%s", socket_addr.c_str(), request_meta_data_json.toStyledString().c_str());            
+            // printf("[Server] Received meta data from socket %s:\n%s", socket_addr.c_str(), request_meta_data_json.toStyledString().c_str());
             bind_meta_data();
 
             mtx.lock();
@@ -278,11 +278,8 @@ void MultiverseServer::start()
 
                 for (const std::string &simulation_name : api_callbacks.getMemberNames())
                 {
-                    response_meta_data_json["api_callbacks_response"][simulation_name] = Json::arrayValue;
                     Simulation &simulation = worlds[world_name].simulations[simulation_name];
-                    simulation.meta_data_state = EMetaDataState::WaitAfterSendReceiveData;
                     simulation.request_meta_data_json["api_callbacks"] = api_callbacks[simulation_name];
-                    simulation.api_callbacks.clear();
                     for (const Json::Value &api_callback : api_callbacks[simulation_name])
                     {
                         for (const std::string &callback_key : api_callback.getMemberNames())
@@ -296,6 +293,7 @@ void MultiverseServer::start()
                             simulation.api_callbacks.push_back(api_callback_map);
                         }
                     }
+                    simulation.meta_data_state = EMetaDataState::WaitAfterSendReceiveData;
                 }
 
                 double start = get_time_now();
@@ -303,20 +301,19 @@ void MultiverseServer::start()
                 bool stop = true;
                 while (!should_shut_down)
                 {
+                    now = get_time_now();
+                    stop = true;
                     for (const std::string &simulation_name : api_callbacks.getMemberNames())
                     {
                         Simulation &simulation = worlds[world_name].simulations[simulation_name];
-                        if (simulation.api_callbacks.size() == simulation.api_callbacks_response.size())
+                        if (simulation.api_callbacks.size() != 0 && simulation.meta_data_state != EMetaDataState::Normal)
                         {
-                            stop = true;
-                            continue;
-                        }
-                        stop = false;
-                        now = get_time_now();
-                        if (now - start > 1)
-                        {
-                            printf("[Server] Socket %s is waiting for %s to send API callbacks response data.\n", socket_addr.c_str(), simulation_name.c_str());
-                            start = now;
+                            stop = false;
+                            if (now - start > 1)
+                            {
+                                printf("[Server] Socket %s is waiting for %s to send API callbacks response data.\n", socket_addr.c_str(), simulation_name.c_str());
+                                start = now;
+                            }
                         }
                     }
                     if (stop)
@@ -343,8 +340,7 @@ void MultiverseServer::start()
                         }
                     }
 
-                    simulation.api_callbacks.clear();
-                    simulation.api_callbacks_response.clear();
+                    simulation.meta_data_state = EMetaDataState::Normal;
                 }
             }
 
@@ -482,7 +478,7 @@ void MultiverseServer::start()
                         break;
                     }
 
-                    if (simulation.api_callbacks.size() != simulation.api_callbacks_response.size())
+                    if (simulation.api_callbacks.size() != 0)
                     {
                         zmq::recv_result_t recv_result_t = socket.recv(message, zmq::recv_flags::none); // TODO: Make use of the message
                         response_meta_data_json["api_callbacks"] = simulation.request_meta_data_json["api_callbacks"];
@@ -491,6 +487,7 @@ void MultiverseServer::start()
                         const std::string &message_str = message.to_string();
                         if (reader.parse(message_str, request_meta_data_json) && !request_meta_data_json.empty())
                         {
+                            simulation.api_callbacks_response.clear();
                             const Json::Value api_callbacks_response = request_meta_data_json["api_callbacks_response"];
                             for (const Json::Value &api_callback_response : api_callbacks_response)
                             {
@@ -544,8 +541,8 @@ void MultiverseServer::start()
                             }
                         }
 
+                        simulation.api_callbacks.clear();
                         simulation.request_meta_data_json.removeMember("api_callbacks");
-                        simulation.meta_data_state = EMetaDataState::Normal;
                         flag = EMultiverseServerState::BindObjects;
                         break;
                     }
@@ -563,8 +560,10 @@ void MultiverseServer::start()
                     zmq::recv_result_t recv_result_t = socket.recv(message, zmq::recv_flags::none); // TODO: Make use of the message
                 }
                 
-                request_meta_data_json = simulation.request_meta_data_json;
-                simulation.meta_data_state = EMetaDataState::Normal;
+                if (strcmp(request_meta_data_json["meta_data"]["simulation_name"].asString().c_str(), simulation_name.c_str()) != 0)
+                {
+                    request_meta_data_json = simulation.request_meta_data_json;
+                }
 
                 send_data_vec.clear();
                 receive_data_vec.clear();
@@ -616,9 +615,7 @@ void MultiverseServer::receive_request_meta_data()
     try
     {
         sockets_need_clean_up[socket_addr] = false;
-        printf("[Server] Socket %s is waiting for meta data.\n", socket_addr.c_str());
         zmq::recv_result_t recv_result_t = socket.recv(message, zmq::recv_flags::none);
-        printf("[Server] Socket %s received meta data.\n", socket_addr.c_str());
         sockets_need_clean_up[socket_addr] = true;
     }
     catch (const zmq::error_t &e)
@@ -696,6 +693,17 @@ void MultiverseServer::bind_meta_data()
     {
         world_name = request_world_name;
         simulation_name = request_simulation_name;
+    }
+
+    if (request_meta_data_json.isMember("api_callbacks") && !request_meta_data_json["api_callbacks"].empty())
+    {
+        const Json::Value api_callbacks = request_meta_data_json["api_callbacks"];
+
+        for (const std::string &simulation_name : api_callbacks.getMemberNames())
+        {
+            Simulation &simulation = worlds[world_name].simulations[simulation_name];
+            simulation.meta_data_state = EMetaDataState::WaitAfterSendReceiveData;
+        }
     }
 
     worlds[world_name].simulations[simulation_name].request_meta_data_json = request_meta_data_json;
@@ -847,7 +855,7 @@ void MultiverseServer::bind_send_objects()
             }
             else
             {
-                printf("[Server] Continue state [%s - %s] on socket %s\n", object_name.c_str(), attribute_name.c_str(), socket_addr.c_str());
+                // printf("[Server] Continue state [%s - %s] on socket %s\n", object_name.c_str(), attribute_name.c_str(), socket_addr.c_str());
                 continue_state = true;
                 attribute.is_sent = true;
 
@@ -953,9 +961,14 @@ void MultiverseServer::wait_for_objects()
 
 void MultiverseServer::bind_receive_objects()
 {
+    std::map<std::string, Object> &objects = worlds[world_name].objects;
+    Simulation &simulation = worlds[world_name].simulations[simulation_name];
     receive_data_vec.emplace_back(&worlds[world_name].time, conversion_map[attribute_map["time"].first][0]);
+
     for (const std::string &object_name : receive_objects_json.getMemberNames())
     {
+        Object &object = objects[object_name];
+        simulation.objects[object_name] = &object;
         response_meta_data_json["receive"][object_name] = Json::objectValue;
         for (const Json::Value &attribute_json : receive_objects_json[object_name])
         {
