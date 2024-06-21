@@ -20,7 +20,7 @@ simulations:
           body:
             big_bowl:
               pos: [2, 2, 1]
-              quat: [0, 0, 0, 1]
+              quat: [1, 0, 0, 0]
         disable_self_collision: "off"
 
 multiverse_server:

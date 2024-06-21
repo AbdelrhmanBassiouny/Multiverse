@@ -1,0 +1,20 @@
+<mujoco model="floor">
+    <compiler angle="radian" meshdir="../meshes/" texturedir="../meshes/textures/"
+        autolimits="true" />
+    <default>
+        <default class="floor_visual">
+            <geom contype="0" conaffinity="0" />
+        </default>
+        <default class="floor_collision">
+            <geom rgba="0.9 0.9 0.9 1.0" />
+        </default>
+    </default>
+    <worldbody>
+        <body name="floor">
+            <inertial pos="0.0 0.0 0.0" mass="0.01" diaginertia="0.0008 0.0008 0.00015" />
+            <geom name="floor" size="0 0 1" type="plane" condim="1" material="matplane"/>
+        </body>
+    </worldbody>
+    <equality />
+    <contact />
+</mujoco>
