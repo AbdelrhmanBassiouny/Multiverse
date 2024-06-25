@@ -1811,6 +1811,93 @@ std::set<std::string> MjMultiverseClient::get_get_contact_islands_response(const
 	return contact_island_results;
 }
 
+std::string MjMultiverseClient::get_get_constraint_effort_response(const Json::Value &arguments) const
+{
+	if (!arguments.isArray() || arguments.size() != 1)
+	{
+		return {"failed (Arguments for get_constraint_effort should be an array of strings with 1 element.)"};
+	}
+
+	const std::string object_name = arguments[0].asString();
+	const int object_body_id = mj_name2id(m, mjtObj::mjOBJ_BODY, object_name.c_str());
+	if (object_body_id == -1)
+	{
+		return {"failed (Object " + object_name + " does not exist.)"};
+	}
+
+	mjtNum *contact_effort = (mjtNum *)calloc(6, sizeof(mjtNum));
+	mjtNum *jac = mj_stackAllocNum(d, 6 * m->nv);
+	mj_jacBodyCom(m, d, jac, jac + 3 * m->nv, object_body_id);
+	mju_mulMatVec(contact_effort, jac, d->qfrc_constraint, 6, m->nv);
+	// mju_rotVecMatT(contact_effort, contact_effort, d->xmat + 9 * object_body_id);
+	// mju_rotVecMatT(contact_effort + 3, contact_effort + 3, d->xmat + 9 * object_body_id);
+
+	std::string contact_effort_result = "";
+	for (int i = 0; i < 6; i++)
+	{
+		contact_effort_result += std::to_string(contact_effort[i]) + " ";
+	}
+	contact_effort_result.pop_back();
+
+	return contact_effort_result;
+}
+
+std::vector<std::string> MjMultiverseClient::get_get_rays_response(const Json::Value &arguments) const
+{
+	if (!arguments.isArray() || arguments.size() != 2)
+	{
+		return {"failed (Arguments for get_rays should be an array of strings with 2 elements.)"};
+	}
+
+	std::istringstream starting_points_iss(arguments[0].asString());
+	std::vector<mjtNum> starting_points = std::vector<mjtNum>(std::istream_iterator<mjtNum>(starting_points_iss), std::istream_iterator<mjtNum>());
+	if (starting_points.size() % 3 != 0)
+	{
+		return {"failed (Starting points should have a multiple of 3 float elements.)"};
+	}
+	
+	std::istringstream ending_points_iss(arguments[1].asString());
+	std::vector<mjtNum> ending_points = std::vector<mjtNum>(std::istream_iterator<mjtNum>(ending_points_iss), std::istream_iterator<mjtNum>());
+	if (ending_points.size() % 3 != 0)
+	{
+		return {"failed (Ending points should have a multiple of 3 float elements.)"};
+	}
+
+	if (starting_points.size() / 3 != ending_points.size() / 3)
+	{
+		return {"failed (Starting points and ending points should have the same number of points.)"};
+	}
+
+	std::vector<std::string> multi_ray_results;
+	for (int i = 0; i < starting_points.size() / 3; i++)
+	{
+		const mjtNum pnt[3] = {starting_points[3 * i], starting_points[3 * i + 1], starting_points[3 * i + 2]};
+		mjtNum vec[3] = {ending_points[3 * i] - pnt[0], ending_points[3 * i + 1] - pnt[1], ending_points[3 * i + 2] - pnt[2]};
+		const mjtNum vec_len = mju_normalize3(vec);
+
+		const mjtByte *geomgroup = NULL;
+		const mjtByte flg_static = 1;
+		const int bodyexclude = -1;
+
+		int geomid;
+		const mjtNum dist = mj_ray(m, d, pnt, vec, geomgroup, flg_static, bodyexclude, &geomid);
+
+		if (geomid != -1 && dist <= vec_len)
+		{
+			const int body_id = m->geom_bodyid[geomid];
+			const std::string body_name = mj_id2name(m, mjtObj::mjOBJ_BODY, body_id);
+			const std::string dist_str = std::to_string(dist);
+			multi_ray_results.push_back(body_name + " " + dist_str);
+		}
+		else
+		{
+			multi_ray_results.push_back({"None"});
+		}
+	}
+
+	return multi_ray_results;
+}
+
 void MjMultiverseClient::bind_api_callbacks()
 {
 	const Json::Value &api_callbacks_json = response_meta_data_json["api_callbacks"];
@@ -1884,6 +1971,18 @@ void MjMultiverseClient::bind_api_callbacks_response()
 				for (const std::string &get_contact_islands_response : get_get_contact_islands_response(api_callback_json[api_callback_name]))
 				{
 					api_callback_response[api_callback_name].append(get_contact_islands_response);
+				}
+			}
+			else if (strcmp(api_callback_name.c_str(), "get_constraint_effort") == 0)
+			{
+				const std::string get_contact_effort_response = get_get_constraint_effort_response(api_callback_json[api_callback_name]);
+				api_callback_response[api_callback_name].append(get_contact_effort_response);
+			}
+			else if (strcmp(api_callback_name.c_str(), "get_rays") == 0)
+			{
+				for (const std::string &get_rays_response : get_get_rays_response(api_callback_json[api_callback_name]))
+				{
+					api_callback_response[api_callback_name].append(get_rays_response);
 				}
 			}
 			else
