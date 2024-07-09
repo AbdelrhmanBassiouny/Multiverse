@@ -41,10 +41,10 @@ std::set<std::string> cumulative_attribute_names = {"force", "torque"};
 std::map<std::string, std::pair<EAttribute, std::vector<double>>> attribute_map =
     {
         {"time", {EAttribute::Time, {0.0}}},
-        {"position", {EAttribute::Position, {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()}}},
-        {"quaternion", {EAttribute::Quaternion, {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()}}},
-        {"relative_velocity", {EAttribute::RelativeVelocity, {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}}},
-        {"odometric_velocity", {EAttribute::OdometricVelocity, {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}}},
+        {"position", {EAttribute::Position, std::vector<double>(3, std::numeric_limits<double>::quiet_NaN())}},
+        {"quaternion", {EAttribute::Quaternion, std::vector<double>(4, std::numeric_limits<double>::quiet_NaN())}},
+        {"relative_velocity", {EAttribute::RelativeVelocity, std::vector<double>(6, 0.0)}},
+        {"odometric_velocity", {EAttribute::OdometricVelocity, std::vector<double>(6, 0.0)}},
         {"joint_rvalue", {EAttribute::JointRvalue, {std::numeric_limits<double>::quiet_NaN()}}},
         {"joint_tvalue", {EAttribute::JointTvalue, {std::numeric_limits<double>::quiet_NaN()}}},
         {"joint_linear_velocity", {EAttribute::JointLinearVelocity, {std::numeric_limits<double>::quiet_NaN()}}},
@@ -57,10 +57,14 @@ std::map<std::string, std::pair<EAttribute, std::vector<double>>> attribute_map 
         {"cmd_joint_angular_velocity", {EAttribute::CmdJointAngularVelocity, {std::numeric_limits<double>::quiet_NaN()}}},
         {"cmd_joint_force", {EAttribute::CmdJointForce, {std::numeric_limits<double>::quiet_NaN()}}},
         {"cmd_joint_torque", {EAttribute::CmdJointTorque, {std::numeric_limits<double>::quiet_NaN()}}},
-        {"joint_position", {EAttribute::JointPosition, {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()}}},
-        {"joint_quaternion", {EAttribute::JointQuaternion, {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()}}},
-        {"force", {EAttribute::Force, {0.0, 0.0, 0.0}}},
-        {"torque", {EAttribute::Torque, {0.0, 0.0, 0.0}}}};
+        {"joint_position", {EAttribute::JointPosition, std::vector<double>(3, std::numeric_limits<double>::quiet_NaN())}},
+        {"joint_quaternion", {EAttribute::JointQuaternion, std::vector<double>(4, std::numeric_limits<double>::quiet_NaN())}},
+        {"force", {EAttribute::Force, std::vector<double>(3, 0.0)}},
+        {"torque", {EAttribute::Torque, std::vector<double>(3, 0.0)}},
+        {"rgb_3840_2160", {EAttribute::RGB_3840_2160, std::vector<double>(3840 * 2160, 0.0)}},
+        {"rgb_1280_1024", {EAttribute::RGB_1280_1024, std::vector<double>(1280 * 1024, 0.0)}},
+        {"rgb_640_480", {EAttribute::RGB_640_480, std::vector<double>(640 * 480, 0.0)}},
+        {"rgb_128_128", {EAttribute::RGB_128_128, std::vector<double>(128 * 128, 0.0)}}};
 
 std::map<std::string, double> unit_scale =
     {
@@ -139,7 +143,19 @@ std::map<EAttribute, std::map<std::string, std::vector<double>>> handedness_scal
           {"lhs", {1.0, -1.0, 1.0}}}},
         {EAttribute::Torque,
          {{"rhs", {1.0, 1.0, 1.0}},
-          {"lhs", {1.0, -1.0, 1.0}}}}};
+          {"lhs", {1.0, -1.0, 1.0}}}},
+        {EAttribute::RGB_3840_2160,
+         {{"rhs", std::vector<double>(3840 * 2160, 1.0)},
+          {"lhs", std::vector<double>(3840 * 2160, 1.0)}}},
+        {EAttribute::RGB_1280_1024,
+         {{"rhs", std::vector<double>(1280 * 1024, 1.0)},
+          {"lhs", std::vector<double>(1280 * 1024, 1.0)}}},
+        {EAttribute::RGB_640_480,
+         {{"rhs", std::vector<double>(640 * 480, 1.0)},
+          {"lhs", std::vector<double>(640 * 480, 1.0)}}},
+        {EAttribute::RGB_128_128,
+         {{"rhs", std::vector<double>(128 * 128, 1.0)},
+          {"lhs", std::vector<double>(128 * 128, 1.0)}}}};
 
 enum class EMetaDataState : unsigned char
 {
@@ -228,7 +244,7 @@ void MultiverseServer::start()
                 const std::string &message_str = message.to_string();
                 if (message_str[1] == '}' && message_str.size() == 2)
                 {
-                    printf("[Server] Received close signal %s from socket %s.\n", message_str.c_str(), socket_addr.c_str());
+                    printf("[Server] Received close signal %s at socket %s.\n", message_str.c_str(), socket_addr.c_str());
                     send_data_vec = {{&worlds[world_name].time, conversion_map[attribute_map["time"].first][0]}};
                     receive_data_vec = {{&worlds[world_name].time, conversion_map[attribute_map["time"].first][0]}};
                     flag = EMultiverseServerState::SendResponseMetaData;
@@ -241,7 +257,7 @@ void MultiverseServer::start()
                 }
                 else if (std::isnan(send_buffer[0]))
                 {
-                    printf("[Server] Received [%s] from socket %s.\n", message_str.c_str(), socket_addr.c_str());
+                    printf("[Server] Received [%s] at socket %s.\n", message_str.c_str(), socket_addr.c_str());
                     flag = EMultiverseServerState::BindReceiveData;
                 }
                 else
@@ -259,7 +275,7 @@ void MultiverseServer::start()
 
         case EMultiverseServerState::BindObjects:
         {
-            // printf("[Server] Received meta data from socket %s:\n%s", socket_addr.c_str(), request_meta_data_json.toStyledString().c_str());
+            // printf("[Server] Received meta data at socket %s:\n%s", socket_addr.c_str(), request_meta_data_json.toStyledString().c_str());
             bind_meta_data();
 
             mtx.lock();
@@ -369,7 +385,7 @@ void MultiverseServer::start()
                 const std::string &message_str = message.to_string();
                 if (message_str[1] == '}' && message_str.size() == 2)
                 {
-                    printf("[Server] Received close signal %s from socket %s.\n", message_str.c_str(), socket_addr.c_str());
+                    printf("[Server] Received close signal %s at socket %s.\n", message_str.c_str(), socket_addr.c_str());
                     flag = EMultiverseServerState::SendResponseMetaData;
                 }
                 else if (reader.parse(message_str, request_meta_data_json) && !request_meta_data_json.empty())
@@ -380,7 +396,7 @@ void MultiverseServer::start()
                 }
                 else if (std::isnan(send_buffer[0]))
                 {
-                    printf("[Server] Received [%s] from socket %s.\n", message_str.c_str(), socket_addr.c_str());
+                    printf("[Server] Received [%s] at socket %s.\n", message_str.c_str(), socket_addr.c_str());
                     flag = EMultiverseServerState::BindReceiveData;
                 }
                 else
@@ -508,7 +524,7 @@ void MultiverseServer::start()
                         }
                         else
                         {
-                            std::string error_message = "[Server] Invalid request meta data from socket " + socket_addr + ": [" + message_str + "].";
+                            std::string error_message = "[Server] Invalid request meta data at socket " + socket_addr + ": [" + message_str + "].";
                             memcpy(send_buffer, message.data(), send_buffer_size * sizeof(double));
                             throw std::invalid_argument(error_message.c_str());
                         }
@@ -595,7 +611,7 @@ void MultiverseServer::start()
             send_receive_data();
         }
 
-        printf("[Server] Unbind from socket %s.\n", socket_addr.c_str());
+        printf("[Server] Unbind socket %s.\n", socket_addr.c_str());
         try
         {
             socket.unbind(socket_addr);
@@ -635,25 +651,25 @@ void MultiverseServer::bind_meta_data()
 {
     if (!request_meta_data_json.isMember("meta_data") || request_meta_data_json["meta_data"].empty())
     {
-        throw std::invalid_argument("[Server] Request meta data from socket " + socket_addr + " doesn't have meta data.");
+        throw std::invalid_argument("[Server] Request meta data at socket " + socket_addr + " doesn't have meta data.");
     }
 
     Json::Value &meta_data = request_meta_data_json["meta_data"];
     if (!meta_data.isMember("world_name") || meta_data["world_name"].asString().empty())
     {
-        throw std::invalid_argument("[Server] Request meta data from socket " + socket_addr + " doesn't have a world name.");
+        throw std::invalid_argument("[Server] Request meta data at socket " + socket_addr + " doesn't have a world name.");
     }
     request_world_name = meta_data["world_name"].asString();
 
     if (!meta_data.isMember("simulation_name") || meta_data["simulation_name"].asString().empty())
     {
-        throw std::invalid_argument("[Server] Request meta data from socket " + socket_addr + " doesn't have a simulation name.");
+        throw std::invalid_argument("[Server] Request meta data at socket " + socket_addr + " doesn't have a simulation name.");
     }
     request_simulation_name = meta_data["simulation_name"].asString();
 
     if (simulation_name.empty() && worlds[request_world_name].simulations.count(request_simulation_name) > 0)
     {
-        throw std::invalid_argument("[Server] Request meta data from socket " + socket_addr + " requires an existing simulation name (" + request_simulation_name + ").");
+        throw std::invalid_argument("[Server] Request meta data at socket " + socket_addr + " requires an existing simulation name (" + request_simulation_name + ").");
     }
 
     if (!simulation_name.empty() && worlds[request_world_name].simulations.count(request_simulation_name) == 0)
@@ -827,6 +843,22 @@ void MultiverseServer::bind_meta_data()
                   [mass_unit, length_unit, time_unit](double &torque)
                   { torque = unit_scale[mass_unit] * unit_scale[length_unit] * unit_scale[length_unit] / (unit_scale[time_unit] * unit_scale[time_unit]); });
 
+    std::for_each(conversion_map[EAttribute::RGB_3840_2160].begin(), conversion_map[EAttribute::RGB_3840_2160].end(),
+                  [](double &rgb_3840_2160)
+                  { rgb_3840_2160 = 1.0; });
+
+    std::for_each(conversion_map[EAttribute::RGB_1280_1024].begin(), conversion_map[EAttribute::RGB_1280_1024].end(),
+                  [](double &rgb_1280_1024)
+                  { rgb_1280_1024 = 1.0; });
+
+    std::for_each(conversion_map[EAttribute::RGB_640_480].begin(), conversion_map[EAttribute::RGB_640_480].end(),
+                  [](double &rgb_640_480)
+                  { rgb_640_480 = 1.0; });
+
+    std::for_each(conversion_map[EAttribute::RGB_128_128].begin(), conversion_map[EAttribute::RGB_128_128].end(),
+                  [](double &rgb_128_128)
+                  { rgb_128_128 = 1.0; });
+    
     for (size_t i = 0; i < 3; i++)
     {
         conversion_map[EAttribute::RelativeVelocity][i] = unit_scale[length_unit] / unit_scale[time_unit];
@@ -889,7 +921,7 @@ void MultiverseServer::bind_send_objects()
                     double *data = &attribute.data[i];
                     const double conversion = conversion_map[attribute_map[attribute_name].first][i];
                     send_data_vec.emplace_back(data, conversion);
-                    response_meta_data_json["send"][object_name][attribute_name].append(attribute_map[attribute_name].second[i]);
+                    response_meta_data_json["send"][object_name][attribute_name].append(*data * conversion);
                 }
             }
             else if (cumulative_attribute_names.count(attribute_name) > 0)
@@ -1204,7 +1236,7 @@ void start_multiverse_server(const std::string &server_socket_addr)
             printf("[Server] Waiting for request...\n");
             zmq::recv_result_t recv_result_t = server_socket.recv(request, zmq::recv_flags::none);
             receive_addr = request.to_string();
-            printf("[Server] Received request from %s.\n", receive_addr.c_str());
+            printf("[Server] Received request to open socket %s.\n", receive_addr.c_str());
         }
         catch (const zmq::error_t &e)
         {
@@ -1221,9 +1253,9 @@ void start_multiverse_server(const std::string &server_socket_addr)
 
         zmq::message_t response(receive_addr.size());
         memcpy(response.data(), receive_addr.c_str(), receive_addr.size());
-        printf("[Server] Sending response to %s.\n", receive_addr.c_str());
+        printf("[Server] Sending response to open socket %s.\n", receive_addr.c_str());
         server_socket.send(response, zmq::send_flags::none);
-        printf("[Server] Sent response to %s.\n", receive_addr.c_str());
+        printf("[Server] Sent response to open socket %s.\n", receive_addr.c_str());
     }
 
     for (std::pair<const std::string, std::thread> &worker : workers)
