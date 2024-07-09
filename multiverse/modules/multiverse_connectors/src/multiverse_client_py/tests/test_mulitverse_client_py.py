@@ -2,8 +2,8 @@ import signal
 import subprocess
 import threading
 import unittest
-from typing import List
 from time import sleep, time
+from typing import List
 
 from multiverse_client_py import MultiverseClient, MultiverseMetaData, SocketAddress
 
@@ -301,21 +301,18 @@ class MultiverseClientSpawnTestCase(unittest.TestCase):
     def test_multiverse_client_spawn(self):
         multiverse_client_test_spawn = self.create_multiverse_client_spawn("1337", "world")
 
-        multiverse_client_test_spawn.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
+        multiverse_client_test_spawn.request_meta_data["meta_data"]["simulation_name"] = "pycram_test"
         multiverse_client_test_spawn.request_meta_data["send"]["milk_box"] = ["position",
                                                                               "quaternion"]
-        multiverse_client_test_spawn.request_meta_data["send"]["panda"] = ["position",
-                                                                           "quaternion"]
         multiverse_client_test_spawn.send_and_receive_meta_data()
 
         time_now = time() - self.time_start
         multiverse_client_test_spawn.send_data = [time_now,
                                                   0, 0, 5,
-                                                  0.0, 0.0, 0.0, 1.0,
-                                                  0, 0, 3,
                                                   0.0, 0.0, 0.0, 1.0]
         multiverse_client_test_spawn.send_and_receive_data()
-        multiverse_client_test_spawn.stop()
+
+        return multiverse_client_test_spawn
 
     def test_multiverse_client_spawn_and_get_data(self):
         multiverse_client_test_spawn = self.create_multiverse_client_spawn("1337", "world")
@@ -563,22 +560,35 @@ class MultiverseClientSpawnTestCase(unittest.TestCase):
 
     def test_multiverse_client_callapi_attach(self):
         # Spawn panda and milk box
-        self.test_multiverse_client_spawn()
+        multiverse_client_test_spawn = self.test_multiverse_client_spawn()
+        multiverse_client_test_spawn.request_meta_data["send"] = {}
+        multiverse_client_test_spawn.request_meta_data["meta_data"]["simulation_name"] = "sim_test_callapi"
+        multiverse_client_test_spawn.request_meta_data["api_callbacks"] = {"pycram_test": [
+            {"attach": [
+                "big_bowl",
+                "milk_box",
+                "1.0 2.0 0.1 1.0 0.0 0.0 0.0"]},
+            {"is_mujoco": []},
+            {"something_else": ["param1",
+                                "param2"]}
+        ]}
+        multiverse_client_test_spawn.send_and_receive_meta_data()
 
         # Attach milk box to hand at (0 0 0) (1 0 0 0)
-        multiverse_client_test_callapi = self.create_multiverse_client_callapi("1339", "world",
-                                                                               {
-                                                                                   "empty_simulation": [
-                                                                                       {"attach": [
-                                                                                           "milk_box",
-                                                                                           "hand"]},
-                                                                                       {"is_mujoco": []},
-                                                                                       {"something_else": ["param1",
-                                                                                                           "param2"]}
-                                                                                   ]
-                                                                               })
-        time_callapi = multiverse_client_test_callapi.response_meta_data["time"]
-        self.assertDictEqual(multiverse_client_test_callapi.response_meta_data,
+        # multiverse_client_test_callapi = self.create_multiverse_client_callapi("1339", "world",
+        #                                                                        {
+        #                                                                            "empty_simulation": [
+        #                                                                                {"attach": [
+        #                                                                                    "milk_box",
+        #                                                                                    "hand",
+        #                                                                                    "1.0 2.0 0.1 1.0 0.0 0.0 0.0"]},
+        #                                                                                {"is_mujoco": []},
+        #                                                                                {"something_else": ["param1",
+        #                                                                                                    "param2"]}
+        #                                                                            ]
+        #                                                                        })
+        time_callapi = multiverse_client_test_spawn.response_meta_data["time"]
+        self.assertDictEqual(multiverse_client_test_spawn.response_meta_data,
                              {'api_callbacks_response':
                                  {
                                      'empty_simulation': [{'attach': ['success']},

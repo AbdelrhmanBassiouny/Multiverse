@@ -13,15 +13,15 @@ simulations:
     world:
       name: world
       path: floor.xml
-    objects:
-      big_bowl:
-        path: big_bowl.xml
-        apply:
-          body:
-            big_bowl:
-              pos: [2, 2, 1]
-              quat: [1, 0, 0, 0]
-        disable_self_collision: "off"
+#    objects:
+#      big_bowl:
+#        path: big_bowl.xml
+#        apply:
+#          body:
+#            big_bowl:
+#              pos: [2, 2, 1]
+#              quat: [1, 0, 0, 0]
+#        disable_self_collision: "off"
 
 multiverse_server:
   host: "tcp://127.0.0.1"
