@@ -12,7 +12,11 @@ simulations:
     simulator: mujoco
     world:
       name: world
-      path: floor.xml
+#      path: floor.xml
+      path: apartment/mjcf/apartment.xml
+      apply:
+        body:
+          gravcomp: 1
 #    objects:
 #      big_bowl:
 #        path: big_bowl.xml
