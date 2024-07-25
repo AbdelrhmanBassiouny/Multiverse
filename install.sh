@@ -132,7 +132,7 @@ sudo apt-get install -y pybind11-dev
 sudo apt-get install -y jupyter-notebook
 
 # Setup virtual environment
-for virtualenvwrapper in /usr/local/bin/virtualenvwrapper.sh /home/$USER/.local/bin/virtualenvwrapper.sh; do
+for virtualenvwrapper in $(which virtualenvwrapper.sh) /usr/share/virtualenvwrapper/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh /home/$USER/.local/bin/virtualenvwrapper.sh; do
     if [ -f $virtualenvwrapper ]; then
         . $virtualenvwrapper
         mkvirtualenv --system-site-packages multiverse
@@ -147,7 +147,7 @@ for virtualenvwrapper in /usr/local/bin/virtualenvwrapper.sh /home/$USER/.local/
         pip install urdf_parser_py
 
         # Install MuJoCo
-        pip install mujoco==3.1.5
+        pip install mujoco==3.2.0
 
         # Install additional packages for Jupyter Notebook
         pip install panel jupyter-server bash_kernel

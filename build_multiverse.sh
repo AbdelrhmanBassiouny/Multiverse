@@ -74,6 +74,7 @@ while [ -n "$1" ]; do
                         DBUILD_CONNECTORS=OFF
                         DBUILD_PARSER=OFF
                     elif [ "$module" = "parser" ]; then
+                        DBUILD_SRC=ON
                         DBUILD_KNOWLEDGE=OFF
                         DBUILD_PARSER=OFF
                     fi
@@ -150,7 +151,7 @@ cmake --install $BUILD_DIR
 
 cd $CURRENT_DIR
 
-if [ "$RELOAD" = true ]; then
+if ! command -v rosdep &> /dev/null && [ "$RELOAD" = true ]; then
     rosdep update
     exec bash # Reload ~/.bashrc
 fi

@@ -162,6 +162,28 @@ class MultiverseClientTestCase(unittest.TestCase):
 
         return multiverse_client_test_send, time_now
 
+    def test_multiverse_client_send_data_3(self, stop=True):
+        time_now = time()
+        multiverse_client_test_send = self.create_multiverse_client_send("1234", "object_1", ["depth_1280_1024"])
+        print("Send request_meta_data takes time: ", time() - time_now)
+
+        time_now = time() - self.time_start
+        send_data = [int(i % 65535) for i in range(1280 * 1024)]
+        send_data = [time_now] + send_data
+        self.multiverse_client_send_data(multiverse_client_test_send, send_data)
+
+        self.assertEqual(multiverse_client_test_send.receive_data, [time_now])
+
+        for _ in range(10):
+            time_now = time()
+            multiverse_client_test_send.send_and_receive_data()
+            print("Send data takes time: ", time() - time_now)
+
+        if stop:
+            multiverse_client_test_send.stop()
+
+        return multiverse_client_test_send, time_now
+
     def test_multiverse_client_receive_2(self):
         _, time_send = self.test_multiverse_client_send_data_2()
 
@@ -173,6 +195,20 @@ class MultiverseClientTestCase(unittest.TestCase):
         print("Receive response_meta_data takes time: ", time() - time_now)
         for i in multiverse_client_test_receive.response_meta_data["receive"]["object_1"]["rgb_1280_1024"]:
             self.assertEqual(i, int(i % 255))
+
+        multiverse_client_test_receive.stop()
+
+    def test_multiverse_client_receive_3(self):
+        _, time_send = self.test_multiverse_client_send_data_3()
+
+        multiverse_client_test_receive = self.create_multiverse_client_receive("1235", "object_1",
+                                                                               ["depth_1280_1024"])
+
+        time_now = time()
+        multiverse_client_test_receive.send_and_receive_meta_data()
+        print("Receive response_meta_data takes time: ", time() - time_now)
+        for i in multiverse_client_test_receive.response_meta_data["receive"]["object_1"]["depth_1280_1024"]:
+            self.assertEqual(i, int(i % 65535))
 
         multiverse_client_test_receive.stop()
 
@@ -342,6 +378,89 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         # self.assertAlmostEqual(joint5_value, 0.0, 1)
 
         multiverse_client_test_spawn.stop()
+
+    def test_multiverse_client_spawn_with_controller(self):
+        # 1) Send controller data
+        meta_data = self.meta_data
+        meta_data.simulation_name = "send_controller"
+        multiverse_client_send = MultiverseClientTest(client_addr=SocketAddress(port="4871"),
+                                                      multiverse_meta_data=self.meta_data)
+        multiverse_client_send.run()
+        multiverse_client_send.request_meta_data["send"]["torso_lift_actuator"] = ["cmd_joint_tvalue"]
+        multiverse_client_send.request_meta_data["send"]["head_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["head_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_3_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_4_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_5_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_6_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_left_7_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_3_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_4_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_5_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_6_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.request_meta_data["send"]["arm_right_7_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_send.send_and_receive_meta_data()
+        multiverse_client_send.send_data = [multiverse_client_send.sim_time] + [0.0] * 17
+        multiverse_client_send.send_and_receive_data()
+
+        # 2) Spawn the robot
+
+        multiverse_client_test_spawn = self.create_multiverse_client_spawn("4845", "world")
+
+        multiverse_client_test_spawn.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
+        multiverse_client_test_spawn.request_meta_data["send"]["tiago_dual"] = ["position", "quaternion"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["torso_lift_actuator"] = ["cmd_joint_tvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["head_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["head_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_3_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_4_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_5_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_6_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_left_7_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_1_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_2_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_3_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_4_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_5_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_6_actuator"] = ["cmd_joint_rvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"]["arm_right_7_actuator"] = ["cmd_joint_rvalue"]
+
+        multiverse_client_test_spawn.send_and_receive_meta_data()
+
+        time_now = time() - self.time_start
+        multiverse_client_test_spawn.send_data = [time_now,
+                                                  0, 2, 0,
+                                                  1.0, 0.0, 0.0, 0.0]
+        multiverse_client_test_spawn.send_and_receive_data()
+
+        # 3) Move the robot
+
+        multiverse_client_test_spawn.request_meta_data["send"] = {}
+        multiverse_client_test_spawn.request_meta_data["send"]["torso_lift_joint"] = ["joint_tvalue"]
+        multiverse_client_test_spawn.request_meta_data["receive"] = {}
+
+        multiverse_client_test_spawn.send_and_receive_meta_data()
+
+        multiverse_client_test_spawn.send_data = [multiverse_client_test_spawn.sim_time, 0.0]
+        multiverse_client_test_spawn.send_and_receive_data()
+
+        # 4) Change the controller
+        multiverse_client_send.request_meta_data["send"] = {}
+        multiverse_client_send.request_meta_data["send"]["torso_lift_actuator"] = ["cmd_joint_tvalue"]
+        multiverse_client_send.request_meta_data["receive"] = {}
+        multiverse_client_send.send_and_receive_meta_data()
+
+        multiverse_client_send.send_data = [multiverse_client_send.sim_time, 0.0]
+        multiverse_client_send.send_and_receive_data()
+
+        multiverse_client_test_spawn.stop()
+        multiverse_client_send.stop()
 
     def test_multiverse_client_spawns(self):
         multiverse_client_test_spawn = self.create_multiverse_client_spawn("1337", "world")
