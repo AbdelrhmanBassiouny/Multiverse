@@ -1,4 +1,4 @@
-version: "2"
+version: 2
 
 build:
   os: "ubuntu-20.04"
@@ -6,6 +6,17 @@ build:
     python: "3.10"
   apt_packages:
     - graphviz
+    - libboost-dev
+    - pybind11-dev
+    - libzmq3-dev
+    - libjsoncpp-dev
+    - clang-11
+    - libc++abi-11-dev
+    - cmake
+  jobs:
+    pre_build:
+      - python -m pip install virtualenvwrapper --break-system-packages
+      - ./build_multiverse.sh --only-src
 
 python:
   install:
