@@ -1,377 +1,81 @@
 .. _tutorial_4:
 
-Tutorial 4: Connect with ROS
-============================
+Tutorial 4: Adding robots and objects to the simulation - Unreal Engine
+=======================================================================
 
 Introduction
 ------------
 
-In this tutorial, we will cover how to connect Multiverse with ROS (Robot Operating System) to interact with robots and objects in the simulation. 
-For Ubuntu 20.04, both ROS and ROS2 are available.
-For Ubuntu >20.04, only ROS2 is available.
+In this tutorial, we will cover how to add robots and objects to the Unreal Engine simulation in a world in Multiverse.
+
+.. note::
+    
+   Because the Unreal Engine simulator running on Linux does not support VR functionalities, this tutorial is only available for Windows.
+
+.. note::
+
+   At the moment, this API in Unreal Engine simulator only supports parts of Multiverse functionalities. Support for the full Multiverse functionalities will be added in the future.
 
 Getting Started
 ---------------
 
-1. Create a new MUV file `my_project.muv` in `<path/to/Multiverse>/multiverse/resources/muv` and open it in your favorite text editor.
+1. Create an Unreal Engine project and add to the `Plugins` folder the following plugins:
 
-Define resources, worlds, and simulations
------------------------------------------
+- `MultiverseConnector <https://github.com/Multiverse-Framework/Multiverse-UnrealEngine-Connector>`_
+- `Meta XR Plugin v60 <https://developer.oculus.com/downloads/package/unreal-engine-5-integration/60.0>`_
+- `Meta XR Platform v60 <https://developer.oculus.com/downloads/package/unreal-5-platform-sdk-plugin/60.0>`_
 
-In this example, we will use only one robot and one object in the simulation.
+2. Build the Unreal Engine project and open it with Unreal Editor.
 
-.. code-block:: yaml
+3. In the Unreal Editor, place the `MultiverseClientActor` actor from the `PlaceActors` panel in the level.
 
-    resources:
-        - ../robots
-        - ../worlds
-        - ../objects
+.. image:: ../_static/images/tutorials/tutorial_4_1.png
+   :width: 1200
 
-    worlds:
-        my_world:
-            rtf_desired: 1
-            
-    simulations:
-        my_simulation:
-            simulator: mujoco
-            world:
-                name: my_world
-                path: floor.xml
-            robots:
-                tiago_dual:
-                    path: tiago_dual.xml
-                    apply:
-                        body:
-                            tiago_dual:
-                                pos: [-1, -2, 0]
-                    disable_self_collision: auto
+Define Robots and Objects in the `MultiverseClientActor`
+--------------------------------------------------------
 
-            objects:
-                milk_box:
-                    path: milk_box.xml
-                    apply:
-                        body:
-                            milk_box:
-                                pos: [0.0, 0.0, 5.0]
-                                quat: [0, 0.707, 0, 0.707]
+4. In the Unreal Editor, drag some robots and objects from the `Content Browser` to the level. Some examples of robots and objects can be found in the `Content Browser` under the `Plugins\Multiverse-UnrealEngine-Connector\Content` folder.
 
+.. note::
 
-Define ROS Configuration in the MUV file
-----------------------------------------
+    For the skeletal meshes, make sure to set the `Anim Class` property to the corresponding animation blueprint (inherits from `Multiverse Anim`). Tutorial for creating a custom animation blueprint for the robot will be added later.
 
-2. Add the following lines to the MUV file to define the Multiverse Server:
+.. image:: ../_static/images/tutorials/tutorial_4_2.png
+   :width: 1200
 
-.. code-block:: yaml
+5. In the `MultiverseClientActor` actor, add robots and objects to the corresponding fields.
 
-    multiverse_server:
-        host: "tcp://127.0.0.1"
-        port: 7000
+.. image:: ../_static/images/tutorials/tutorial_4_3.png
+   :width: 1200
 
-3. Add the following lines to the MUV file to define the Multiverse Clients:
+6. Save the Unreal Engine project.
 
-.. code-block:: yaml
-    
-    multiverse_clients:
-        my_simulation:
-            port: 7501
-            send:
-                body: ["position", "quaternion"]
-                joint: ["joint_rvalue", "joint_tvalue", "joint_angular_velocity", "joint_linear_velocity", "joint_torque", "joint_force"]
-            receive:
-                tiago_dual: ["odometric_velocity"]
-                torso_lift_actuator: ["cmd_joint_tvalue"]
-                head_1_actuator: ["cmd_joint_rvalue"]
-                head_2_actuator: ["cmd_joint_rvalue"]
-                arm_left_1_actuator: ["cmd_joint_rvalue"]
-                arm_left_2_actuator: ["cmd_joint_rvalue"]
-                arm_left_3_actuator: ["cmd_joint_rvalue"]
-                arm_left_4_actuator: ["cmd_joint_rvalue"]
-                arm_left_5_actuator: ["cmd_joint_rvalue"]
-                arm_left_6_actuator: ["cmd_joint_rvalue"]
-                arm_left_7_actuator: ["cmd_joint_rvalue"]
-                arm_right_1_actuator: ["cmd_joint_rvalue"]
-                arm_right_2_actuator: ["cmd_joint_rvalue"]
-                arm_right_3_actuator: ["cmd_joint_rvalue"]
-                arm_right_4_actuator: ["cmd_joint_rvalue"]
-                arm_right_5_actuator: ["cmd_joint_rvalue"]
-                arm_right_6_actuator: ["cmd_joint_rvalue"]
-                arm_right_7_actuator: ["cmd_joint_rvalue"]
+Running the Simulation
+----------------------
 
-                
-        ros: # For ROS configuration, for ROS2 configuration use ros2
-            ros_nodes:
-                services:
-                    socket:
-                      - port: 7400
+.. note::
 
-                publishers:
-                    tf:
-                      - meta_data:
-                            world_name: my_world
-                            length_unit: m
-                            angle_unit: rad
-                            mass_unit: kg
-                            time_unit: s
-                            handedness: rhs
-                        port: 7301
-                        topic: /tf
-                        rate: 60
-                        root_frame_id: map
-                    odom:
-                      - meta_data:
-                            world_name: my_world
-                            length_unit: m
-                            angle_unit: rad
-                            mass_unit: kg
-                            time_unit: s
-                            handedness: rhs
-                        port: 7302
-                        topic: /odom
-                        rate: 60
-                        body: tiago_dual # The body to attach the odometry to
-                        frame_id: map
+    Before running the simulation, make sure the Multiverse Server is running.
 
-                subscribers:
-                    cmd_vel:
-                      - meta_data:
-                            world_name: my_world
-                            length_unit: m
-                            angle_unit: rad
-                            mass_unit: kg
-                            time_unit: s
-                            handedness: rhs
-                        port: 7203
-                        topic: /cmd_vel
-                        body: tiago_dual # The body to attach the velocity command to
-
-            ros_control: # Only available for ROS, not yet for ROS2
-            - meta_data:
-                    world_name: my_world
-                    length_unit: m
-                    angle_unit: rad
-                    mass_unit: kg
-                    time_unit: s
-                    handedness: rhs
-                port: 7600
-                controller_manager:
-                    robot: tiago_dual
-                    robot_description: /robot_description
-                    urdf: tiago_dual/urdf/tiago_dual.urdf
-                    config: tiago_dual/config/ros_control.yaml
-                    actuators:
-                        torso_lift_actuator: torso_lift_joint
-                        head_1_actuator: head_1_joint
-                        head_2_actuator: head_2_joint
-                        arm_left_1_actuator: arm_left_1_joint
-                        arm_left_2_actuator: arm_left_2_joint
-                        arm_left_3_actuator: arm_left_3_joint
-                        arm_left_4_actuator: arm_left_4_joint
-                        arm_left_5_actuator: arm_left_5_joint
-                        arm_left_6_actuator: arm_left_6_joint
-                        arm_left_7_actuator: arm_left_7_joint
-                        arm_right_1_actuator: arm_right_1_joint
-                        arm_right_2_actuator: arm_right_2_joint
-                        arm_right_3_actuator: arm_right_3_joint
-                        arm_right_4_actuator: arm_right_4_joint
-                        arm_right_5_actuator: arm_right_5_joint
-                        arm_right_6_actuator: arm_right_6_joint
-                        arm_right_7_actuator: arm_right_7_joint
-                        gripper_left_left_finger_actuator: gripper_left_left_finger_joint
-                        gripper_left_right_finger_actuator: gripper_left_right_finger_joint
-                        gripper_right_left_finger_actuator: gripper_right_left_finger_joint
-                        gripper_right_right_finger_actuator: gripper_right_right_finger_joint
-                    controllers:
-                        spawn:
-                        - joint_state_controller
-                            torso_controller
-                            head_controller
-                            arm_left_controller
-                            arm_right_controller
-                            gripper_left_left_finger_effort_controller
-                            gripper_left_right_finger_effort_controller
-                            gripper_right_left_finger_effort_controller
-                            gripper_right_right_finger_effort_controller
-
-1. Save the MUV file, and you are ready to connect Multiverse with ROS.
-
-Running the Simulation and Testing ROS Connection
--------------------------------------------------
-
-5. Launch the simulation using the following command:
+To start the Multiverse Server, run the following command in the terminal:
 
 .. code-block:: bash
 
-    multiverse_launch  <path/to/Multiverse>/multiverse/resources/muv/my_project.muv
+    multiverse_server
 
-6. Open a new terminal and source the ROS workspace:
+7. Run the Unreal Engine project.
 
-For ROS:
-~~~~~~~~
-
-.. code-block:: bash
-
-    source <path/to/Multiverse>/multiverse_ws/devel/setup.bash
-    rostopic list
-    rosservice list
-
-Here is the list of topics and services that you can see in ROS:
-
-.. code-block:: bash
-
-    rostopic list
-
-    /cmd_vel
-    /my_world/tiago_dual/arm_left_controller/command
-    /my_world/tiago_dual/arm_left_controller/follow_joint_trajectory/cancel
-    /my_world/tiago_dual/arm_left_controller/follow_joint_trajectory/feedback
-    /my_world/tiago_dual/arm_left_controller/follow_joint_trajectory/goal
-    /my_world/tiago_dual/arm_left_controller/follow_joint_trajectory/result
-    /my_world/tiago_dual/arm_left_controller/follow_joint_trajectory/status
-    /my_world/tiago_dual/arm_left_controller/state
-    /my_world/tiago_dual/arm_right_controller/command
-    /my_world/tiago_dual/arm_right_controller/follow_joint_trajectory/cancel
-    /my_world/tiago_dual/arm_right_controller/follow_joint_trajectory/feedback
-    /my_world/tiago_dual/arm_right_controller/follow_joint_trajectory/goal
-    /my_world/tiago_dual/arm_right_controller/follow_joint_trajectory/result
-    /my_world/tiago_dual/arm_right_controller/follow_joint_trajectory/status
-    /my_world/tiago_dual/arm_right_controller/state
-    /my_world/tiago_dual/gripper_left_left_finger_effort_controller/command
-    /my_world/tiago_dual/gripper_left_right_finger_effort_controller/command
-    /my_world/tiago_dual/gripper_right_left_finger_effort_controller/command
-    /my_world/tiago_dual/gripper_right_right_finger_effort_controller/command
-    /my_world/tiago_dual/head_controller/command
-    /my_world/tiago_dual/head_controller/follow_joint_trajectory/cancel
-    /my_world/tiago_dual/head_controller/follow_joint_trajectory/feedback
-    /my_world/tiago_dual/head_controller/follow_joint_trajectory/goal
-    /my_world/tiago_dual/head_controller/follow_joint_trajectory/result
-    /my_world/tiago_dual/head_controller/follow_joint_trajectory/status
-    /my_world/tiago_dual/head_controller/state
-    /my_world/tiago_dual/joint_states
-    /my_world/tiago_dual/torso_controller/command
-    /my_world/tiago_dual/torso_controller/follow_joint_trajectory/cancel
-    /my_world/tiago_dual/torso_controller/follow_joint_trajectory/feedback
-    /my_world/tiago_dual/torso_controller/follow_joint_trajectory/goal
-    /my_world/tiago_dual/torso_controller/follow_joint_trajectory/result
-    /my_world/tiago_dual/torso_controller/follow_joint_trajectory/status
-    /my_world/tiago_dual/torso_controller/state
-    /odom
-    /rosout
-    /rosout_agg
-    /tf
-
-    rosservice list
-
-    /multiverse/socket
-    /multiverse_control_1721760267969714959/get_loggers
-    /multiverse_control_1721760267969714959/set_logger_level
-    /multiverse_ros_socket/get_loggers
-    /multiverse_ros_socket/set_logger_level
-    /my_world/tiago_dual/arm_left_controller/query_state
-    /my_world/tiago_dual/arm_right_controller/query_state
-    /my_world/tiago_dual/controller_manager/list_controller_types
-    /my_world/tiago_dual/controller_manager/list_controllers
-    /my_world/tiago_dual/controller_manager/load_controller
-    /my_world/tiago_dual/controller_manager/reload_controller_libraries
-    /my_world/tiago_dual/controller_manager/switch_controller
-    /my_world/tiago_dual/controller_manager/unload_controller
-    /my_world/tiago_dual/head_controller/query_state
-    /my_world/tiago_dual/torso_controller/query_state
-    /rosout/get_loggers
-    /rosout/set_logger_level
-
-To test the connection, you can publish a message to the `/cmd_vel` topic to control the base of the robot,
-or you can control the joints of the robot using the `rqt_joint_trajectory_controller` tool.
-
-You can also query the state of the simulations by calling the ROS service `/multiverse/socket`. For example:
-
-.. code-block:: bash
-
-    rosservice call /multiverse/socket "meta_data: {world_name: 'my_world', simulation_name: '', length_unit: 'm', angle_unit: 'rad',
-  mass_unit: 'm', time_unit: 's', handedness: 'rhs'}
-    send:
-    -   object_name: ''
-        attribute_name: ''
-        data: [0]
-    receive:
-    -   object_name: 'tiago_dual'
-        attribute_names: ['position']"
-
-The above command will return the position of the robot in the simulation in meters in the right-handed coordinate system.
-Changing the attributes in the meta data will return the data in the desired units.
-
-.. code-block:: bash
-
-    meta_data: 
-        world_name: "my_world"
-        simulation_name: "ros"
-        length_unit: "m"
-        angle_unit: "rad"
-        mass_unit: "m"
-        time_unit: "s"
-        handedness: "rhs"
-    send: []
-    receive: 
-    - 
-        object_name: "tiago_dual"
-        attribute_name: "position"
-        data: [-2.0007730929407312, -3.9984003943955817, 0.0]
-
-For ROS2:
-~~~~~~~~~
-
-.. code-block:: bash
-
-    source <path/to/Multiverse>/multiverse_ws2/install/setup.bash
-    ros2 topic list
-    ros2 service list
-
-Here is the list of topics and services that you can see in ROS2:
-
-.. code-block:: bash
-
-    ros2 topic list
-
-    /cmd_vel
-    /odom
-    /parameter_events
-    /rosout
-    /tf
-
-    ros2 service list
-
-    /CmdVelSubscriber7203/describe_parameters
-    /CmdVelSubscriber7203/get_parameter_types
-    /CmdVelSubscriber7203/get_parameters
-    /CmdVelSubscriber7203/list_parameters
-    /CmdVelSubscriber7203/set_parameters
-    /CmdVelSubscriber7203/set_parameters_atomically
-    /OdomPublisher7302/describe_parameters
-    /OdomPublisher7302/get_parameter_types
-    /OdomPublisher7302/get_parameters
-    /OdomPublisher7302/list_parameters
-    /OdomPublisher7302/set_parameters
-    /OdomPublisher7302/set_parameters_atomically
-    /SocketService7400/describe_parameters
-    /SocketService7400/get_parameter_types
-    /SocketService7400/get_parameters
-    /SocketService7400/list_parameters
-    /SocketService7400/set_parameters
-    /SocketService7400/set_parameters_atomically
-    /TfPublisher7301/describe_parameters
-    /TfPublisher7301/get_parameter_types
-    /TfPublisher7301/get_parameters
-    /TfPublisher7301/list_parameters
-    /TfPublisher7301/set_parameters
-    /TfPublisher7301/set_parameters_atomically
-    /multiverse/socket
+At this point, you should see connection between the Unreal Engine simulation and the Multiverse Server. 
+In this example, Unreal Engine will send the object position and quaternion to the Multiverse Server, and the Multiverse Server will send the robot state, including position, quaternion and the joint state to the Unreal Engine simulation.
+To successfully control the robot, you need to deploy another Multiverse Client to simulate the robot and send the robot state to the Multiverse Server.
 
 Conclusion
 ----------
 
-Congratulations! You have successfully connected Multiverse with ROS. 
-Until now, you have learned how to define resources, worlds, simulations, and communication between simulators in a MUV file, launch the simulations using the `multiverse_launch` command, and connect Multiverse with ROS to interact with robots and objects in the simulation.
+Congratulations! You have successfully added robots and objects to the Unreal Engine simulation in Multiverse.
 
 Next Steps
 ----------
 
-- Write your own Multiverse Connectors to interact with the Multiverse Server.
+- Deploy ROS as Multiverse Clients to interact with the simulation.
