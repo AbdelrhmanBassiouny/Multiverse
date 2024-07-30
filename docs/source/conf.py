@@ -3,9 +3,8 @@
 import subprocess
 import sys
 
-subprocess.call('apt-get install cmake', shell=True)
-subprocess.call('python3 -m pip install virtualenvwrapper --break-system-packages', shell=True)
-subprocess.call('cd ../../; ./build_multiverse.sh --only-src', shell=True)
+sys.path.insert(0, '../../multiverse/modules/multiverse_connectors/src/multiverse_client_py/src')
+sys.path.insert(0, '../../multiverse/lib/dist-packages')
 
 print('****************************************')
 print('conf.py')

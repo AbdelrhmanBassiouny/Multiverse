@@ -371,7 +371,7 @@
 	</contact>
 
 	<actuator>
-		<position name="torso_lift_actuator" joint="torso_lift_joint" kp="10000" kv="4000" ctrlrange="0.0 0.8" forcerange="-10000 10000"/>
+		<position name="torso_lift_actuator" joint="torso_lift_joint" kp="100000" kv="4000" ctrlrange="0.0 0.8" forcerange="-10000 10000"/>
 		<position name="head_1_actuator" joint="head_1_joint" kp="100" kv="40" ctrlrange="-1.3089969389957472 1.3089969389957472" forcerange="-100 100"/>
 		<position name="head_2_actuator" joint="head_2_joint" kp="100" kv="40" ctrlrange="-1.0471975511965976 0.7853981633974483" forcerange="-100 100"/>
 		<position name="arm_left_1_actuator" joint="arm_left_1_joint" kp="2000" kv="800" ctrlrange="-1.1780972450961724 1.5707963267948966" forcerange="-1000 1000"/>

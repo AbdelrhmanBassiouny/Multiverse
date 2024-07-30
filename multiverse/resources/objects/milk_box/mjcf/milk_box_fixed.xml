@@ -15,7 +15,7 @@
     </default>
     <worldbody>
         <body name="milk_box">
-            <freejoint />
+<!--            <freejoint />-->
             <geom name="MilkBox" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" type="mesh" material="milk_box_visual" mesh="MilkBox" class="milk_box_visual" />
             <geom name="UCX_MilkBox_001" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" type="box" size="0.03 0.0475 0.1" class="milk_box_collision" />
         </body>

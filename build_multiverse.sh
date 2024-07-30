@@ -118,11 +118,10 @@ if [ $DBUILD_KNOWLEDGE = ON ]; then
     echo "Updating multiverse_knowledge..."
     git submodule update --init $PWD/multiverse/modules/multiverse_knowledge
 fi
-
-#for virtualenvwrapper in /usr/share/virtualenvwrapper/virtualenvwrapper.sh . /home/$USER/.local/bin/virtualenvwrapper.sh; do
+#for virtualenvwrapper in $(which virtualenvwrapper.sh) /usr/share/virtualenvwrapper/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh /home/$USER/.local/bin/virtualenvwrapper.sh; do
 #    if [ -f $virtualenvwrapper ]; then
 #        . $virtualenvwrapper
-#        workon multiverse
+#        mkvirtualenv --system-site-packages multiverse
 #        break
 #    fi
 #done
@@ -151,7 +150,7 @@ cmake --install $BUILD_DIR
 
 cd $CURRENT_DIR
 
-if ! command -v rosdep &> /dev/null && [ "$RELOAD" = true ]; then
+if [ "$RELOAD" = true ]; then
     rosdep update
     exec bash # Reload ~/.bashrc
 fi
