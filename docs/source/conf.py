@@ -13,6 +13,7 @@ print('****************************************')
 # -- Project information
 
 project = 'MultiverseFramework'
+author = 'Giang Nguyen'
 copyright = 'Institute for Artificial Intelligence, University of Bremen'
 
 release = '0.1'
@@ -33,6 +34,7 @@ extensions = [
     'sphinx.ext.imgmath', 
     'sphinx.ext.todo', 
     'sphinx.ext.graphviz',
+    'sphinx.ext.napoleon',
     'sphinxcontrib.video',
     'breathe', 
     'myst_parser'
@@ -57,7 +59,7 @@ exclude_patterns = ['build']
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-# html_extra_path = ['build/html', '../html']
+html_extra_path = ['build/html']
 
 source_suffix = {
     '.rst': 'restructuredtext',
@@ -66,6 +68,14 @@ source_suffix = {
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'groupwise',
+    'special-members': '__init__',
+    'undoc-members': True,
+    'exclude-members': '__weakref__'
+}
 
 def setup(app):
     app.add_css_file('css/style.css')
