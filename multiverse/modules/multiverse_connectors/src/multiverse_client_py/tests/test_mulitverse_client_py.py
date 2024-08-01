@@ -2,8 +2,8 @@ import signal
 import subprocess
 import threading
 import unittest
-from typing import List
 from time import sleep, time
+from typing import List
 
 from multiverse_client_py import MultiverseClient, MultiverseMetaData, SocketAddress
 
@@ -282,6 +282,12 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         multiverse_client = MultiverseClientTest(client_addr=SocketAddress(port=port),
                                                  multiverse_meta_data=meta_data)
         multiverse_client.run()
+        return multiverse_client
+
+    @staticmethod
+    def reset_spawn_request_meta_data(multiverse_client):
+        multiverse_client.request_meta_data["send"] = {}
+        multiverse_client.request_meta_data["receive"] = {}
         return multiverse_client
 
     def create_multiverse_client_listenapi(self, port, world_name):
@@ -847,6 +853,19 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
 
     def test_multiverse_client_move(self):
         multiverse_client_test_move = self.create_multiverse_client_spawn("1337", "world")
+        multiverse_client_test_move.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
+        multiverse_client_test_move.request_meta_data["send"]["cup"] = ["position",
+                                                                        "quaternion",
+                                                                        "relative_velocity"]
+        multiverse_client_test_move.send_and_receive_meta_data()
+        time_now = time() - self.time_start
+        multiverse_client_test_move.send_data = [time_now,
+                                                 0, 0, 1,
+                                                 1.0, 0.0, 0.0, 0.0,
+                                                 0.0, 0.0, 0, 0.0, 0.0, 0.0]
+        multiverse_client_test_move.send_and_receive_data()
+        multiverse_client_test_move.request_meta_data["send"] = {}
+        multiverse_client_test_move.request_meta_data["receive"] = {}
         for h in range(10):
             x_pos = [0.0, 1.0, 1.0, 1.0, 0.0, -1.0, -1.0, -1.0, 0.0]
             y_pos = [1.0, 1.0, 0.0, -1.0, -1.0, -1.0, 0.0, 1.0, 1.0]
@@ -870,6 +889,30 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
                                                                                             "quaternion",
                                                                                             "relative_velocity"])
                     multiverse_client_test_receive.send_and_receive_meta_data()
+
+                    multiverse_client_test_callapi = self.create_multiverse_client_callapi("1339", "world",
+                                                                                           {
+                                                                                               "empty_simulation": [
+                                                                                                   {"attach": [
+                                                                                                       "cup",
+                                                                                                       "milk_box"]},
+                                                                                               ]
+                                                                                           })
+                    multiverse_client_test_callapi.send_and_receive_meta_data()
+
+                    time_callapi = multiverse_client_test_callapi.response_meta_data["time"]
+                    self.assertDictEqual(multiverse_client_test_callapi.response_meta_data,
+                                         {'api_callbacks_response':
+                                             {
+                                                 'empty_simulation': [{'attach': ['success']}]},
+                                             'meta_data': {'angle_unit': 'rad',
+                                                           'handedness': 'rhs',
+                                                           'length_unit': 'm',
+                                                           'mass_unit': 'kg',
+                                                           'simulation_name': 'sim_test_callapi',
+                                                           'time_unit': 's',
+                                                           'world_name': 'world'},
+                                             'time': time_callapi})
 
                 time_now = time() - self.time_start
                 multiverse_client_test_receive.send_data = [time_now]
