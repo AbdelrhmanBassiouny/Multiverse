@@ -853,6 +853,8 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
 
     def test_multiverse_client_move(self):
         multiverse_client_test_move = self.create_multiverse_client_spawn("1337", "world")
+
+        # Spawn the cup
         multiverse_client_test_move.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
         multiverse_client_test_move.request_meta_data["send"]["cup"] = ["position",
                                                                         "quaternion",
@@ -864,12 +866,16 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
                                                  1.0, 0.0, 0.0, 0.0,
                                                  0.0, 0.0, 0, 0.0, 0.0, 0.0]
         multiverse_client_test_move.send_and_receive_data()
+
+        # reset request_meta_data
         multiverse_client_test_move.request_meta_data["send"] = {}
         multiverse_client_test_move.request_meta_data["receive"] = {}
+
         for h in range(10):
             x_pos = [0.0, 1.0, 1.0, 1.0, 0.0, -1.0, -1.0, -1.0, 0.0]
             y_pos = [1.0, 1.0, 0.0, -1.0, -1.0, -1.0, 0.0, 1.0, 1.0]
             for i in range(9):
+                # spawn/move the milk box
                 multiverse_client_test_move.request_meta_data["meta_data"]["simulation_name"] = "empty_simulation"
                 multiverse_client_test_move.request_meta_data["send"]["milk_box"] = ["position",
                                                                                      "quaternion",
@@ -883,12 +889,15 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
                 multiverse_client_test_move.send_and_receive_data()
 
                 if h == 0 and i == 0:
+                    # Receive the data of the milk box
                     multiverse_client_test_receive = self.create_multiverse_client_receive("1338",
                                                                                            "milk_box",
                                                                                            ["position",
                                                                                             "quaternion",
                                                                                             "relative_velocity"])
                     multiverse_client_test_receive.send_and_receive_meta_data()
+
+                    # Attach the cup and milk box
 
                     multiverse_client_test_callapi = self.create_multiverse_client_callapi("1339", "world",
                                                                                            {
