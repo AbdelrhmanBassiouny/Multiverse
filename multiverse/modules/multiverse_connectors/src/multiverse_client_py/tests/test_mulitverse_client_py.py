@@ -266,19 +266,22 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
     # def tearDownClass(cls) -> None:
     #     kill_multiverse_server(cls._process)
 
-    def create_multiverse_client_receive(self, port, object_name, attribute_names):
+    def create_multiverse_client_receive(self, port, object_name, attribute_names, world_name=None,
+                                         simulation_name="sim_test_receive"):
         meta_data = self.meta_data
-        meta_data.simulation_name = "sim_test_receive"
+        meta_data.simulation_name = simulation_name
+        if world_name is not None:
+            meta_data.world_name = world_name
         multiverse_client = MultiverseClientTest(client_addr=SocketAddress(port=port),
                                                  multiverse_meta_data=meta_data)
         multiverse_client.request_meta_data["receive"][object_name] = attribute_names
         multiverse_client.run()
         return multiverse_client
 
-    def create_multiverse_client_spawn(self, port, world_name):
+    def create_multiverse_client_spawn(self, port, world_name, simulation_name="sim_test_spawn"):
         meta_data = self.meta_data
         meta_data.world_name = world_name
-        meta_data.simulation_name = "sim_test_spawn"
+        meta_data.simulation_name = simulation_name
         multiverse_client = MultiverseClientTest(client_addr=SocketAddress(port=port),
                                                  multiverse_meta_data=meta_data)
         multiverse_client.run()
@@ -310,15 +313,129 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         multiverse_client.run()
         return multiverse_client
 
-    def create_multiverse_client_callapi(self, port, world_name, api_callbacks):
+    def create_multiverse_client_callapi(self, port, world_name, api_callbacks, simulation_name="sim_test_callapi"):
         meta_data = self.meta_data
         meta_data.world_name = world_name
-        meta_data.simulation_name = "sim_test_callapi"
+        meta_data.simulation_name = simulation_name
         multiverse_client = MultiverseClientTest(client_addr=SocketAddress(port=port),
                                                  multiverse_meta_data=meta_data)
         multiverse_client.request_meta_data["api_callbacks"] = api_callbacks
         multiverse_client.run()
         return multiverse_client
+
+    def test_multiverse_move_mobile_robot_in_two_unrelated_worlds(self):
+        # create world_1 clients
+        multiverse_client_test_receive_1 = self.create_multiverse_client_receive("1337", "", [""],
+                                                                                 "world_1", "receiver_1")
+        multiverse_client_test_spawn_1 = self.create_multiverse_client_spawn("1338", "world_1", "writer_1")
+
+        multiverse_test_call_api_1 = self.create_multiverse_client_callapi("1339", "world_1", {},
+                                                                           "sim_test_callapi_1")
+
+        # create world_2 clients
+        multiverse_client_test_receive_2 = self.create_multiverse_client_receive("1340", "", [""],
+                                                                                 "world_2", "receiver_2")
+        multiverse_client_test_spawn_2 = self.create_multiverse_client_spawn("1341", "world_2", "writer_2")
+
+        multiverse_test_call_api_2 = self.create_multiverse_client_callapi("1342", "world_2", {},
+                                                                           "sim_test_callapi_2")
+
+        # pause simulation in world_1
+        self.pause_simulation(multiverse_test_call_api_1, "empty_simulation_1")
+
+        # pause simulation in world_2
+        self.pause_simulation(multiverse_test_call_api_2, "empty_simulation_2")
+
+        # Spawn robot in world1
+        self.send_body_data(multiverse_client_test_spawn_1, "tiago_dual", {"position": [0.0, 0.0, 0.0],
+                                                                           "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                                                           "relative_velocity": [0.0]*6},
+                            "empty_simulation_1")
+
+        latest_position_1 = 0.0
+
+        # Spawn robot in world2
+        self.send_body_data(multiverse_client_test_spawn_2, "tiago_dual", {"position": [1.0, 0.0, 0.0],
+                                                                           "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                                                           "relative_velocity": [0.0]*6},
+                            "empty_simulation_2")
+
+        latest_position_2 = 1.0
+
+        step_x = 0.4
+        for i in range(10):
+            curr_value = step_x * (i + 1)
+            # Move robot in world1
+            self.send_body_data(multiverse_client_test_spawn_1, "odom_vel_lin_x_joint", {"joint_tvalue": [curr_value]},
+                                "empty_simulation_1")
+
+            latest_position_1 += step_x
+            print("new position 1 should be: ", [latest_position_1, 0.0, 0.0])
+
+            # Assert robot position in world1
+            self.assert_receive_body_data(multiverse_client_test_receive_1, "tiago_dual",
+                                          {"position": [latest_position_1, 0.0, 0.0]})
+
+            # Move robot in world2
+            self.send_body_data(multiverse_client_test_spawn_2, "odom_vel_lin_x_joint", {"joint_tvalue": [curr_value]},
+                                "empty_simulation_2")
+
+            latest_position_2 += step_x
+            print("new position 2 should be: ", [latest_position_2, 0.0, 0.0])
+
+            # Asser robot position in world2
+            self.assert_receive_body_data(multiverse_client_test_receive_2, "tiago_dual",
+                                          {"position": [latest_position_2, 0.0, 0.0]})
+
+        # stop all clients
+        multiverse_client_test_receive_1.stop()
+        multiverse_client_test_spawn_1.stop()
+        multiverse_test_call_api_1.stop()
+        multiverse_client_test_receive_2.stop()
+        multiverse_client_test_spawn_2.stop()
+        multiverse_test_call_api_2.stop()
+
+    def pause_simulation(self, multiverse_client_test_callapi, simulation_name):
+        multiverse_client_test_callapi.request_meta_data["send"] = {}
+        multiverse_client_test_callapi.request_meta_data["receive"] = {}
+        multiverse_client_test_callapi.request_meta_data["api_callbacks"] = {
+            simulation_name: [{"pause": []}]
+        }
+        multiverse_client_test_callapi.send_and_receive_meta_data()
+        self.assertEqual(multiverse_client_test_callapi.response_meta_data["api_callbacks_response"][simulation_name],
+                         [{"pause": ["paused"]}])
+
+    def unpause_simulation(self, multiverse_client_test_callapi, simulation_name):
+        multiverse_client_test_callapi.request_meta_data["send"] = {}
+        multiverse_client_test_callapi.request_meta_data["receive"] = {}
+        multiverse_client_test_callapi.request_meta_data["api_callbacks"] = {
+            simulation_name: [{"unpause": []}]
+        }
+        multiverse_client_test_callapi.send_and_receive_meta_data()
+        self.assertEqual(multiverse_client_test_callapi.response_meta_data["api_callbacks_response"][simulation_name],
+                         [{"unpause": ["unpaused"]}])
+
+    def send_body_data(self, multiverse_client, object_name, body_data, simulation_name):
+        multiverse_client.request_meta_data["meta_data"]["simulation_name"] = simulation_name
+        multiverse_client.request_meta_data["send"] = {}
+        multiverse_client.request_meta_data["send"][object_name] = list(body_data.keys())
+        multiverse_client.send_and_receive_meta_data()
+        flattened_body_data = [item for sublist in body_data.values() for item in sublist]
+        time_now = time() - self.time_start
+        multiverse_client.send_data = [time_now, *flattened_body_data]
+        multiverse_client.send_and_receive_data()
+
+    def assert_receive_body_data(self, multiverse_client_test_receive, object_name, expected_data):
+        multiverse_client_test_receive.request_meta_data["receive"][""] = [""]
+        multiverse_client_test_receive.send_and_receive_meta_data()
+        self.assertIn("receive", multiverse_client_test_receive.response_meta_data)
+        self.assertIn(object_name, multiverse_client_test_receive.response_meta_data["receive"])
+        body_data = multiverse_client_test_receive.response_meta_data["receive"][object_name]
+        for att_name in expected_data.keys():
+            self.assertIn(att_name, body_data)
+            print(f"{object_name}[{att_name}]: ", body_data[att_name])
+            for v1, v2 in zip(body_data[att_name], expected_data[att_name]):
+                self.assertAlmostEqual(v1, v2, 1)
 
     # @unittest.skip("Only occasionally")
     def test_multiverse_client_callapi_pause(self):
