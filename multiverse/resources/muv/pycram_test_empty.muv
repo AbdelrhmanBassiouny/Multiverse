@@ -18,6 +18,9 @@ simulations:
       apply:
         body:
           gravcomp: 1
+    config:
+      max_time_step: 0.002
+      min_time_step: 0.001
   prospection_pycram_test:
     simulator: mujoco
     world:
@@ -26,6 +29,9 @@ simulations:
       apply:
         body:
           gravcomp: 1
+    config:
+      max_time_step: 0.002
+      min_time_step: 0.001
 
 multiverse_server:
   host: "tcp://127.0.0.1"

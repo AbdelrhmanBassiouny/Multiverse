@@ -1,0 +1,511 @@
+<?xml version="1.0" ?>
+<mujoco model="pr2">
+	<compiler meshdir="../meshes" texturedir="../textures" angle="radian" autolimits="true" balanceinertia="true" boundmass="0.000001" boundinertia="0.000001"/>
+	<default>
+		<default class="pr2_visual">
+			<geom contype="0" conaffinity="0"/>
+		</default>
+		<default class="pr2_collision">
+			<geom rgba="0.9 0.9 0.9 1.0"/>
+		</default>
+	</default>
+	<asset>
+		<mesh name="base" file="obj/base.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="base_L" file="stl/base_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="caster" file="stl/caster.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="caster_L" file="stl/caster_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="wheel" file="obj/wheel.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="torso_lift" file="obj/torso_lift.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="torso_lift_L" file="stl/torso_lift_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="head_pan" file="obj/head_pan.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="head_pan_L" file="stl/head_pan_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="head_tilt" file="obj/head_tilt.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="head_tilt_L" file="stl/head_tilt_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="tilting_hokuyo" file="obj/tilting_hokuyo.obj" scale="1.0 1.0 1.0"/>
+		<mesh name="tilting_hokuyo_L" file="stl/tilting_hokuyo_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="shoulder_pan" file="stl/shoulder_pan.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="shoulder_lift" file="stl/shoulder_lift.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="upper_arm_roll" file="stl/upper_arm_roll.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="upper_arm_roll_L" file="stl/upper_arm_roll_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="upper_arm" file="stl/upper_arm.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="elbow_flex" file="stl/elbow_flex.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="forearm_roll" file="stl/forearm_roll.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="forearm_roll_L" file="stl/forearm_roll_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="forearm" file="stl/forearm.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="wrist_flex" file="stl/wrist_flex.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="wrist_roll" file="stl/wrist_roll.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="wrist_roll_L" file="stl/wrist_roll_L.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="gripper_palm" file="stl/gripper_palm.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="l_finger" file="stl/l_finger.stl" scale="1.0 1.0 1.0"/>
+		<mesh name="l_finger_tip" file="stl/l_finger_tip.stl" scale="1.0 1.0 1.0"/>
+		<material name="M_base_link_visual_0" texture="base_color"/>
+		<material name="M_fl_caster_l_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_fl_caster_r_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_fr_caster_l_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_fr_caster_r_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_bl_caster_l_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_bl_caster_r_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_br_caster_l_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_br_caster_r_wheel_link_visual_0" texture="wheel_color"/>
+		<material name="M_torso_lift_link_visual_0" texture="torso_lift_color"/>
+		<material name="M_head_pan_link_visual_0" texture="head_pan_color"/>
+		<material name="M_head_tilt_link_visual_0" texture="head_tilt_color"/>
+		<material name="M_laser_tilt_mount_link_visual_0" texture="tilting_hokuyo_color"/>
+		<material name="M_r_shoulder_pan_link_visual_0" texture="shoulder_pan_color"/>
+		<material name="M_r_shoulder_lift_link_visual_0" texture="shoulder_lift_color"/>
+		<material name="M_r_upper_arm_link_visual_0" texture="upper_arm_color"/>
+		<material name="M_r_elbow_flex_link_visual_0" texture="elbow_flex_color"/>
+		<material name="M_r_forearm_link_visual_0" texture="forearm_color"/>
+		<material name="M_r_wrist_flex_link_visual_0" texture="wrist_color"/>
+		<material name="M_r_gripper_palm_link_visual_0" texture="gripper_palm_color"/>
+		<material name="M_r_gripper_l_finger_link_visual_0" texture="l_finger_color"/>
+		<material name="M_r_gripper_l_finger_tip_link_visual_0" texture="l_finger_tip_color"/>
+		<material name="M_r_gripper_r_finger_link_visual_0" texture="l_finger_color"/>
+		<material name="M_r_gripper_r_finger_tip_link_visual_0" texture="l_finger_tip_color"/>
+		<material name="M_l_shoulder_pan_link_visual_0" texture="shoulder_pan_color"/>
+		<material name="M_l_shoulder_lift_link_visual_0" texture="shoulder_lift_color"/>
+		<material name="M_l_upper_arm_link_visual_0" texture="upper_arm_color"/>
+		<material name="M_l_elbow_flex_link_visual_0" texture="elbow_flex_color"/>
+		<material name="M_l_forearm_link_visual_0" texture="forearm_color"/>
+		<material name="M_l_wrist_flex_link_visual_0" texture="wrist_color"/>
+		<material name="M_l_gripper_palm_link_visual_0" texture="gripper_palm_color"/>
+		<material name="M_l_gripper_l_finger_link_visual_0" texture="l_finger_color"/>
+		<material name="M_l_gripper_l_finger_tip_link_visual_0" texture="l_finger_tip_color"/>
+		<material name="M_l_gripper_r_finger_link_visual_0" texture="l_finger_color"/>
+		<material name="M_l_gripper_r_finger_tip_link_visual_0" texture="l_finger_tip_color"/>
+		<texture name="base_color" type="2d" file="base_color.png"/>
+		<texture name="wheel_color" type="2d" file="wheel_color.png"/>
+		<texture name="torso_lift_color" type="2d" file="torso_lift_color.png"/>
+		<texture name="head_pan_color" type="2d" file="head_pan_color.png"/>
+		<texture name="head_tilt_color" type="2d" file="head_tilt_color.png"/>
+		<texture name="tilting_hokuyo_color" type="2d" file="tilting_hokuyo_color.png"/>
+		<texture name="shoulder_pan_color" type="2d" file="shoulder_pan_color.png"/>
+		<texture name="shoulder_lift_color" type="2d" file="shoulder_lift_color.png"/>
+		<texture name="upper_arm_color" type="2d" file="upper_arm_color.png"/>
+		<texture name="elbow_flex_color" type="2d" file="elbow_flex_color.png"/>
+		<texture name="forearm_color" type="2d" file="forearm_color.png"/>
+		<texture name="wrist_color" type="2d" file="wrist_color.png"/>
+		<texture name="gripper_palm_color" type="2d" file="gripper_palm_color.png"/>
+		<texture name="l_finger_color" type="2d" file="l_finger_color.png"/>
+		<texture name="l_finger_tip_color" type="2d" file="l_finger_tip_color.png"/>
+	</asset>
+	<worldbody>
+		<body name="pr2" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+			<joint name="odom_vel_lin_x_joint" type="slide" axis="1.0 0.0 0.0"/>
+			<joint name="odom_vel_lin_y_joint" type="slide" axis="0.0 1.0 0.0"/>
+			<joint name="odom_vel_ang_z_joint" type="hinge" axis="0.0 0.0 1.0"/>
+			<body name="base_footprint" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+				<inertial mass="1.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+				<geom name="SM_base_footprint_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.004999999888241291 0.004999999888241291 0.004999999888241291" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+				<geom name="SM_base_footprint_collision_0" type="box" pos="0.0 0.0 0.07100000232458115" quat="1.0 0.0 0.0 0.0" size="0.0005000000237487257 0.0005000000237487257 0.0005000000237487257" class="pr2_collision"/>
+				<body name="base_link" pos="0.0 0.0 0.050999999046325684" quat="1.0 0.0 0.0 0.0">
+					<inertial mass="116.0" pos="-0.061000000685453415 0.0 0.14650000631809235" quat="0.8497045636177063 0.007924478501081467 0.5271715521812439 -0.005430426448583603" diaginertia="3.0417723655700684 5.66924524307251 6.293884754180908"/>
+					<geom name="SM_base_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="base" material="M_base_link_visual_0" class="pr2_visual"/>
+					<geom name="SM_base_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="base_L" class="pr2_collision"/>
+					<body name="base_laser_link" pos="0.2750000059604645 0.0 0.25200000405311584" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="0.0010000000474974513" pos="0.0 0.0 0.0" quat="-0.7071067690849304 0.0 0.0 0.7071067690849304" diaginertia="9.999999974752427e-07 9.999999747378752e-05 9.999999747378752e-05"/>
+					</body>
+					<body name="fr_caster_rotation_link" pos="0.22460000216960907 -0.22460000216960907 0.028200000524520874" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="3.4730820655822754" pos="0.0 0.0 0.07000000029802322" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+						<geom name="SM_fr_caster_rotation_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+						<geom name="SM_fr_caster_rotation_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster_L" class="pr2_collision"/>
+						<joint name="fr_caster_rotation_joint" type="hinge" pos="0.0 0.0 3.469446951953614e-18" axis="0.0 0.0 1.0"/>
+						<body name="fr_caster_r_wheel_link" pos="0.0 -0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_fr_caster_r_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_fr_caster_r_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_fr_caster_r_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="fr_caster_r_wheel_joint" type="hinge" pos="0.0 1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+						<body name="fr_caster_l_wheel_link" pos="0.0 0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_fr_caster_l_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_fr_caster_l_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_fr_caster_l_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="fr_caster_l_wheel_joint" type="hinge" pos="0.0 -1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+					</body>
+					<body name="br_caster_rotation_link" pos="-0.22460000216960907 -0.22460000216960907 0.028200000524520874" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="3.4730820655822754" pos="0.0 0.0 0.07000000029802322" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+						<geom name="SM_br_caster_rotation_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+						<geom name="SM_br_caster_rotation_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster_L" class="pr2_collision"/>
+						<joint name="br_caster_rotation_joint" type="hinge" pos="0.0 0.0 3.469446951953614e-18" axis="0.0 0.0 1.0"/>
+						<body name="br_caster_r_wheel_link" pos="0.0 -0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_br_caster_r_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_br_caster_r_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_br_caster_r_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="br_caster_r_wheel_joint" type="hinge" pos="0.0 1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+						<body name="br_caster_l_wheel_link" pos="0.0 0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_br_caster_l_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_br_caster_l_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_br_caster_l_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="br_caster_l_wheel_joint" type="hinge" pos="0.0 -1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+					</body>
+					<body name="torso_lift_motor_screw_link" pos="-0.15000000596046448 0.0 0.699999988079071" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="1.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+						<joint name="torso_lift_motor_screw_joint" type="hinge" pos="0.0 0.0 0.0" axis="0.0 0.0 1.0"/>
+					</body>
+					<body name="base_bellow_link" pos="-0.28999999165534973 0.0 0.800000011920929" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="1.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+						<geom name="SM_base_bellow_link_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.02500000037252903 0.1850000023841858 0.15000000596046448" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+						<geom name="SM_base_bellow_link_collision_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.02500000037252903 0.1850000023841858 0.15000000596046448" class="pr2_collision"/>
+					</body>
+					<body name="fl_caster_rotation_link" pos="0.22460000216960907 0.22460000216960907 0.028200000524520874" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="3.4730820655822754" pos="0.0 0.0 0.07000000029802322" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+						<geom name="SM_fl_caster_rotation_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+						<geom name="SM_fl_caster_rotation_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster_L" class="pr2_collision"/>
+						<joint name="fl_caster_rotation_joint" type="hinge" pos="0.0 0.0 3.469446951953614e-18" axis="0.0 0.0 1.0"/>
+						<body name="fl_caster_r_wheel_link" pos="0.0 -0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_fl_caster_r_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_fl_caster_r_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_fl_caster_r_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="fl_caster_r_wheel_joint" type="hinge" pos="0.0 1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+						<body name="fl_caster_l_wheel_link" pos="0.0 0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_fl_caster_l_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_fl_caster_l_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_fl_caster_l_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="fl_caster_l_wheel_joint" type="hinge" pos="0.0 -1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+					</body>
+					<body name="torso_lift_link" pos="-0.05000000074505806 0.0 0.739674985408783" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="36.248046875" pos="-0.10000000149011612 0.0 -0.0885000005364418" quat="0.6815678477287292 0.0027680164203047752 0.7317057847976685 0.008017218671739101" diaginertia="0.5145807266235352 2.5104501247406006 2.7830748558044434"/>
+						<geom name="SM_torso_lift_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="torso_lift" material="M_torso_lift_link_visual_0" class="pr2_visual"/>
+						<geom name="SM_torso_lift_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="torso_lift_L" class="pr2_collision"/>
+						<joint name="torso_lift_joint" type="slide" pos="0.0 0.0 0.0" range="0.0 0.33000001311302185" axis="0.0 0.0 1.0"/>
+						<body name="r_torso_lift_side_plate_link" pos="0.05350000038743019 -0.20928500592708588 0.17662499845027924" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.10000000149011612" pos="-0.0625 0.0 0.05000000074505806" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+						</body>
+						<body name="head_pan_link" pos="-0.017069999128580093 0.0 0.38144999742507935" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="6.339000225067139" pos="0.010906999930739403 0.031693000346422195 0.09050700068473816" quat="0.9933208227157593 0.09740236401557922 0.05015663057565689 -0.036205992102622986" diaginertia="0.03217979893088341 0.04612261801958084 0.05839352682232857"/>
+							<geom name="SM_head_pan_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="head_pan" material="M_head_pan_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_head_pan_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="head_pan_L" class="pr2_collision"/>
+							<joint name="head_pan_joint" type="hinge" pos="3.469446951953614e-18 0.0 -5.551115123125783e-17" range="-3.006999969482422 3.006999969482422" axis="0.0 0.0 1.0"/>
+							<body name="head_tilt_link" pos="0.06800000369548798 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+								<inertial mass="4.479000091552734" pos="0.0017160000279545784 -0.01955600082874298 0.05500200018286705" quat="0.9944794774055481 -0.10440601408481598 -0.0007060912903398275 -0.010463757440447807" diaginertia="0.024210046976804733 0.05414252355694771 0.06790011376142502"/>
+								<geom name="SM_head_tilt_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="head_tilt" material="M_head_tilt_link_visual_0" class="pr2_visual"/>
+								<geom name="SM_head_tilt_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="head_tilt_L" class="pr2_collision"/>
+								<joint name="head_tilt_joint" type="hinge" pos="0.0 0.0 0.0" range="-0.47123798727989197 1.3962599039077759" axis="0.0 1.0 0.0"/>
+								<body name="head_plate_frame" pos="0.02319999970495701 0.0 0.06449999660253525" quat="1.0 0.0 0.0 0.0">
+									<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+									<geom name="SM_head_plate_frame_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.004999999888241291 0.004999999888241291 0.004999999888241291" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+									<geom name="SM_head_plate_frame_collision_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.004999999888241291 0.004999999888241291 0.004999999888241291" class="pr2_collision"/>
+									<body name="projector_wg6802418_frame" pos="0.0 0.10999999940395355 0.05460000038146973" quat="1.0 0.0 0.0 0.0">
+										<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+										<body name="projector_wg6802418_child_frame" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.0 -0.7071067690849304 0.0">
+											<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+										</body>
+									</body>
+									<body name="sensor_mount_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+										<inertial mass="0.05000000074505806" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.009999999776482582"/>
+										<geom name="SM_sensor_mount_link_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.004999999888241291 0.004999999888241291 0.004999999888241291" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+										<body name="double_stereo_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+											<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.009999999776482582"/>
+											<geom name="SM_double_stereo_link_visual_0" type="box" pos="-0.009999999776482582 0.0 0.02500000037252903" quat="1.0 0.0 0.0 0.0" size="0.009999999776482582 0.05999999865889549 0.02500000037252903" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+											<body name="narrow_stereo_link" pos="0.04500000178813934 0.05999999865889549 0.05009999871253967" quat="1.0 0.0 0.0 0.0">
+												<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+												<body name="narrow_stereo_l_stereo_camera_frame" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+													<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+													<body name="narrow_stereo_r_stereo_camera_frame" pos="0.0 -0.09000000357627869 0.0" quat="1.0 0.0 0.0 0.0">
+														<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+														<body name="narrow_stereo_r_stereo_camera_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+															<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+														</body>
+													</body>
+													<body name="narrow_stereo_l_stereo_camera_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+														<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+													</body>
+												</body>
+												<body name="narrow_stereo_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+													<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+												</body>
+											</body>
+											<body name="wide_stereo_link" pos="0.04500000178813934 0.029999999329447746 0.05009999871253967" quat="1.0 0.0 0.0 0.0">
+												<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+												<body name="wide_stereo_l_stereo_camera_frame" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+													<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+													<body name="wide_stereo_r_stereo_camera_frame" pos="0.0 -0.09000000357627869 0.0" quat="1.0 0.0 0.0 0.0">
+														<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+														<body name="wide_stereo_r_stereo_camera_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+															<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+														</body>
+													</body>
+													<body name="wide_stereo_l_stereo_camera_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+														<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+													</body>
+												</body>
+												<body name="wide_stereo_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+													<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+												</body>
+											</body>
+										</body>
+										<body name="high_def_frame" pos="0.04645700007677078 -0.10999999940395355 0.05460000038146973" quat="1.0 0.0 0.0 0.0">
+											<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+											<body name="high_def_optical_frame" pos="0.0 0.0 0.0" quat="0.5 -0.5 0.5 -0.5">
+												<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+											</body>
+										</body>
+									</body>
+								</body>
+							</body>
+						</body>
+						<body name="laser_tilt_mount_link" pos="0.0989300012588501 0.0 0.22699999809265137" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.5910000205039978" pos="-0.0011360000353306532 0.0016700000269338489 -0.0071299998089671135" quat="-0.11446588486433029 0.6666911840438843 0.043618619441986084 0.7351992130279541" diaginertia="0.0007879214826971292 0.001081750146113336 0.0012045714538544416"/>
+							<geom name="SM_laser_tilt_mount_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="tilting_hokuyo" material="M_laser_tilt_mount_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_laser_tilt_mount_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="tilting_hokuyo_L" class="pr2_collision"/>
+							<joint name="laser_tilt_mount_joint" type="hinge" pos="0.0 0.0 -8.326672684688674e-17" range="-0.7854000329971313 1.483530044555664" axis="0.0 1.0 0.0"/>
+							<body name="laser_tilt_link" pos="0.0 0.0 0.029999999329447746" quat="1.0 0.0 0.0 0.0">
+								<inertial mass="0.0010000000474974513" pos="0.0 0.0 0.0" quat="-0.7071067690849304 0.0 0.0 0.7071067690849304" diaginertia="9.999999974752427e-07 9.999999747378752e-05 9.999999747378752e-05"/>
+							</body>
+						</body>
+						<body name="r_shoulder_pan_link" pos="0.0 -0.18799999356269836 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="25.7993221282959" pos="-0.0012009999481961131 0.0245130006223917 -0.0982310026884079" quat="0.31358572840690613 0.708196759223938 -0.18962126970291138 0.6034609079360962" diaginertia="0.24203263223171234 0.8377005457878113 0.9342013597488403"/>
+							<geom name="SM_r_shoulder_pan_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_pan" material="M_r_shoulder_pan_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_r_shoulder_pan_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_pan" class="pr2_collision"/>
+							<joint name="r_shoulder_pan_joint" type="hinge" pos="0.0 0.0 0.0" range="-2.285398006439209 0.7146018147468567" axis="0.0 0.0 1.0"/>
+							<body name="r_shoulder_lift_link" pos="0.10000000149011612 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+								<inertial mass="2.749880075454712" pos="0.021950000897049904 -0.026639999821782112 -0.03127000108361244" quat="0.7288599610328674 0.5471419095993042 -0.3908849358558655 -0.12887151539325714" diaginertia="0.015168089419603348 0.020730163902044296 0.026187369599938393"/>
+								<geom name="SM_r_shoulder_lift_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_lift" material="M_r_shoulder_lift_link_visual_0" class="pr2_visual"/>
+								<geom name="SM_r_shoulder_lift_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_lift" class="pr2_collision"/>
+								<joint name="r_shoulder_lift_joint" type="hinge" pos="0.0 0.0 0.0" range="-0.5235999822616577 1.3963000774383545" axis="0.0 1.0 0.0"/>
+								<body name="r_upper_arm_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+									<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+									<geom name="SM_r_upper_arm_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+									<geom name="SM_r_upper_arm_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm_roll_L" class="pr2_collision"/>
+									<joint name="r_upper_arm_roll_joint" type="hinge" pos="0.0 0.0 0.0" range="-3.8999998569488525 0.800000011920929" axis="1.0 0.0 0.0"/>
+									<body name="r_upper_arm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+										<inertial mass="6.017690181732178" pos="0.21398000419139862 -0.016209999099373817 -0.00019999999494757503" quat="0.9950173497200012 0.09443877637386322 -0.008656684309244156 -0.030771486461162567" diaginertia="0.015132686123251915 0.07493065297603607 0.07613848894834518"/>
+										<geom name="SM_r_upper_arm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm" material="M_r_upper_arm_link_visual_0" class="pr2_visual"/>
+										<geom name="SM_r_upper_arm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm" class="pr2_collision"/>
+										<body name="r_elbow_flex_link" pos="0.4000000059604645 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+											<inertial mass="1.9032700061798096" pos="0.01013999991118908 0.00031999999191612005 -0.012109999544918537" quat="0.6702385544776917 0.6546961665153503 0.23355256021022797 -0.26001229882240295" diaginertia="0.003089768812060356 0.003964767791330814 0.00441851606592536"/>
+											<geom name="SM_r_elbow_flex_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="elbow_flex" material="M_r_elbow_flex_link_visual_0" class="pr2_visual"/>
+											<geom name="SM_r_elbow_flex_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="elbow_flex" class="pr2_collision"/>
+											<joint name="r_elbow_flex_joint" type="hinge" pos="0.0 0.0 0.0" range="-2.3212997913360596 0.0" axis="0.0 1.0 0.0"/>
+											<body name="r_forearm_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+												<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+												<geom name="SM_r_forearm_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+												<geom name="SM_r_forearm_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm_roll_L" class="pr2_collision"/>
+												<joint name="r_forearm_roll_joint" type="hinge" pos="0.0 0.0 0.0" axis="1.0 0.0 0.0"/>
+												<body name="r_forearm_cam_frame" pos="0.13500000536441803 0.0 0.04399999976158142" quat="0.679287850856781 0.679287850856781 -0.19638748466968536 0.19638748466968536">
+													<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+													<body name="r_forearm_cam_optical_frame" pos="0.0 -1.1102230246251565e-16 0.0" quat="0.5 -0.5 0.5 -0.5">
+														<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+													</body>
+												</body>
+												<body name="r_forearm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+													<inertial mass="2.5796799659729004" pos="0.18791000545024872 -0.00016999999934341758 -0.009119999594986439" quat="0.9996134638786316 0.0032210745848715305 0.0275101438164711 -0.00239151855930686" diaginertia="0.0036089171189814806 0.015077545307576656 0.01663258671760559"/>
+													<geom name="SM_r_forearm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm" material="M_r_forearm_link_visual_0" class="pr2_visual"/>
+													<geom name="SM_r_forearm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm" class="pr2_collision"/>
+													<body name="r_wrist_flex_link" pos="0.32100000977516174 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+														<inertial mass="0.6140199899673462" pos="-0.0015699999639764428 0.0 -0.000750000006519258" quat="0.40475937724113464 0.5800774693489075 -0.5794992446899414 -0.4047970473766327" diaginertia="0.00019824413175228983 0.0006433910457417369 0.0006527714431285858"/>
+														<geom name="SM_r_wrist_flex_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_flex" material="M_r_wrist_flex_link_visual_0" class="pr2_visual"/>
+														<geom name="SM_r_wrist_flex_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_flex" class="pr2_collision"/>
+														<joint name="r_wrist_flex_joint" type="hinge" pos="0.0 0.0 0.0" range="-2.180000066757202 0.0" axis="0.0 1.0 0.0"/>
+														<body name="r_wrist_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+															<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+															<geom name="SM_r_wrist_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+															<geom name="SM_r_wrist_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_roll_L" class="pr2_collision"/>
+															<joint name="r_wrist_roll_joint" type="hinge" pos="0.0 0.0 0.0" axis="1.0 0.0 0.0"/>
+															<body name="r_gripper_palm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																<inertial mass="0.5800700187683105" pos="0.06622999906539917 0.0005300000193528831 -0.0011899999808520079" quat="0.9997050166130066 0.001489907270297408 -0.0008833961910568178 0.024226387962698936" diaginertia="0.000351471098838374 0.0006781778647564352 0.0008656365098431706"/>
+																<geom name="SM_r_gripper_palm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="gripper_palm" material="M_r_gripper_palm_link_visual_0" class="pr2_visual"/>
+																<geom name="SM_r_gripper_palm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="gripper_palm" class="pr2_collision"/>
+																<body name="r_gripper_motor_accelerometer_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0010000000474974513" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+																	<geom name="SM_r_gripper_motor_accelerometer_link_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.0005000000237487257 0.0005000000237487257 0.0005000000237487257" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+																	<geom name="SM_r_gripper_motor_accelerometer_link_collision_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.0005000000237487257 0.0005000000237487257 0.0005000000237487257" class="pr2_collision"/>
+																</body>
+																<body name="r_gripper_motor_slider_link" pos="0.1682800054550171 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+																	<joint name="r_gripper_motor_slider_joint" type="slide" pos="2.7755575615628914e-17 0.0 0.0" range="-0.10000000149011612 0.10000000149011612" axis="1.0 0.0 0.0"/>
+																	<body name="r_gripper_motor_screw_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="9.999999747378752e-05 9.999999747378752e-05 9.999999747378752e-05"/>
+																		<joint name="r_gripper_motor_screw_joint" type="hinge" pos="0.0 0.0 0.0" axis="0.0 1.0 0.0"/>
+																	</body>
+																</body>
+																<body name="r_gripper_l_finger_link" pos="0.07690999656915665 0.009999999776482582 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.17125999927520752" pos="0.03598000109195709 0.01730000041425228 -0.0016400000313296914" quat="-0.6326293349266052 0.7730244994163513 0.025774406269192696 0.03935627639293671" diaginertia="7.662394637009129e-05 0.0001813359122024849 0.00019773963140323758"/>
+																	<geom name="SM_r_gripper_l_finger_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger" material="M_r_gripper_l_finger_link_visual_0" class="pr2_visual"/>
+																	<geom name="SM_r_gripper_l_finger_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger" class="pr2_collision"/>
+																	<joint name="r_gripper_l_finger_joint" type="hinge" pos="-2.7755575615628914e-17 -8.673617379884035e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 1.0"/>
+																	<body name="r_gripper_l_finger_tip_link" pos="0.09137000143527985 0.00494999997317791 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.044190000742673874" pos="0.004230000078678131 0.002839999971911311 0.0" quat="0.9356346130371094 0.0 0.0 -0.35297003388404846" diaginertia="3.236244992876891e-06 1.5004895431047771e-05 1.5417679605889134e-05"/>
+																		<geom name="SM_r_gripper_l_finger_tip_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger_tip" material="M_r_gripper_l_finger_tip_link_visual_0" class="pr2_visual"/>
+																		<geom name="SM_r_gripper_l_finger_tip_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger_tip" class="pr2_collision"/>
+																		<joint name="r_gripper_l_finger_tip_joint" type="hinge" pos="-5.551115123125783e-17 -9.540979117872439e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 -1.0"/>
+																	</body>
+																</body>
+																<body name="r_gripper_r_finger_link" pos="0.07690999656915665 -0.009999999776482582 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.17388999462127686" pos="0.035760000348091125 -0.01735999993979931 -0.0009500000160187483" quat="0.651272177696228 0.7577614188194275 -0.0200330913066864 0.035226594656705856" diaginertia="7.668467151233926e-05 0.00018134000129066408 0.00019890314433723688"/>
+																	<geom name="SM_r_gripper_r_finger_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger" material="M_r_gripper_r_finger_link_visual_0" class="pr2_visual"/>
+																	<geom name="SM_r_gripper_r_finger_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger" class="pr2_collision"/>
+																	<joint name="r_gripper_r_finger_joint" type="hinge" pos="-2.7755575615628914e-17 8.673617379884035e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 -1.0"/>
+																	<body name="r_gripper_r_finger_tip_link" pos="0.09137000143527985 -0.00494999997317791 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.044190000742673874" pos="0.004230000078678131 -0.002839999971911311 0.0" quat="0.9356346130371094 0.0 0.0 0.35297003388404846" diaginertia="3.236244992876891e-06 1.5004895431047771e-05 1.5417679605889134e-05"/>
+																		<geom name="SM_r_gripper_r_finger_tip_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger_tip" material="M_r_gripper_r_finger_tip_link_visual_0" class="pr2_visual"/>
+																		<geom name="SM_r_gripper_r_finger_tip_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger_tip" class="pr2_collision"/>
+																		<joint name="r_gripper_r_finger_tip_joint" type="hinge" pos="-5.551115123125783e-17 9.540979117872439e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 1.0"/>
+																		<body name="r_gripper_l_finger_tip_frame" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																			<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																			<joint name="r_gripper_joint" type="slide" pos="0.0 0.0 0.0" range="0.0 0.09000000357627869" axis="0.0 1.0 0.0"/>
+																		</body>
+																	</body>
+																</body>
+																<body name="r_gripper_led_frame" pos="0.05130000039935112 0.0 0.024399999529123306" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																</body>
+																<body name="r_gripper_tool_frame" pos="0.18000000715255737 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																</body>
+															</body>
+														</body>
+													</body>
+												</body>
+											</body>
+										</body>
+									</body>
+								</body>
+							</body>
+						</body>
+						<body name="l_shoulder_pan_link" pos="0.0 0.18799999356269836 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="25.7993221282959" pos="-0.0012009999481961131 0.0245130006223917 -0.0982310026884079" quat="0.31358572840690613 0.708196759223938 -0.18962126970291138 0.6034609079360962" diaginertia="0.24203263223171234 0.8377005457878113 0.9342013597488403"/>
+							<geom name="SM_l_shoulder_pan_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_pan" material="M_l_shoulder_pan_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_l_shoulder_pan_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_pan" class="pr2_collision"/>
+							<joint name="l_shoulder_pan_joint" type="hinge" pos="0.0 0.0 0.0" range="-0.7146018147468567 2.285398006439209" axis="0.0 0.0 1.0"/>
+							<body name="l_shoulder_lift_link" pos="0.10000000149011612 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+								<inertial mass="2.749880075454712" pos="0.021950000897049904 -0.026639999821782112 -0.03127000108361244" quat="0.7288599610328674 0.5471419095993042 -0.3908849358558655 -0.12887151539325714" diaginertia="0.015168089419603348 0.020730163902044296 0.026187369599938393"/>
+								<geom name="SM_l_shoulder_lift_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_lift" material="M_l_shoulder_lift_link_visual_0" class="pr2_visual"/>
+								<geom name="SM_l_shoulder_lift_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="shoulder_lift" class="pr2_collision"/>
+								<joint name="l_shoulder_lift_joint" type="hinge" pos="0.0 0.0 0.0" range="-0.5235999822616577 1.3963000774383545" axis="0.0 1.0 0.0"/>
+								<body name="l_upper_arm_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+									<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+									<geom name="SM_l_upper_arm_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+									<geom name="SM_l_upper_arm_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm_roll_L" class="pr2_collision"/>
+									<joint name="l_upper_arm_roll_joint" type="hinge" pos="0.0 0.0 0.0" range="-0.800000011920929 3.8999998569488525" axis="1.0 0.0 0.0"/>
+									<body name="l_upper_arm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+										<inertial mass="6.017690181732178" pos="0.21404999494552612 0.016580000519752502 -0.0005699999746866524" quat="0.9944902062416077 0.10079044848680496 0.007727773394435644 0.02776307612657547" diaginertia="0.0151071073487401 0.07488211989402771 0.07606969773769379"/>
+										<geom name="SM_l_upper_arm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm" material="M_l_upper_arm_link_visual_0" class="pr2_visual"/>
+										<geom name="SM_l_upper_arm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="upper_arm" class="pr2_collision"/>
+										<body name="l_elbow_flex_link" pos="0.4000000059604645 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+											<inertial mass="1.9032700061798096" pos="0.01013999991118908 0.00031999999191612005 -0.012109999544918537" quat="0.6702385544776917 0.6546961665153503 0.23355256021022797 -0.26001229882240295" diaginertia="0.003089768812060356 0.003964767791330814 0.00441851606592536"/>
+											<geom name="SM_l_elbow_flex_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="elbow_flex" material="M_l_elbow_flex_link_visual_0" class="pr2_visual"/>
+											<geom name="SM_l_elbow_flex_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="elbow_flex" class="pr2_collision"/>
+											<joint name="l_elbow_flex_joint" type="hinge" pos="0.0 0.0 0.0" range="-2.3212997913360596 0.0" axis="0.0 1.0 0.0"/>
+											<body name="l_forearm_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+												<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+												<geom name="SM_l_forearm_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+												<geom name="SM_l_forearm_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm_roll_L" class="pr2_collision"/>
+												<joint name="l_forearm_roll_joint" type="hinge" pos="0.0 0.0 0.0" axis="1.0 0.0 0.0"/>
+												<body name="l_forearm_cam_frame" pos="0.13500000536441803 0.0 0.04399999976158142" quat="0.679287850856781 -0.679287850856781 -0.19638748466968536 -0.19638748466968536">
+													<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+													<body name="l_forearm_cam_optical_frame" pos="0.0 1.1102230246251565e-16 0.0" quat="0.5 -0.5 0.5 -0.5">
+														<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+													</body>
+												</body>
+												<body name="l_forearm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+													<inertial mass="2.5796799659729004" pos="0.18791000545024872 -0.00016999999934341758 -0.009119999594986439" quat="0.9996134638786316 0.0032210745848715305 0.0275101438164711 -0.00239151855930686" diaginertia="0.0036089171189814806 0.015077545307576656 0.01663258671760559"/>
+													<geom name="SM_l_forearm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm" material="M_l_forearm_link_visual_0" class="pr2_visual"/>
+													<geom name="SM_l_forearm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="forearm" class="pr2_collision"/>
+													<body name="l_wrist_flex_link" pos="0.32100000977516174 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+														<inertial mass="0.6140199899673462" pos="-0.0015699999639764428 0.0 -0.000750000006519258" quat="0.40475937724113464 0.5800774693489075 -0.5794992446899414 -0.4047970473766327" diaginertia="0.00019824413175228983 0.0006433910457417369 0.0006527714431285858"/>
+														<geom name="SM_l_wrist_flex_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_flex" material="M_l_wrist_flex_link_visual_0" class="pr2_visual"/>
+														<geom name="SM_l_wrist_flex_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_flex" class="pr2_collision"/>
+														<joint name="l_wrist_flex_joint" type="hinge" pos="0.0 0.0 0.0" range="-2.180000066757202 0.0" axis="0.0 1.0 0.0"/>
+														<body name="l_wrist_roll_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+															<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
+															<geom name="SM_l_wrist_roll_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_roll" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+															<geom name="SM_l_wrist_roll_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wrist_roll_L" class="pr2_collision"/>
+															<joint name="l_wrist_roll_joint" type="hinge" pos="0.0 0.0 0.0" axis="1.0 0.0 0.0"/>
+															<body name="l_gripper_palm_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																<inertial mass="0.5800700187683105" pos="0.06622999906539917 0.0005300000193528831 -0.0011899999808520079" quat="0.9997050166130066 0.001489907270297408 -0.0008833961910568178 0.024226387962698936" diaginertia="0.000351471098838374 0.0006781778647564352 0.0008656365098431706"/>
+																<geom name="SM_l_gripper_palm_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="gripper_palm" material="M_l_gripper_palm_link_visual_0" class="pr2_visual"/>
+																<geom name="SM_l_gripper_palm_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="gripper_palm" class="pr2_collision"/>
+																<body name="l_gripper_motor_accelerometer_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0010000000474974513" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+																	<geom name="SM_l_gripper_motor_accelerometer_link_visual_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.0005000000237487257 0.0005000000237487257 0.0005000000237487257" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+																	<geom name="SM_l_gripper_motor_accelerometer_link_collision_0" type="box" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" size="0.0005000000237487257 0.0005000000237487257 0.0005000000237487257" class="pr2_collision"/>
+																</body>
+																<body name="l_gripper_motor_slider_link" pos="0.1682800054550171 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+																	<joint name="l_gripper_motor_slider_joint" type="slide" pos="2.7755575615628914e-17 0.0 0.0" range="-0.10000000149011612 0.10000000149011612" axis="1.0 0.0 0.0"/>
+																	<body name="l_gripper_motor_screw_link" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.009999999776482582" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="9.999999747378752e-05 9.999999747378752e-05 9.999999747378752e-05"/>
+																		<joint name="l_gripper_motor_screw_joint" type="hinge" pos="0.0 0.0 0.0" axis="0.0 1.0 0.0"/>
+																	</body>
+																</body>
+																<body name="l_gripper_l_finger_link" pos="0.07690999656915665 0.009999999776482582 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.17125999927520752" pos="0.03598000109195709 0.01730000041425228 -0.0016400000313296914" quat="-0.6326293349266052 0.7730244994163513 0.025774406269192696 0.03935627639293671" diaginertia="7.662394637009129e-05 0.0001813359122024849 0.00019773963140323758"/>
+																	<geom name="SM_l_gripper_l_finger_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger" material="M_l_gripper_l_finger_link_visual_0" class="pr2_visual"/>
+																	<geom name="SM_l_gripper_l_finger_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger" class="pr2_collision"/>
+																	<joint name="l_gripper_l_finger_joint" type="hinge" pos="-2.7755575615628914e-17 -8.673617379884035e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 1.0"/>
+																	<body name="l_gripper_l_finger_tip_link" pos="0.09137000143527985 0.00494999997317791 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.044190000742673874" pos="0.004230000078678131 0.002839999971911311 0.0" quat="0.9356346130371094 0.0 0.0 -0.35297003388404846" diaginertia="3.236244992876891e-06 1.5004895431047771e-05 1.5417679605889134e-05"/>
+																		<geom name="SM_l_gripper_l_finger_tip_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger_tip" material="M_l_gripper_l_finger_tip_link_visual_0" class="pr2_visual"/>
+																		<geom name="SM_l_gripper_l_finger_tip_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="l_finger_tip" class="pr2_collision"/>
+																		<joint name="l_gripper_l_finger_tip_joint" type="hinge" pos="-5.551115123125783e-17 -9.540979117872439e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 -1.0"/>
+																	</body>
+																</body>
+																<body name="l_gripper_r_finger_link" pos="0.07690999656915665 -0.009999999776482582 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.17388999462127686" pos="0.035760000348091125 -0.01735999993979931 -0.0009500000160187483" quat="0.651272177696228 0.7577614188194275 -0.0200330913066864 0.035226594656705856" diaginertia="7.668467151233926e-05 0.00018134000129066408 0.00019890314433723688"/>
+																	<geom name="SM_l_gripper_r_finger_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger" material="M_l_gripper_r_finger_link_visual_0" class="pr2_visual"/>
+																	<geom name="SM_l_gripper_r_finger_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger" class="pr2_collision"/>
+																	<joint name="l_gripper_r_finger_joint" type="hinge" pos="-2.7755575615628914e-17 8.673617379884035e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 -1.0"/>
+																	<body name="l_gripper_r_finger_tip_link" pos="0.09137000143527985 -0.00494999997317791 0.0" quat="1.0 0.0 0.0 0.0">
+																		<inertial mass="0.044190000742673874" pos="0.004230000078678131 -0.002839999971911311 0.0" quat="0.9356346130371094 0.0 0.0 0.35297003388404846" diaginertia="3.236244992876891e-06 1.5004895431047771e-05 1.5417679605889134e-05"/>
+																		<geom name="SM_l_gripper_r_finger_tip_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger_tip" material="M_l_gripper_r_finger_tip_link_visual_0" class="pr2_visual"/>
+																		<geom name="SM_l_gripper_r_finger_tip_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="-1.0341155557737347e-13 1.0 0.0 0.0" mesh="l_finger_tip" class="pr2_collision"/>
+																		<joint name="l_gripper_r_finger_tip_joint" type="hinge" pos="-5.551115123125783e-17 9.540979117872439e-18 0.0" range="0.0 0.5479999780654907" axis="0.0 0.0 1.0"/>
+																		<body name="l_gripper_l_finger_tip_frame" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																			<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																			<joint name="l_gripper_joint" type="slide" pos="0.0 0.0 0.0" range="0.0 0.09000000357627869" axis="0.0 1.0 0.0"/>
+																		</body>
+																	</body>
+																</body>
+																<body name="l_gripper_led_frame" pos="0.05130000039935112 0.0 0.024399999529123306" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																</body>
+																<body name="l_gripper_tool_frame" pos="0.18000000715255737 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+																	<inertial mass="0.0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.0 0.0 0.0"/>
+																</body>
+															</body>
+														</body>
+													</body>
+												</body>
+											</body>
+										</body>
+									</body>
+								</body>
+							</body>
+						</body>
+						<body name="l_torso_lift_side_plate_link" pos="0.05350000038743019 0.20928500592708588 0.17662499845027924" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.10000000149011612" pos="-0.0625 0.0 0.05000000074505806" quat="1.0 0.0 0.0 0.0" diaginertia="0.0010000000474974513 0.0010000000474974513 0.0010000000474974513"/>
+						</body>
+						<body name="imu_link" pos="-0.029769999906420708 -0.14970000088214874 0.164000004529953" quat="-1.0341155557737347e-13 0.0 1.0 0.0">
+							<inertial mass="0.0010000000474974513" pos="0.0 0.0 0.0" quat="-0.7071067690849304 0.0 0.0 0.7071067690849304" diaginertia="9.999999974752427e-07 9.999999747378752e-05 9.999999747378752e-05"/>
+						</body>
+					</body>
+					<body name="bl_caster_rotation_link" pos="-0.22460000216960907 0.22460000216960907 0.028200000524520874" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="3.4730820655822754" pos="0.0 0.0 0.07000000029802322" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+						<geom name="SM_bl_caster_rotation_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster" rgba="0.9 0.9 0.9 1.0" class="pr2_visual"/>
+						<geom name="SM_bl_caster_rotation_link_collision_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="caster_L" class="pr2_collision"/>
+						<joint name="bl_caster_rotation_joint" type="hinge" pos="0.0 0.0 3.469446951953614e-18" axis="0.0 0.0 1.0"/>
+						<body name="bl_caster_r_wheel_link" pos="0.0 -0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_bl_caster_r_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_bl_caster_r_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_bl_caster_r_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="bl_caster_r_wheel_joint" type="hinge" pos="0.0 1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+						<body name="bl_caster_l_wheel_link" pos="0.0 0.04899999871850014 0.0" quat="1.0 0.0 0.0 0.0">
+							<inertial mass="0.44036000967025757" pos="0.0 0.0 0.0" quat="-0.4079904556274414 0.2716773748397827 0.6657471060752869 0.5625975728034973" diaginertia="0.011456840671598911 0.012544593773782253 0.015392469242215157"/>
+							<geom name="SM_bl_caster_l_wheel_link_visual_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="wheel" material="M_bl_caster_l_wheel_link_visual_0" class="pr2_visual"/>
+							<geom name="SM_bl_caster_l_wheel_link_collision_0" type="cylinder" pos="0.0 0.0 0.0" quat="0.7071067690849304 0.7071067690849304 0.0 0.0" size="0.07479199767112732 0.017000000923871994 0.0" class="pr2_collision"/>
+							<joint name="bl_caster_l_wheel_joint" type="hinge" pos="0.0 -1.3877787807814457e-17 0.0" axis="0.0 1.0 0.0"/>
+						</body>
+					</body>
+				</body>
+			</body>
+		</body>
+	</worldbody>
+	<equality/>
+</mujoco>
