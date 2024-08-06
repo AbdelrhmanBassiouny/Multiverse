@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <mujoco model="pycram_milk">
-	<compiler meshdir="../meshes" texturedir="../textures" angle="radian" autolimits="true" balanceinertia="true" boundmass="0.000001" boundinertia="0.000001"/>
+	<compiler meshdir="../meshes" texturedir="../textures" angle="radian" autolimits="true" balanceinertia="true"/>
 	<default>
 		<default class="pycram_milk_visual">
 			<geom contype="0" conaffinity="0"/>
@@ -17,7 +17,7 @@
 	<worldbody>
 		<body name="pycram_milk" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
 			<freejoint/>
-			<geom name="PyCRAM_Milk" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" type="mesh" material="pycram_milk_visual" mesh="PyCRAM_Milk" class="pycram_milk_visual" />
+			<geom name="PyCRAM_Milk" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" type="mesh" material="pycram_milk_visual" mesh="PyCRAM_Milk" />
 			<inertial mass="0.10000000149011612" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" diaginertia="0.009999999776482582 0.009999999776482582 0.009999999776482582"/>
 		</body>
 	</worldbody>

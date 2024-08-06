@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <mujoco model="Apartment">
-	<compiler meshdir="../assets/meshes" texturedir="../assets/textures" angle="radian" autolimits="true" balanceinertia="true" boundmass="1.0" boundinertia="1.0"/>
+	<compiler meshdir="../assets/meshes" texturedir="../assets/textures" angle="radian" autolimits="true" balanceinertia="true" inertiafromgeom="true"/>
 	<option timestep="0.001" integrator="RK4" gravity="0 0 -9.81" />
 	<default>
 		<default class="apartment_visual">
