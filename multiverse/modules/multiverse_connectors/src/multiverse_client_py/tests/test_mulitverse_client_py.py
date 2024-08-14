@@ -350,7 +350,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
                             simulation_name)
 
         # Attach object to a world link
-        self.attach(multiverse_test_call_api, obj_name, world_link_name, translation=[-2, -2, 0],
+        self.attach(multiverse_test_call_api, obj_name, world_link_name,
                     simulation_name=simulation_name)
 
         # Detach object from a world link
