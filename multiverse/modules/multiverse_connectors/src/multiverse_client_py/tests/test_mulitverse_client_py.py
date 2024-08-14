@@ -364,17 +364,20 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
 
     def attach(self, api_callback_client, object_1, object_2, translation=None, rotation=None,
                simulation_name="empty_simulation"):
-        if translation is None:
-            translation = [0.0, 0.0, 0.0]
-        if rotation is None:
-            rotation = [1.0, 0.0, 0.0, 0.0]
         api_callback_client.request_meta_data["send"] = {}
         api_callback_client.request_meta_data["receive"] = {}
-        api_callback_client.request_meta_data["api_callbacks"] = {
-            simulation_name: [
-                {"attach": [object_1, object_2, " ".join(map(str, translation + rotation))]}
-            ]
-        }
+        if translation is not None and rotation is not None:
+            api_callback_client.request_meta_data["api_callbacks"] = {
+                simulation_name: [
+                    {"attach": [object_1, object_2, " ".join(map(str, translation + rotation))]}
+                ]
+            }
+        else:
+            api_callback_client.request_meta_data["api_callbacks"] = {
+                simulation_name: [
+                    {"attach": [object_1, object_2]}
+                ]
+            }
         api_callback_client.send_and_receive_meta_data()
 
     def detach(self, api_callback_client, object_1, object_2, simulation_name="empty_simulation"):
