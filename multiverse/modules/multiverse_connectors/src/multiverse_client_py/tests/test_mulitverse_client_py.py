@@ -323,6 +323,70 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         multiverse_client.run()
         return multiverse_client
 
+    def test_attach_and_detach_object_with_a_world_link(self):
+        # create world clients
+        multiverse_client_test_receive = self.create_multiverse_client_receive("1337", "", [""],
+                                                                               "world", "receiver")
+        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", "world",
+                                                                           "writer")
+        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", "world", {},
+                                                                         "sim_test_callapi")
+
+        simulation_name = "pycram_test"
+
+        # pause simulation
+        self.pause_simulation(multiverse_test_call_api, simulation_name)
+
+        obj_name = "spoon"
+        world_link_name = "cabinet10_drawer1"
+
+        # Spawn object
+        self.send_body_data(multiverse_client_test_spawn, obj_name,
+                            {
+                                "position": [-2.0, -2.0, 0.0],
+                                "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                "relative_velocity": [0.0] * 6
+                            },
+                            simulation_name)
+
+        # Attach object to a world link
+        self.attach(multiverse_test_call_api, obj_name, world_link_name, translation=[-2, -2, 0],
+                    simulation_name=simulation_name)
+
+        # Detach object from a world link
+        self.detach(multiverse_test_call_api, obj_name, world_link_name,
+                    simulation_name=simulation_name)
+
+        # stop all clients
+        multiverse_client_test_receive.stop()
+        multiverse_client_test_spawn.stop()
+        multiverse_test_call_api.stop()
+
+    def attach(self, api_callback_client, object_1, object_2, translation=None, rotation=None,
+               simulation_name="empty_simulation"):
+        if translation is None:
+            translation = [0.0, 0.0, 0.0]
+        if rotation is None:
+            rotation = [1.0, 0.0, 0.0, 0.0]
+        api_callback_client.request_meta_data["send"] = {}
+        api_callback_client.request_meta_data["receive"] = {}
+        api_callback_client.request_meta_data["api_callbacks"] = {
+            simulation_name: [
+                {"attach": [object_1, object_2, " ".join(map(str, translation + rotation))]}
+            ]
+        }
+        api_callback_client.send_and_receive_meta_data()
+
+    def detach(self, api_callback_client, object_1, object_2, simulation_name="empty_simulation"):
+        api_callback_client.request_meta_data["send"] = {}
+        api_callback_client.request_meta_data["receive"] = {}
+        api_callback_client.request_meta_data["api_callbacks"] = {
+            simulation_name: [
+                {"detach": [object_1, object_2]}
+            ]
+        }
+        api_callback_client.send_and_receive_meta_data()
+
     def test_multiverse_move_mobile_robot_in_two_unrelated_worlds(self):
         # create world_1 clients
         multiverse_client_test_receive_1 = self.create_multiverse_client_receive("1337", "", [""],
@@ -349,7 +413,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         # Spawn robot in world1
         self.send_body_data(multiverse_client_test_spawn_1, "tiago_dual", {"position": [0.0, 0.0, 0.0],
                                                                            "quaternion": [1.0, 0.0, 0.0, 0.0],
-                                                                           "relative_velocity": [0.0]*6},
+                                                                           "relative_velocity": [0.0] * 6},
                             "empty_simulation_1")
 
         latest_position_1 = 0.0
@@ -357,7 +421,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         # Spawn robot in world2
         self.send_body_data(multiverse_client_test_spawn_2, "tiago_dual", {"position": [1.0, 0.0, 0.0],
                                                                            "quaternion": [1.0, 0.0, 0.0, 0.0],
-                                                                           "relative_velocity": [0.0]*6},
+                                                                           "relative_velocity": [0.0] * 6},
                             "empty_simulation_2")
 
         latest_position_2 = 1.0
