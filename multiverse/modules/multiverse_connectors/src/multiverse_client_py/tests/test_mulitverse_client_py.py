@@ -337,7 +337,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         # pause simulation
         self.pause_simulation(multiverse_test_call_api, simulation_name)
 
-        obj_name = "spoon"
+        obj_name = "milk_box"
         world_link_name = "cabinet10_drawer1"
 
         # Spawn object
