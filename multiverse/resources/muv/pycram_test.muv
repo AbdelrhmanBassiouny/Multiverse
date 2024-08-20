@@ -1,4 +1,5 @@
-resources: 
+resources:
+  - ../cached
   - ../robots
   - ../worlds
   - ../objects
