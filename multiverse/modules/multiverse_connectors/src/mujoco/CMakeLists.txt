@@ -8,10 +8,9 @@ elseif (WIN32)
     )
 endif()
 
-set(mujoco_DIR ${BUILD_DIR}/mujoco/lib/cmake/mujoco)
+set(MUJOCO_SOURCE_DIR ${BUILD_DIR}/mujoco)
 set(OpenGL_GL_PREFERENCE LEGACY)
 
-find_package(mujoco REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(
@@ -35,7 +34,8 @@ if(UNIX)
         Threads::Threads
         jsoncpp
         boost_filesystem
-        mujoco::mujoco
+        ${MUJOCO_SOURCE_DIR}/lib/libmujoco.so
+        tinyxml2
     )
     set_target_properties(mujoco_headless PROPERTIES INSTALL_RPATH "${BUILD_DIR}/mujoco/lib;${LIB_DIR}/libstdc++")
 elseif(WIN32)
@@ -44,9 +44,9 @@ elseif(WIN32)
         multiverse_client_json
         Threads::Threads
         jsoncpp
-        tinyxml2
         boost_filesystem-mt
-        mujoco::mujoco
+        ${MUJOCO_SOURCE_DIR}/lib/mujoco.lib
+        tinyxml2
     )
 endif()
 
@@ -67,7 +67,8 @@ if(UNIX)
         Threads::Threads
         jsoncpp
         boost_filesystem
-        mujoco::mujoco
+        ${MUJOCO_SOURCE_DIR}/lib/libmujoco.so
+        tinyxml2
     )
     set_target_properties(mujoco PROPERTIES INSTALL_RPATH "${BUILD_DIR}/mujoco/lib;${LIB_DIR}/libstdc++")
 elseif(WIN32)
@@ -79,9 +80,9 @@ elseif(WIN32)
         opengl32
         Threads::Threads
         jsoncpp
-        tinyxml2
         boost_filesystem-mt
-        mujoco::mujoco
+        ${MUJOCO_SOURCE_DIR}/lib/mujoco.lib
+        tinyxml2
     )
 endif()
 
