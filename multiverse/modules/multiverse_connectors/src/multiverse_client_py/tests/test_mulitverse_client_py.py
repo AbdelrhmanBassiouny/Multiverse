@@ -1,3 +1,4 @@
+import datetime
 import signal
 import subprocess
 import threading
@@ -361,6 +362,120 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         multiverse_client_test_receive.stop()
         multiverse_client_test_spawn.stop()
         multiverse_test_call_api.stop()
+
+    def test_spawn_robot_and_two_objects_and_get_contact_points_and_contact_effort_multiple_times(self):
+        # create world clients
+        multiverse_client_test_receive = self.create_multiverse_client_receive("1337", "", [""],
+                                                                                 "world", "receiver")
+        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", "world",
+                                                                            "writer")
+        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", "world", {},
+                                                                            "sim_test_callapi")
+
+        simulation_name = "empty_simulation"
+
+        # pause simulation
+        self.pause_simulation(multiverse_test_call_api, simulation_name)
+
+        robot_name = "tiago_dual"
+        obj_name_1 = "milk_box"
+        obj_name_2 = "cup"
+        n_repitions = 100
+
+        for _ in range(n_repitions):
+            self.reset_spawn_request_meta_data(multiverse_client_test_spawn)
+
+            # Spawn robot
+            self.send_body_data(multiverse_client_test_spawn, robot_name,
+                                {
+                                    "position": [-2.0, -2.0, 0.001],
+                                    "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                    "relative_velocity": [0.0] * 6
+                                },
+                                simulation_name)
+
+            sleep(0.5)
+
+            # remove robot
+            self.remove_object(multiverse_client_test_spawn, robot_name, simulation_name)
+
+            sleep(0.5)
+
+            # Spawn object 1
+            self.send_body_data(multiverse_client_test_spawn, obj_name_1,
+                                {
+                                    "position": [1, 1, 0.01],
+                                    "quaternion": [0.707, 0, -0.707, 0],
+                                    "relative_velocity": [0.0] * 6
+                                },
+                                simulation_name)
+
+            # Spawn object 2
+            self.send_body_data(multiverse_client_test_spawn, obj_name_2,
+                                {
+                                    "position": [1, 1, 0.2],
+                                    "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                    "relative_velocity": [0.0] * 6
+                                },
+                                simulation_name)
+
+            # Get contact points and contact effort for object 1
+            self.simulate(multiverse_test_call_api, simulation_name, datetime.timedelta(milliseconds=200))
+            contact_data = self.get_contact_points_and_contact_effort(multiverse_test_call_api, obj_name_1,
+                                                                      simulation_name)
+
+            self.assertEqual(contact_data[0], [obj_name_2, 'world'])
+
+            # Remove all objects
+            self.remove_object(multiverse_client_test_spawn, obj_name_1, simulation_name)
+            self.remove_object(multiverse_client_test_spawn, obj_name_2, simulation_name)
+
+            # reset the world
+            self.reset_world(multiverse_client_test_spawn, simulation_name)
+
+        # stop all clients
+        multiverse_client_test_receive.stop()
+        multiverse_client_test_spawn.stop()
+        multiverse_test_call_api.stop()
+
+    def reset_world(self, spawn_client, simulation_name="empty_simulation"):
+        self.reset_spawn_request_meta_data(spawn_client)
+        spawn_client.request_meta_data["meta_data"]["simulation_name"] = simulation_name
+        spawn_client.send_data = [0.0]
+        spawn_client.send_and_receive_data()
+        # self.assertEqual(spawn_client.receive_data, [0.0])
+
+    def remove_object(self, spawn_client, object_name, simulation_name="empty_simulation"):
+        self.reset_spawn_request_meta_data(spawn_client)
+        spawn_client.request_meta_data["meta_data"]["simulation_name"] = simulation_name
+        spawn_client.request_meta_data["send"][object_name] = []
+        spawn_client.request_meta_data["receive"][object_name] = []
+        spawn_client.send_and_receive_meta_data()
+        spawn_client.send_data = [spawn_client.sim_time]
+        spawn_client.send_and_receive_data()
+
+    def simulate(self, multiverse_test_call_api, simulation_name, simulation_time: datetime.timedelta):
+        self.unpause_simulation(multiverse_test_call_api, simulation_name)
+        sleep(simulation_time.total_seconds())
+        self.pause_simulation(multiverse_test_call_api, simulation_name)
+
+    def get_contact_points_and_contact_effort(self, api_callback_client, object_name, simulation_name):
+        api_callback_client.request_meta_data["send"] = {}
+        api_callback_client.request_meta_data["receive"] = {}
+        api_callback_client.request_meta_data["api_callbacks"] = {
+            simulation_name: [
+                {"get_contact_bodies": [object_name]},
+                {"get_constraint_effort": [object_name]}
+            ]
+        }
+        api_callback_client.send_and_receive_meta_data()
+        self.assertIn("api_callbacks_response", api_callback_client.response_meta_data)
+        response = api_callback_client.response_meta_data["api_callbacks_response"]
+        self.assertIn(simulation_name, response)
+        self.assertIn("get_contact_bodies", response[simulation_name][0])
+        self.assertIn("get_constraint_effort", response[simulation_name][1])
+        return (response[simulation_name][0]["get_contact_bodies"],
+                response[simulation_name][1]["get_constraint_effort"])
 
     def attach(self, api_callback_client, object_1, object_2, translation=None, rotation=None,
                simulation_name="empty_simulation"):
