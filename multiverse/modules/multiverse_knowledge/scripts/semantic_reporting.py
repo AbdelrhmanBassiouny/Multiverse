@@ -5,6 +5,7 @@ import shutil
 import os
 import re
 from pxr import Usd, UsdGeom, UsdOntology
+import time
 
 synonyms = {
     "box": ["carton"],
@@ -105,9 +106,9 @@ def semantic_reporting(semrep, in_ABox_usd_file: str, in_TBox_Usd_file: str, out
             print(f"Found {report} for {prim.GetName()}")
 
             for sem_class in report:
-                dfl, sem_class = sem_class.split(":")
+                soma_dfl, sem_class = sem_class.split("#")
                 sem_class = sem_class.replace('.', '')
-                if dfl == 'dfl':
+                if soma_dfl == 'http://www.ease-crc.org/ont/SOMA_DFL.owl':
                     sem_path = f"/SOMA_DFL/_class_{sem_class}"
                     if stage_TBox.GetPrimAtPath(sem_path):
                         semanticTagAPI.CreateSemanticReportsRel().AddTarget(sem_path)
@@ -130,12 +131,15 @@ def main():
 
     import dfl.semrep as semrep
 
+    print("Loading semantic reporting module...")
+
     keyFRED = 'b67a0577-8c76-3889-89b2-cf3dceab4a0e'
 
     keyWikiData = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI2M2FmZjQ4YTFlOWQxZTUwOWU4YjkwNzkwMDZmZDQzOSIsImp0aSI6IjM0YzRkMjM3N2FjMDU2YmU0NjYxNGViZTc2MDEzMjYyYjE2NGQ5ZWJhOTVjN2FjN2EwZTg3MDhiMWZkNTI0OTViNzY3OTJkN2E3ZTQ4NWFkIiwiaWF0IjoxNzEyNzYzMDIzLjY0NzI2MywibmJmIjoxNzEyNzYzMDIzLjY0NzI2NywiZXhwIjozMzI2OTY3MTgyMy42NDIxOTcsInN1YiI6Ijc1Mzk5MTQ3IiwiaXNzIjoiaHR0cHM6Ly9tZXRhLndpa2ltZWRpYS5vcmciLCJyYXRlbGltaXQiOnsicmVxdWVzdHNfcGVyX3VuaXQiOjUwMDAsInVuaXQiOiJIT1VSIn0sInNjb3BlcyI6WyJiYXNpYyIsImhpZ2h2b2x1bWUiXX0.b2oZdt2sqNacRJ5_uAJNHELJyxQk-If9qFLhGb9mFqMzcK3XjpQu9HlxjTWmKbTVlcJIyCGCR9xmT9j2AN5LgbWyn1vuooXii94CJw5PSvppK8kWDMSIftbrJ4yHs2YXtD0DF31RoaSv9vDL_kmKcifNdV5W6F7TUE7Ik2HgYXg8-hsZa1hMW1Qm-cnf6l2ysDz4TK1skJTkzgMgFJSkjHSkK3Ehh7G9vKVujhkJLq5CkkNb6slwpfw4D7uUk4pjGiL3wIJqG0Mn6AjgGvj-cjKsi1cFN8WLvt0IdCjZ24tvDJJgufVrnbLhFji_mpnwqkPgrSV7jzGdV_UXht5M1Ex7rPjDtMZX9ZswQs4V-sa8h_wQV8SsxDnR4fE--_QuLPfHLv3l2DQASSBP3d1XljdmU-eJVjUbRnvanaa32_yyZ3sSvYK1EhXx4HTrxakPZ8kWGo-KAo0KGOy9gYjr9BzKk6EuEKtyArzMsvk7AuKfe_Wxw7c0Z8TGQ4-vawUSyUFsm-bw9CSr9kQ8SymaEDYG2TjLQeBYN_kzObCEpLqrJts_cewN27nCwsz8e5cRKqoJ5j2F2yAbbV83ewp7HT_Ze7pAtiCKgp42ExzkuvrS8Cgkc_ZvQ8J_R7OqNboG4l5sRB5Kjz-JCjt6Nfyn5nW-a5-KyeMr-mCeKCEwNA8'
 
     semrep.setFREDKey(keyFRED)
     semrep.setWikiDataKey(keyWikiData)
+    semrep.initializeOntology()
 
     semantic_reporting(semrep, args.in_usd, args.in_TBox_usd, args.out_usd)
 
