@@ -4,8 +4,8 @@ import subprocess
 import threading
 import unittest
 from time import sleep, time
-import os
 from typing_extensions import List
+import os
 
 from multiverse_client_py import MultiverseClient, MultiverseMetaData, SocketAddress
 
