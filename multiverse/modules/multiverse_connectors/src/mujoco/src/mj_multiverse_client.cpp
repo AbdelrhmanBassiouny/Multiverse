@@ -1523,11 +1523,33 @@ void MjMultiverseClient::attach(const Json::Value &arguments)
 			body_1_element_copy->DeleteChild(joint_element);
 		}
 		body_2_element->InsertEndChild(body_1_element_copy);
-		tinyxml2::XMLElement *parent_body_1_element = body_1_element->Parent()->ToElement();
-		parent_body_1_element->DeleteChild(body_1_element);
 
-		doc_1.SaveFile(doc_file_path_1.c_str());
-		doc_2.SaveFile(doc_file_path_2.c_str());
+		if (strcmp(doc_file_path_1.c_str(), doc_file_path_2.c_str()) == 0)
+		{
+			doc_2.SaveFile(doc_file_path_2.c_str());
+
+			tinyxml2::XMLDocument doc;
+			doc.LoadFile(scene_xml_path.c_str());
+
+			tinyxml2::XMLElement *found_body_element = nullptr;
+			for (tinyxml2::XMLElement *worldbody_element = doc.FirstChildElement("mujoco")->FirstChildElement("worldbody");
+				worldbody_element != nullptr;
+				worldbody_element = worldbody_element->NextSiblingElement("worldbody"))
+			{
+				get_body_element(worldbody_element, found_body_element, object_1_name);
+			}
+
+			tinyxml2::XMLElement *parent_body_1_element = found_body_element->Parent()->ToElement();
+			parent_body_1_element->DeleteChildren();
+			doc.SaveFile(scene_xml_path.c_str());
+		}
+		else
+		{
+			tinyxml2::XMLElement *parent_body_1_element = body_1_element->Parent()->ToElement();
+			parent_body_1_element->DeleteChild(body_1_element);
+			doc_1.SaveFile(doc_file_path_1.c_str());
+			doc_2.SaveFile(doc_file_path_2.c_str());
+		}
 
 		const int body_1_id = mj_name2id(m, mjtObj::mjOBJ_BODY, object_1_name.c_str());
 		const int body_1_dof_num = m->body_dofnum[body_1_id];
@@ -1998,6 +2020,106 @@ std::set<std::string> MjMultiverseClient::get_get_contact_bodies_response(const 
 	return contact_results;
 }
 
+std::set<std::string> MjMultiverseClient::get_get_contact_points_response(const Json::Value &arguments) const
+{
+	if (!arguments.isArray() || (arguments.size() != 1 && arguments.size() != 2))
+	{
+		return {"failed (Arguments for get_contact_points should be an array of strings with 1 or 2 elements.)"};
+	}
+
+	const std::string object_1_name = arguments[0].asString();
+	const int body_1_id = mj_name2id(m, mjtObj::mjOBJ_BODY, object_1_name.c_str());
+	if (body_1_id == -1)
+	{
+		return {"failed (Object " + object_1_name + " does not exist.)"};
+	}
+
+	std::vector<std::vector<double>> contact_results;
+	if (arguments.size() == 2)
+	{
+		const std::string object_2_name = arguments[1].asString();
+		const int body_2_id = mj_name2id(m, mjtObj::mjOBJ_BODY, object_2_name.c_str());
+		if (body_2_id == -1)
+		{
+			return {"failed (Object " + object_2_name + " does not exist.)"};
+		}
+
+		for (int contact_id = 0; contact_id < d->ncon; contact_id++)
+		{
+			const mjContact contact = d->contact[contact_id];
+			if (contact.exclude != 0 && contact.exclude != 1)
+			{
+				continue;
+			}
+			const int geom_1_id = contact.geom[0];
+			const int geom_2_id = contact.geom[1];
+
+			if ((body_1_id == m->geom_bodyid[geom_1_id] && body_2_id == m->geom_bodyid[geom_2_id]) || (body_1_id == m->geom_bodyid[geom_2_id] && body_2_id == m->geom_bodyid[geom_1_id]))
+			{
+				std::vector<double> contact_point = {contact.pos[0], contact.pos[1], contact.pos[2]};
+				if (body_1_id == m->geom_bodyid[geom_2_id])
+				{
+					contact_point.push_back(contact.frame[0]);
+					contact_point.push_back(contact.frame[1]);
+					contact_point.push_back(contact.frame[2]);
+				}
+				else
+				{
+					contact_point.push_back(-contact.frame[0]);
+					contact_point.push_back(-contact.frame[1]);
+					contact_point.push_back(-contact.frame[2]);
+				}
+				contact_results.push_back(contact_point);
+			}
+		}
+	}
+	else
+	{
+		for (int contact_id = 0; contact_id < d->ncon; contact_id++)
+		{
+			const mjContact contact = d->contact[contact_id];
+			if (contact.exclude != 0 && contact.exclude != 1)
+			{
+				continue;
+			}
+			const int geom_1_id = contact.geom[0];
+			const int geom_2_id = contact.geom[1];
+
+			if (body_1_id == m->geom_bodyid[geom_1_id] || body_1_id == m->geom_bodyid[geom_2_id])
+			{
+				std::vector<double> contact_point = {contact.pos[0], contact.pos[1], contact.pos[2]};
+				if (body_1_id == m->geom_bodyid[geom_2_id])
+				{
+					contact_point.push_back(contact.frame[0]);
+					contact_point.push_back(contact.frame[1]);
+					contact_point.push_back(contact.frame[2]);
+				}
+				else
+				{
+					contact_point.push_back(-contact.frame[0]);
+					contact_point.push_back(-contact.frame[1]);
+					contact_point.push_back(-contact.frame[2]);
+				}
+				contact_results.push_back(contact_point);
+			}
+		}
+	}
+
+	std::set<std::string> contact_results_str;
+	for (const std::vector<double> &contact_result : contact_results)
+	{
+		std::string contact_result_str = "";
+		for (const double &contact_result_val : contact_result)
+		{
+			contact_result_str += std::to_string(contact_result_val) + " ";
+		}
+		contact_result_str.pop_back();
+		contact_results_str.insert(contact_result_str);
+	}
+
+	return contact_results_str;
+}
+
 std::set<std::string> MjMultiverseClient::get_get_contact_islands_response(const Json::Value &arguments) const
 {
 	if (!arguments.isArray() || (arguments.size() != 1 && arguments.size() != 2))
@@ -2226,6 +2348,65 @@ std::string MjMultiverseClient::get_set_control_value_response(const Json::Value
 	return "success";
 }
 
+std::vector<std::string> MjMultiverseClient::get_get_bounding_box_response(const Json::Value &arguments) const
+{
+	if (!arguments.isArray() || (arguments.size() != 1 && arguments.size() != 2))
+	{
+		return {"failed (Arguments for get_bounding_box should be an array of strings with 1 or 2 elements.)"};
+	}
+
+	const std::string object_name = arguments[0].asString();
+	const int body_id = mj_name2id(m, mjtObj::mjOBJ_BODY, object_name.c_str());
+	if (body_id == -1)
+	{
+		return {"failed (Object " + object_name + " does not exist.)"};
+	}
+
+	std::set<int> body_ids = {body_id};
+	bool with_children = false;
+	if (arguments.size() == 2)
+	{
+		if (arguments[1].asString() != "with_children")
+		{
+			return {"failed (Second argument for get_contact_bodies should be \"with_children\".)"};
+		}
+		with_children = true;
+	}
+
+	if (with_children)
+	{
+		for (int child_body_id = body_id + 1; child_body_id < m->nbody; child_body_id++)
+		{
+			if (m->body_parentid[child_body_id] == body_id)
+			{
+				body_ids.insert(child_body_id);
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+
+	std::vector<std::string> bounding_box_results;
+	for (const int &body_id : body_ids)
+	{
+		for (int geom_id = m->body_geomadr[body_id]; geom_id < m->body_geomadr[body_id] + m->body_geomnum[body_id]; geom_id++)
+		{
+			mjtNum *aabb = m->geom_aabb + 6 * geom_id;
+			std::string bounding_box_result = "";
+			for (int i = 0; i < 6; i++)
+			{
+				bounding_box_result += std::to_string(aabb[i]) + " ";
+			}
+			bounding_box_result.pop_back();
+			bounding_box_results.push_back(bounding_box_result);
+		}
+	}
+
+	return bounding_box_results;
+}
+
 void MjMultiverseClient::bind_api_callbacks()
 {
 	const Json::Value &api_callbacks_json = response_meta_data_json["api_callbacks"];
@@ -2298,6 +2479,13 @@ void MjMultiverseClient::bind_api_callbacks_response()
 					api_callback_response[api_callback_name].append(get_contact_body_response);
 				}
 			}
+			else if (strcmp(api_callback_name.c_str(), "get_contact_points") == 0)
+			{
+				for (const std::string &get_contact_point_response : get_get_contact_points_response(api_callback_json[api_callback_name]))
+				{
+					api_callback_response[api_callback_name].append(get_contact_point_response);
+				}
+			}
 			else if (strcmp(api_callback_name.c_str(), "get_contact_islands") == 0)
 			{
 				for (const std::string &get_contact_islands_response : get_get_contact_islands_response(api_callback_json[api_callback_name]))
@@ -2322,6 +2510,13 @@ void MjMultiverseClient::bind_api_callbacks_response()
 				for (const std::string &exist_response : get_exist_response(api_callback_json[api_callback_name]))
 				{
 					api_callback_response[api_callback_name].append(exist_response);
+				}
+			}
+			else if (strcmp(api_callback_name.c_str(), "get_bounding_box") == 0)
+			{
+				for (const std::string &get_bounding_box_response : get_get_bounding_box_response(api_callback_json[api_callback_name]))
+				{
+					api_callback_response[api_callback_name].append(get_bounding_box_response);
 				}
 			}
 			else if (strcmp(api_callback_name.c_str(), "set_control_value") == 0)

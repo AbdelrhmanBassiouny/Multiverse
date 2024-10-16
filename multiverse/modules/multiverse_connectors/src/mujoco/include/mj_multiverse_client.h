@@ -71,6 +71,8 @@ private:
 
     std::set<std::string> get_get_contact_bodies_response(const Json::Value &arguments) const;
 
+    std::set<std::string> get_get_contact_points_response(const Json::Value &arguments) const;
+
     std::set<std::string> get_get_contact_islands_response(const Json::Value &arguments) const;
 
     std::string get_get_constraint_effort_response(const Json::Value &arguments) const;
@@ -80,6 +82,8 @@ private:
     std::vector<std::string> get_exist_response(const Json::Value &arguments) const;
 
     std::string get_set_control_value_response(const Json::Value &arguments) const;
+
+    std::vector<std::string> get_get_bounding_box_response(const Json::Value &arguments) const;
 
 public:
     bool communicate(const bool resend_meta_data = false) override;
