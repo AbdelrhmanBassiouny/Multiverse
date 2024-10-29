@@ -5,16 +5,18 @@ resources:
   - ../objects
 
 worlds:
-  pycram_test:
+  real:
     rtf_desired: 1
-  prospection_pycram_test:
+  belief_state:
+    rtf_desired: 1
+  prospection:
     rtf_desired: 1
 
 simulations:
-  pycram_test:
+  real:
     simulator: mujoco
     world:
-      name: world
+      name: real
       path: apartment/mjcf/apartment.xml
       apply:
         body:
@@ -22,10 +24,21 @@ simulations:
     config:
       max_time_step: 0.002
       min_time_step: 0.001
-  prospection_pycram_test:
+  belief_state:
     simulator: mujoco
     world:
-      name: prospection_world
+      name: belief_state
+      path: apartment/mjcf/apartment.xml
+      apply:
+        body:
+          gravcomp: 1
+    config:
+      max_time_step: 0.002
+      min_time_step: 0.001
+  prospection:
+    simulator: mujoco
+    world:
+      name: prospection
       path: apartment/mjcf/apartment.xml
       apply:
         body:
@@ -39,13 +52,19 @@ multiverse_server:
   port: 7000
 
 multiverse_clients:
-  pycram_test:
-    port: 7500
+  real:
+    port: 7400
     send:
       body: ["position", "quaternion", "relative_velocity"]
       joint: ["joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque"]
 
-  prospection_pycram_test:
+  belief_state:
+    port: 7500
+    send:
+      body: [ "position", "quaternion", "relative_velocity" ]
+      joint: [ "joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque" ]
+
+  prospection:
     port: 7600
     send:
       body: [ "position", "quaternion", "relative_velocity" ]

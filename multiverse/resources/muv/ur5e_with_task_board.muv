@@ -3,16 +3,21 @@ resources:
   - ../worlds
   - ../objects
   - ../demos
+  - ../cached
 
 worlds:
-  world:
+  real:
+    rtf_desired: 1
+  belief_state:
+    rtf_desired: 1
+  prospection:
     rtf_desired: 1
 
 simulations:
-  ur5e_with_task_board:
+  real:
     simulator: mujoco
     world:
-      name: world
+      name: real
       path: work_table.xml
     robots:
       gripper:
@@ -63,13 +68,121 @@ simulations:
       max_time_step: 0.002
       min_time_step: 0.001
 
+  belief_state:
+    simulator: mujoco
+    world:
+      name: belief_state
+      path: work_table.xml
+    robots:
+      gripper:
+        path: gripper-2F-85.xml
+        prefix:
+          geom: gripper-2F-85_
+        disable_self_collision: "off"
+      ur5e:
+        path: ur5e/mjcf/ur5e.xml
+        apply:
+          body:
+            ur5e:
+              pos: [ 0.0, 0.0, 1.05 ]
+        attach:
+          wrist_3_link:
+            gripper:
+              pos: [ 0.0, 0.1, 0.0 ]
+              quat: [ -1.0, 1.0, 0.0, 0.0 ]
+        disable_self_collision: auto
+        joint_state:
+          shoulder_pan_joint: 3.1415
+          shoulder_lift_joint: -1.5708
+          elbow_joint: 1.5708
+          wrist_1_joint: -1.5708
+          wrist_2_joint: -1.5708
+          wrist_3_joint: 0.0
+    objects:
+      task_board:
+        path: task_board.xml
+        apply:
+          body:
+            task_board:
+              pos: [ 0.0, -0.7, 1.05 ]
+              quat: [ -0.7071, 0.0, 0.0, 0.7071 ]
+        prefix:
+          geom: task_board_
+      task_board_tool:
+        path: task_board_tool.xml
+        apply:
+          body:
+            task_board_tool:
+              pos: [ -0.102, -0.686, 1.146 ]
+              quat: [ 1.0, 0.0, 0.0, 0.0 ]
+        prefix:
+          geom: task_board_tool_
+
+    config:
+      max_time_step: 0.002
+      min_time_step: 0.001
+
+  prospection:
+    simulator: mujoco
+    world:
+      name: prospection
+      path: work_table.xml
+    robots:
+      gripper:
+        path: gripper-2F-85.xml
+        prefix:
+          geom: gripper-2F-85_
+        disable_self_collision: "off"
+      ur5e:
+        path: ur5e/mjcf/ur5e.xml
+        apply:
+          body:
+            ur5e:
+              pos: [ 0.0, 0.0, 1.05 ]
+        attach:
+          wrist_3_link:
+            gripper:
+              pos: [ 0.0, 0.1, 0.0 ]
+              quat: [ -1.0, 1.0, 0.0, 0.0 ]
+        disable_self_collision: auto
+        joint_state:
+          shoulder_pan_joint: 3.1415
+          shoulder_lift_joint: -1.5708
+          elbow_joint: 1.5708
+          wrist_1_joint: -1.5708
+          wrist_2_joint: -1.5708
+          wrist_3_joint: 0.0
+    objects:
+      task_board:
+        path: task_board.xml
+        apply:
+          body:
+            task_board:
+              pos: [ 0.0, -0.7, 1.05 ]
+              quat: [ -0.7071, 0.0, 0.0, 0.7071 ]
+        prefix:
+          geom: task_board_
+      task_board_tool:
+        path: task_board_tool.xml
+        apply:
+          body:
+            task_board_tool:
+              pos: [ -0.102, -0.686, 1.146 ]
+              quat: [ 1.0, 0.0, 0.0, 0.0 ]
+        prefix:
+          geom: task_board_tool_
+
+    config:
+      max_time_step: 0.002
+      min_time_step: 0.001
+
 multiverse_server:
   host: "tcp://127.0.0.1"
   port: 7000
 
 multiverse_clients:
-  ur5e_with_task_board:
-    port: 7500
+  real:
+    port: 7400
     send:
       body: ["position", "quaternion"]
       joint: ["joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque"]
@@ -82,12 +195,24 @@ multiverse_clients:
       wrist_2: ["cmd_joint_rvalue"]
       wrist_3: ["cmd_joint_rvalue"]
 
+  belief_state:
+    port: 7500
+    send:
+      body: [ "position", "quaternion" ]
+      joint: [ "joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque" ]
+
+  prospection:
+    port: 7600
+    send:
+      body: [ "position", "quaternion" ]
+      joint: [ "joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque" ]
+
   ros:
     ros_nodes:
       publishers:
         tf:
           - meta_data:
-              world_name: world
+              world_name: real
               length_unit: m
               angle_unit: rad
               mass_unit: kg
@@ -101,7 +226,7 @@ multiverse_clients:
       subscribers:
         data:
           - meta_data:
-              world_name: world
+              world_name: real
               length_unit: m
               angle_unit: rad
               mass_unit: kg
@@ -115,11 +240,11 @@ multiverse_clients:
 
       services:
         socket:
-          - port: 7400
+          - port: 7401
 
     ros_control:
       - meta_data:
-          world_name: world
+          world_name: real
           length_unit: m
           angle_unit: rad
           mass_unit: kg
