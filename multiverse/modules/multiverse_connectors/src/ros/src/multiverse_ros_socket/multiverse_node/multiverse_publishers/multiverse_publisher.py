@@ -64,19 +64,13 @@ class MultiversePublisher(MultiverseNode):
 
     def _run(self) -> None:
         self._connect_and_start()
-        if not self._use_meta_data:
-            self._bind_response_meta_data(self.response_meta_data)
 
     def _publisher_callback(self, _=None) -> None:
         try:
             if self._use_meta_data:
-                self._bind_request_meta_data(_)
                 self._communicate(True)
-                self._bind_response_meta_data(self.response_meta_data)
             else:
-                self.send_data = [self.sim_time]
                 self._communicate(False)
-                self._bind_receive_data(self.receive_data)
             self._publish()
         except:
             return

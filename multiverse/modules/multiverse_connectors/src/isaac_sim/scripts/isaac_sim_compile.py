@@ -6,7 +6,8 @@ import json
 import os
 import shutil
 from typing import List, Dict, Set, Any, Union, Optional, Tuple
-
+import numpy
+from pxr import Usd, UsdGeom, Gf, UsdPhysics
 
 @dataclasses.dataclass
 class Entity:
@@ -75,19 +76,83 @@ class IsaacSimCompiler:
         self.objects = []
 
     def build_world_usd(self, robots: Dict[str, Robot], objects: Dict[str, Object]):
+        for entity in list(robots.values()) + list(objects.values()):
+            file_ext = os.path.splitext(entity.path)[1]
+            entity_usd_dir = os.path.dirname(entity.path)
+            entity_usd_path = os.path.join(self.save_dir_path, entity.name + f"{file_ext}")
+            shutil.copy(entity.path, entity_usd_path)
+            entity.path = entity_usd_path
+            entity_stage = Usd.Stage.Open(entity_usd_path)
+
+            if "body" in entity.apply:
+                body_apply = entity.apply["body"]
+                for xform_prim in [prim for prim in entity_stage.Traverse() if prim.IsA(UsdGeom.Xform) and prim.GetName() in body_apply]:
+                    if xform_prim.GetName() == entity.name and xform_prim.GetParent().IsPseudoRoot():
+                        continue
+                    xform = UsdGeom.Xform(xform_prim)
+                    xform.ClearXformOpOrder()
+                    pos = body_apply[xform_prim.GetName()].get("pos", [0, 0, 0])
+                    quat = body_apply[xform_prim.GetName()].get("quat", [1, 0, 0, 0])
+
+                    pos = numpy.asfarray(pos)
+                    quat = numpy.asfarray(quat)
+                    mat = Gf.Matrix4d()
+                    mat.SetTranslateOnly(Gf.Vec3d(*pos))
+                    mat.SetRotateOnly(Gf.Quatd(quat[0], Gf.Vec3d(*quat[1:])))
+
+                    xform.AddTransformOp().Set(mat)
+
+            for joint_name, joint_value in entity.joint_state.items():
+                for joint_prim in [prim for prim in entity_stage.TraverseAll() if prim.IsA(UsdPhysics.Joint) and prim.GetName() == joint_name]:
+                    if joint_prim.IsA(UsdPhysics.RevoluteJoint) and joint_prim.HasAPI(UsdPhysics.DriveAPI):
+                        drive_api = UsdPhysics.DriveAPI.Apply(joint_prim, "angular")
+                        drive_api.GetTargetPositionAttr().Set(numpy.rad2deg(joint_value))
+
+                    elif joint_prim.IsA(UsdPhysics.PrismaticJoint) and joint_prim.HasAPI(UsdPhysics.DriveAPI):
+                        drive_api = UsdPhysics.DriveAPI.Apply(joint_prim, "linear")
+                        drive_api.GetTargetPositionAttr().Set(joint_value)
+                    else:
+                        print(f"Joint {joint_name} does not have DriveAPI")
+
+            entity_stage.GetRootLayer().Save()
+
+            if file_ext == ".usda":
+                with open(entity_usd_path, "r") as f:
+                    data = f.read()
+                data = data.replace("@./", f"@{entity_usd_dir}/")
+                with open(entity_usd_path, "w") as f:
+                    f.write(data)
+
+            if isinstance(entity, Object):
+                self.objects.append(entity)
+            elif isinstance(entity, Robot):
+                self.robots.append(entity)
+
         self.create_world_usd()
 
     def create_world_usd(self):
         if not os.path.exists(self.save_dir_path):
             os.makedirs(self.save_dir_path)
-        self.save_usd_path = os.path.join(self.save_dir_path, self.scene_name + ".usda")
+        file_ext = os.path.splitext(self.world_usd_path)[1]
+        self.save_usd_path = os.path.join(self.save_dir_path, self.scene_name + f"{file_ext}")
         shutil.copy(self.world_usd_path, self.save_usd_path)
-        with open(self.save_usd_path, "r") as f:
-            data = f.read()
-        world_usd_dir = os.path.dirname(self.world_usd_path)
-        data = data.replace("@./", f"@{world_usd_dir}/")
-        with open(self.save_usd_path, "w") as f:
-            f.write(data)
+        if file_ext == ".usda":
+            with open(self.save_usd_path, "r") as f:
+                data = f.read()
+            world_usd_dir = os.path.dirname(self.world_usd_path)
+            data = data.replace("@./", f"@{world_usd_dir}/")
+            with open(self.save_usd_path, "w") as f:
+                f.write(data)
+
+        stage = Usd.Stage.Open(self.save_usd_path)
+
+        sublayer_paths = []
+        for robot in self.robots:
+            sublayer_paths.append(robot.path)
+        for obj in self.objects:
+            sublayer_paths.append(obj.path)
+        stage.GetRootLayer().subLayerPaths = sublayer_paths
+        stage.GetRootLayer().Save()
 
 def main():
     # Initialize argument parser
