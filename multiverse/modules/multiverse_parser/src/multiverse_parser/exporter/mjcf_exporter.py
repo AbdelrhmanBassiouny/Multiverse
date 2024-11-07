@@ -318,6 +318,7 @@ class MjcfExporter:
             mesh = ET.SubElement(asset, "mesh")
             mesh.set("name", mujoco_mesh.GetPrim().GetName())
             tmp_mesh_path = mujoco_mesh.GetFileAttr().Get().path
+            tmp_mesh_path = tmp_mesh_path.replace(".//", "/")
             tmp_mesh_relpath = os.path.relpath(tmp_mesh_path, self.factory.tmp_mesh_dir_path)
 
             mesh.set("file", tmp_mesh_relpath)
@@ -444,7 +445,7 @@ class MjcfExporter:
                 if stage.GetPrimAtPath(mujoco_mesh_path).IsValid():
                     continue
                 mujoco_mesh = UsdMujoco.MujocoMesh.Define(stage, mujoco_mesh_path)
-                mujoco_mesh.CreateFileAttr(tmp_mesh_file_path)
+                mujoco_mesh.CreateFileAttr(f"./{tmp_mesh_file_path}")
                 mujoco_mesh.CreateScaleAttr(Gf.Vec3f(*mesh_file_property.scale))
 
         materials = {}

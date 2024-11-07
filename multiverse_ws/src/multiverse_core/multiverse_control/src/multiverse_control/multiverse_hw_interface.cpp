@@ -113,6 +113,8 @@ MultiverseHWInterface::MultiverseHWInterface(const std::map<std::string, std::st
     connect();
 
     *world_time = 0.0;
+
+    reset();
 }
 
 ros::Time MultiverseHWInterface::get_world_time(const double offset) const
@@ -234,6 +236,7 @@ void MultiverseHWInterface::init_send_and_receive_data()
 
 void MultiverseHWInterface::bind_send_data()
 {
+    *world_time = get_time_now() - sim_start_time;
     for (int i = 0; i < send_buffer.buffer_double.size; i++)
     {
         send_buffer.buffer_double.data[i] = *send_data_vec[i];
@@ -244,7 +247,7 @@ void MultiverseHWInterface::bind_receive_data()
 {
     for (int i = 0; i < receive_buffer.buffer_double.size; i++)
     {
-        *receive_data_vec[i] =  send_buffer.buffer_double.data[i];
+        *receive_data_vec[i] = receive_buffer.buffer_double.data[i];
     }
 }
 
@@ -261,6 +264,7 @@ bool MultiverseHWInterface::communicate(const bool resend_meta_data)
 
 void MultiverseHWInterface::reset()
 {
+    sim_start_time = get_time_now();
     for (const std::string &joint_name : joint_names)
     {
         joint_commands[joint_name][0] = init_joint_states[joint_name];

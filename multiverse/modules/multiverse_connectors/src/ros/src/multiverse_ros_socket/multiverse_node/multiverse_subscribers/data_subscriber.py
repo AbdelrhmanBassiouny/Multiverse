@@ -31,7 +31,9 @@ class DataSubscriber(MultiverseSubscriber):
             topic_name=topic_name,
             multiverse_meta_data=multiverse_meta_data
         )
-        self.request_meta_data["send"] = kwargs["send"]
+        def bind_request_meta_data() -> None:
+            self.request_meta_data["send"] = kwargs["send"]
+        self.bind_request_meta_data_callback = bind_request_meta_data
 
     def _init_send_data(self) -> None:
         if self._msg_type == Float64:
@@ -41,7 +43,7 @@ class DataSubscriber(MultiverseSubscriber):
 
     def _bind_send_data(self, data_msg: Any) -> Any:
         if self._msg_type == Float64:
-            self.send_data[1:] = [self.world_time + self.sim_time, 0.0, data_msg.data]
+            self.send_data = [self.world_time + self.sim_time, data_msg.data]
         else:
             raise NotImplementedError(f"msg_type {self._msg_type} not implemented.")
         return data_msg

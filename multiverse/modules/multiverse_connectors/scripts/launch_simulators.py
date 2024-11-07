@@ -31,9 +31,25 @@ def parse_mujoco(resources_paths: List[str], mujoco_data: Dict[str, Any]):
 
     return mujoco_args
 
+def parse_isaac_sim(resources_paths: List[str], isaac_sim_data: Dict[str, Any]):
+    worlds_path = find_files(resources_paths, isaac_sim_data["world"]["path"])
+    isaac_sim_args = [f"--world={worlds_path}"]
+
+    for entity_str in ["robots", "objects"]:
+        if entity_str in isaac_sim_data:
+            for entity_name in isaac_sim_data[entity_str]:
+                if "path" in isaac_sim_data[entity_str][entity_name]:
+                    isaac_sim_data[entity_str][entity_name]["path"] = find_files(resources_paths,
+                                                                              isaac_sim_data[entity_str][entity_name][
+                                                                                  "path"])
+            entity_dict = isaac_sim_data[entity_str]
+            isaac_sim_args.append(f"--{entity_str}={entity_dict}".replace(" ", ""))
+
+    return isaac_sim_args
+
 
 class MultiverseSimulationLaunch(MultiverseLaunch):
-    simulators = {"mujoco", "mujoco_headless"}
+    simulators = {"mujoco", "mujoco_headless", "isaac_sim", "isaac_sim_headless"}
 
     def __init__(self):
         super().__init__()
@@ -51,6 +67,8 @@ class MultiverseSimulationLaunch(MultiverseLaunch):
     def parse_simulator(self, simulation_data):
         if simulation_data["simulator"] == "mujoco" or simulation_data["simulator"] == "mujoco_headless":
             return parse_mujoco(self.resources_paths, simulation_data)
+        elif simulation_data["simulator"] == "isaac_sim" or simulation_data["simulator"] == "isaac_sim_headless":
+            return parse_isaac_sim(self.resources_paths, simulation_data)
         else:
             raise NotImplementedError(f"Simulator {simulation_data['simulator']} not implemented")
 
@@ -86,7 +104,6 @@ class MultiverseSimulationLaunch(MultiverseLaunch):
 
         config_dict = simulation_data.get("config", {})
         config_dict["rtf_desired"] = rtf_desired
-        config_dict["resources"] = self.resources_paths
         cmd += [f"{config_dict}".replace(" ", "").replace("'", '"')]
 
         if self.multiverse_clients.get(simulation_name) is not None:

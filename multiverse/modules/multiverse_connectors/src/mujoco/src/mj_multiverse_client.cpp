@@ -1118,8 +1118,8 @@ void MjMultiverseClient::weld(const Json::Value &arguments)
 		printf("Attachment already exists.\n");
 		return;
 	}
-	if (strcmp(weld_response.c_str(), "failed (equality not found)") != 0 &&
-		strcmp(weld_response.c_str(), "failed (relative pose are different)") != 0)
+	if (strcmp(weld_response.c_str(), "failed (Equality not found)") != 0 &&
+		strcmp(weld_response.c_str(), "failed (Relative pose are different)") != 0)
 	{
 		printf("%s\n", weld_response.c_str());
 		return;
@@ -1158,7 +1158,7 @@ void MjMultiverseClient::weld(const Json::Value &arguments)
 	{
 		tinyxml2::XMLElement *mujoco_element = doc.FirstChildElement("mujoco");
 
-		if (strcmp(weld_response.c_str(), "failed (relative pose are different)") == 0)
+		if (strcmp(weld_response.c_str(), "failed (Relative pose are different)") == 0)
 		{
 			bool found_weld_element = false;
 			for (tinyxml2::XMLElement *equality_element = mujoco_element->FirstChildElement("equality");
@@ -1266,7 +1266,7 @@ std::string MjMultiverseClient::get_weld_response(const Json::Value &arguments) 
 				{
 					if (mju_abs(relative_pose[i] - m->eq_data[mjNEQDATA * equality_id + i + 3]) > 1e-3)
 					{
-						return "failed (relative pose are different)";
+						return "failed (Relative pose are different)";
 					}
 				}
 			}
@@ -1275,7 +1275,7 @@ std::string MjMultiverseClient::get_weld_response(const Json::Value &arguments) 
 		}
 	}
 
-	return "failed (equality not found)";
+	return "failed (Equality not found)";
 }
 
 void MjMultiverseClient::unweld(const Json::Value &arguments)
@@ -1451,8 +1451,8 @@ void MjMultiverseClient::attach(const Json::Value &arguments)
 		printf("Attachment already exists.\n");
 		return;
 	}
-	if (strcmp(attach_response.c_str(), "failed (relative pose are different)") != 0 &&
-		strcmp(attach_response.c_str(), "failed (attachment not found)") != 0)
+	if (strcmp(attach_response.c_str(), "failed (Relative pose are different)") != 0 &&
+		strcmp(attach_response.c_str(), "failed (Attachment not found)") != 0)
 	{
 		printf("%s\n", attach_response.c_str());
 		return;
@@ -1502,7 +1502,7 @@ void MjMultiverseClient::attach(const Json::Value &arguments)
 
 	body_1_element->SetAttribute("pos", relative_pos.c_str());
 	body_1_element->SetAttribute("quat", relative_quat.c_str());
-	if (strcmp(attach_response.c_str(), "failed (attachment not found)") == 0)
+	if (strcmp(attach_response.c_str(), "failed (Attachment not found)") == 0)
 	{
 		tinyxml2::XMLElement *body_1_element_copy = body_1_element->DeepClone(&doc_2)->ToElement();
 		std::vector<tinyxml2::XMLElement *> body_1_joint_elements;
@@ -1630,7 +1630,7 @@ std::string MjMultiverseClient::get_attach_response(const Json::Value &arguments
 {
 	if (!arguments.isArray() || arguments.size() < 2 || arguments.size() > 3)
 	{
-		return "failed (Arguments for weld should be an array of strings with 2 or 3 elements.)";
+		return "failed (Arguments for attach should be an array of strings with 2 or 3 elements.)";
 	}
 
 	const std::string object_1_name = arguments[0].asString();
@@ -1662,14 +1662,14 @@ std::string MjMultiverseClient::get_attach_response(const Json::Value &arguments
 				m->body_quat[4 * body_1_id + 2] != relative_pose[5] ||
 				m->body_quat[4 * body_1_id + 3] != relative_pose[6])
 			{
-				return "failed (relative pose are different)";
+				return "failed (Relative pose are different)";
 			}
 		}
 		return "success";
 	}
 	else
 	{
-		return "failed (attachment not found)";
+		return "failed (Attachment not found)";
 	}
 }
 
@@ -1681,7 +1681,7 @@ void MjMultiverseClient::detach(const Json::Value &arguments)
 		printf("Attachment not found, already detached.\n");
 		return;
 	}
-	if (strcmp(detach_response.c_str(), "failed (attachment found)") != 0)
+	if (strcmp(detach_response.c_str(), "failed (Attachment found)") != 0)
 	{
 		printf("%s\n", detach_response.c_str());
 		return;
@@ -1946,7 +1946,7 @@ std::string MjMultiverseClient::get_detach_response(const Json::Value &arguments
 		return "failed (Object " + object_2_name + " does not exist.)";
 	}
 
-	return m->body_parentid[body_1_id] == body_2_id ? "failed (attachment found)" : "success";
+	return m->body_parentid[body_1_id] == body_2_id ? "failed (Attachment found)" : "success";
 }
 
 std::set<std::string> MjMultiverseClient::get_get_contact_bodies_response(const Json::Value &arguments) const
@@ -2285,7 +2285,7 @@ std::vector<std::string> MjMultiverseClient::get_get_rays_response(const Json::V
 		}
 		else
 		{
-			multi_ray_results.push_back({"None"});
+			multi_ray_results.push_back("None");
 		}
 	}
 
