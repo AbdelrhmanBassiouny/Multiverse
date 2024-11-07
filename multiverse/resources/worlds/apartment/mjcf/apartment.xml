@@ -659,25 +659,25 @@
 							<geom name="fridge_door1_handle_collision_1" pos="0.0164985 0.0 -0.08" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.01 0.0065 0.0065"/>
 							<geom name="fridge_door1_handle_collision_2" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0065 0.0065 0.086516"/>
 						</body>
-						<body name="fridge_door_tray2" pos="0.10176933000000005 -0.29847088 0.22387222000000007" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="0.00036538255517371 -5.043889359512832e-06 -0.005287451669573784" mass="2.480499029159546" diaginertia="0.042593616992235184 0.040292028337717056 0.0032568746246397495"/>
-							<geom name="fridge_door_tray2_collision_3" pos="0.0 -0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.001 0.026901"/>
-							<geom name="fridge_door_tray2_collision_4" pos="0.0 0.0 -0.025903" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.210977 0.001"/>
-							<geom name="fridge_door_tray2_collision_0" pos="0.054019 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210977 0.026901"/>
-							<geom name="fridge_door_tray2_collision_2" pos="0.0 0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.001 0.026901"/>
-							<geom name="fridge_door_tray2_collision_1" pos="-0.054019 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210977 0.026901"/>
-							<body name="fridge_egg_tray" pos="-0.0022657600000000055 0.0853088999999998 0.0006985500000000755" quat="1.0 0.0 0.0 0.0">
-								<inertial pos="0.012743869796395302 6.809793831052957e-06 0.003597934264689684" mass="0.28363198041915894" diaginertia="0.0007312275702133775 0.000394336850149557 0.0003528354864101857"/>
-							</body>
-						</body>
-						<body name="fridge_door_tray1" pos="0.10379066000000003 -0.2972607799999998 -0.01565247000000003" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.0001365563803119585 -0.0009173324215225875 -0.007440905086696148" mass="4.4324259757995605" diaginertia="0.07473434507846832 0.07253947108983994 0.007802892941981554"/>
-							<geom name="fridge_door_tray1_collision_3" pos="0.0 -0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.001 0.047787"/>
-							<geom name="fridge_door_tray1_collision_4" pos="0.0 0.0 -0.047166" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.210927 0.001"/>
-							<geom name="fridge_door_tray1_collision_0" pos="0.054273 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210927 0.047787"/>
-							<geom name="fridge_door_tray1_collision_1" pos="-0.054273 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210927 0.047787"/>
-							<geom name="fridge_door_tray1_collision_2" pos="0.0 0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.001 0.047787"/>
-						</body>
+<!--						<body name="fridge_door_tray2" pos="0.10176933000000005 -0.29847088 0.22387222000000007" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="0.00036538255517371 -5.043889359512832e-06 -0.005287451669573784" mass="2.480499029159546" diaginertia="0.042593616992235184 0.040292028337717056 0.0032568746246397495"/>-->
+<!--							<geom name="fridge_door_tray2_collision_3" pos="0.0 -0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.001 0.026901"/>-->
+<!--							<geom name="fridge_door_tray2_collision_4" pos="0.0 0.0 -0.025903" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.210977 0.001"/>-->
+<!--							<geom name="fridge_door_tray2_collision_0" pos="0.054019 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210977 0.026901"/>-->
+<!--							<geom name="fridge_door_tray2_collision_2" pos="0.0 0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.054994 0.001 0.026901"/>-->
+<!--							<geom name="fridge_door_tray2_collision_1" pos="-0.054019 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210977 0.026901"/>-->
+<!--							<body name="fridge_egg_tray" pos="-0.0022657600000000055 0.0853088999999998 0.0006985500000000755" quat="1.0 0.0 0.0 0.0">-->
+<!--								<inertial pos="0.012743869796395302 6.809793831052957e-06 0.003597934264689684" mass="0.28363198041915894" diaginertia="0.0007312275702133775 0.000394336850149557 0.0003528354864101857"/>-->
+<!--							</body>-->
+<!--						</body>-->
+<!--						<body name="fridge_door_tray1" pos="0.10379066000000003 -0.2972607799999998 -0.01565247000000003" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.0001365563803119585 -0.0009173324215225875 -0.007440905086696148" mass="4.4324259757995605" diaginertia="0.07473434507846832 0.07253947108983994 0.007802892941981554"/>-->
+<!--							<geom name="fridge_door_tray1_collision_3" pos="0.0 -0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.001 0.047787"/>-->
+<!--							<geom name="fridge_door_tray1_collision_4" pos="0.0 0.0 -0.047166" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.210927 0.001"/>-->
+<!--							<geom name="fridge_door_tray1_collision_0" pos="0.054273 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210927 0.047787"/>-->
+<!--							<geom name="fridge_door_tray1_collision_1" pos="-0.054273 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.210927 0.047787"/>-->
+<!--							<geom name="fridge_door_tray1_collision_2" pos="0.0 0.209978 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.05471 0.001 0.047787"/>-->
+<!--						</body>-->
 					</body>
 					<body name="fridge_door2" pos="-0.29725901000000005 0.2990897000000001 -0.63800789" quat="1.0 0.0 0.0 0.0">
 						<inertial pos="0.026100823655724525 -0.29109108448028564 0.0009363036369904876" mass="39.403018951416016" diaginertia="2.62724232673645 1.5762299299240112 1.0735594034194946"/>
@@ -715,64 +715,64 @@
 						<geom name="fridge_base_collision_3" pos="-0.029351 0.223235 -0.561142" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.196424 0.012277 0.318196"/>
 						<geom name="fridge_base_visual_7" pos="-0.029351 0.0 -0.18398" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.196424 0.234783 0.058965"/>
 						<geom name="fridge_base_collision_7" pos="-0.029351 0.0 -0.18398" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.196424 0.234783 0.058965"/>
-						<body name="fridge_shelf2" pos="-0.0010274399999999906 0.002043159999999933 0.41123558000000004" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.02025615982711315 -2.7698994209401917e-09 0.0002445956342853606" mass="1.9237642288208008" diaginertia="0.04772718623280525 0.03511981666088104 0.012628650292754173"/>
-							<geom name="fridge_shelf2_collision_0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.133991 0.234134 0.004544"/>
-						</body>
-						<body name="fridge_drawer1" pos="-0.012090060000000014 0.0022359500000002086 0.11025719" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.008570153266191483 8.290867548055303e-09 -0.011821984313428402" mass="25.013385772705078" diaginertia="0.7308518290519714 0.5152349472045898 0.3080076277256012"/>
-							<geom name="fridge_drawer1_collision_5" pos="0.0 0.0 -0.080999" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.227117 0.001372"/>
-							<geom name="fridge_drawer1_collision_4" pos="0.0 -0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.082076"/>
-							<geom name="fridge_drawer1_collision_2" pos="0.16468 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.002123 0.227117 0.082076"/>
-							<geom name="fridge_drawer1_collision_3" pos="0.0 0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.082076"/>
-							<geom name="fridge_drawer1_collision_1" pos="-0.169309 0.0 -0.034598" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001448 0.227117 0.047864"/>
-							<geom name="fridge_drawer1_collision_0" pos="-0.169309 0.0 0.070506" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0025 0.227117 0.011921"/>
-							<joint name="fridge_drawer1_joint" pos="-1.387778780781448e-17 2.0860049798621105e-16 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
-						</body>
-						<body name="fridge_drawer2" pos="-0.015483409999999975 -0.0019881100000000984 -0.04961250000000006" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.008561861701309681 8.11787526089347e-09 -0.009830103255808353" mass="20.86504364013672" diaginertia="0.6114146709442139 0.42133629322052 0.24360686540603638"/>
-							<geom name="fridge_drawer2_collision_2" pos="0.16468 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.002123 0.227117 0.068941"/>
-							<geom name="fridge_drawer2_collision_0" pos="-0.169309 0.0 0.057007" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0025 0.227117 0.011801"/>
-							<geom name="fridge_drawer2_collision_1" pos="-0.169309 0.0 -0.036775" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001448 0.227117 0.032111"/>
-							<geom name="fridge_drawer2_collision_4" pos="0.0 -0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.068941"/>
-							<geom name="fridge_drawer2_collision_5" pos="0.0 0.0 -0.066161" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.227117 0.001372"/>
-							<geom name="fridge_drawer2_collision_3" pos="0.0 0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.068941"/>
-							<joint name="fridge_drawer2_joint" pos="2.4286128663675312e-17 -9.84455572616838e-17 6.245004513516506e-17" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
-						</body>
-						<body name="fridge_drawer3" pos="-0.03265699 0.0025189899999999987 -0.3561763" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.015027781017124653 -1.7991524146054871e-06 -0.016413865610957146" mass="23.896957397460938" diaginertia="0.5966867804527283 0.4138781726360321 0.2907105088233948"/>
-							<geom name="fridge_drawer3_collision_1" pos="-0.165482 0.0 -0.037113" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.05887"/>
-							<geom name="fridge_drawer3_collision_3" pos="-0.004962 0.197083 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.00732 0.095915"/>
-							<geom name="fridge_drawer3_collision_2" pos="0.154928 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001555 0.204478 0.095915"/>
-							<geom name="fridge_drawer3_collision_4" pos="-0.004962 -0.197083 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.00732 0.095915"/>
-							<geom name="fridge_drawer3_collision_5" pos="-0.004962 0.0 -0.095072" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.204478 0.000911"/>
-							<geom name="fridge_drawer3_collision_0" pos="-0.165482 0.0 0.083453" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.012462"/>
-							<joint name="fridge_drawer3_joint" pos="1.5933176641955753e-34 -1.3010426069826053e-18 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
-						</body>
-						<body name="fridge_drawer4" pos="-0.02885222999999998 0.005081679999999977 -0.53299805" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.016014786437153816 -2.3364809749182314e-06 -0.01388465240597725" mass="18.671113967895508" diaginertia="0.46840837597846985 0.30909407138824463 0.21107740700244904"/>
-							<geom name="fridge_drawer4_collision_4" pos="0.0 -0.196311 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.008 0.075917"/>
-							<geom name="fridge_drawer4_collision_5" pos="0.0 0.0 -0.074992" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.204478 0.001"/>
-							<geom name="fridge_drawer4_collision_2" pos="0.155483 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.075917"/>
-							<geom name="fridge_drawer4_collision_1" pos="-0.165482 0.0 -0.035978" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.04"/>
-							<geom name="fridge_drawer4_collision_0" pos="-0.165482 0.0 0.063456" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.012462"/>
-							<geom name="fridge_drawer4_collision_3" pos="0.0 0.196311 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.008 0.075917"/>
-							<joint name="fridge_drawer4_joint" pos="2.0816681711721688e-17 -2.255140518769849e-17 -0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
-						</body>
-						<body name="fridge_drawer5" pos="-0.06480766300000002 0.0 -0.712787175" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.01321667991578579 -4.888519811174774e-07 -0.011687368154525757" mass="17.044340133666992" diaginertia="0.34217938780784607 0.2994421124458313 0.11983069777488708"/>
-							<geom name="fridge_drawer5_collision_1" pos="-0.118669 0.0 -0.03813" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204404 0.055353"/>
-							<geom name="fridge_drawer5_collision_4" pos="0.0 -0.196942 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.007461 0.075917"/>
-							<geom name="fridge_drawer5_collision_2" pos="0.108269 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.003217 0.204404 0.075917"/>
-							<geom name="fridge_drawer5_collision_0" pos="-0.120488 0.0 0.08099" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204404 0.012499"/>
-							<geom name="fridge_drawer5_collision_5" pos="0.0 0.0 -0.09249" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.204404 0.001"/>
-							<geom name="fridge_drawer5_collision_3" pos="0.0 0.196942 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.007461 0.075917"/>
-							<joint name="fridge_drawer5_joint" pos="-1.3877787807814457e-17 -1.6995388418086138e-33 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
-						</body>
-						<body name="fridge_shelf1" pos="-0.0010274399999999906 0.002043159999999933 0.5454509700000001" quat="1.0 0.0 0.0 0.0">
-							<inertial pos="-0.02025615982711315 -2.7698994209401917e-09 0.0002445956342853606" mass="1.9237642288208008" diaginertia="0.04772718623280525 0.03511981666088104 0.012628650292754173"/>
-							<geom name="fridge_shelf1_collision_0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.133991 0.234134 0.004544"/>
-						</body>
+<!--						<body name="fridge_shelf2" pos="-0.0010274399999999906 0.002043159999999933 0.41123558000000004" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.02025615982711315 -2.7698994209401917e-09 0.0002445956342853606" mass="1.9237642288208008" diaginertia="0.04772718623280525 0.03511981666088104 0.012628650292754173"/>-->
+<!--							<geom name="fridge_shelf2_collision_0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.133991 0.234134 0.004544"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_drawer1" pos="-0.012090060000000014 0.0022359500000002086 0.11025719" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.008570153266191483 8.290867548055303e-09 -0.011821984313428402" mass="25.013385772705078" diaginertia="0.7308518290519714 0.5152349472045898 0.3080076277256012"/>-->
+<!--							<geom name="fridge_drawer1_collision_5" pos="0.0 0.0 -0.080999" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.227117 0.001372"/>-->
+<!--							<geom name="fridge_drawer1_collision_4" pos="0.0 -0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.082076"/>-->
+<!--							<geom name="fridge_drawer1_collision_2" pos="0.16468 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.002123 0.227117 0.082076"/>-->
+<!--							<geom name="fridge_drawer1_collision_3" pos="0.0 0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.082076"/>-->
+<!--							<geom name="fridge_drawer1_collision_1" pos="-0.169309 0.0 -0.034598" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001448 0.227117 0.047864"/>-->
+<!--							<geom name="fridge_drawer1_collision_0" pos="-0.169309 0.0 0.070506" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0025 0.227117 0.011921"/>-->
+<!--							<joint name="fridge_drawer1_joint" pos="-1.387778780781448e-17 2.0860049798621105e-16 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_drawer2" pos="-0.015483409999999975 -0.0019881100000000984 -0.04961250000000006" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.008561861701309681 8.11787526089347e-09 -0.009830103255808353" mass="20.86504364013672" diaginertia="0.6114146709442139 0.42133629322052 0.24360686540603638"/>-->
+<!--							<geom name="fridge_drawer2_collision_2" pos="0.16468 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.002123 0.227117 0.068941"/>-->
+<!--							<geom name="fridge_drawer2_collision_0" pos="-0.169309 0.0 0.057007" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0025 0.227117 0.011801"/>-->
+<!--							<geom name="fridge_drawer2_collision_1" pos="-0.169309 0.0 -0.036775" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001448 0.227117 0.032111"/>-->
+<!--							<geom name="fridge_drawer2_collision_4" pos="0.0 -0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.068941"/>-->
+<!--							<geom name="fridge_drawer2_collision_5" pos="0.0 0.0 -0.066161" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.227117 0.001372"/>-->
+<!--							<geom name="fridge_drawer2_collision_3" pos="0.0 0.217307 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.171761 0.00983 0.068941"/>-->
+<!--							<joint name="fridge_drawer2_joint" pos="2.4286128663675312e-17 -9.84455572616838e-17 6.245004513516506e-17" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_drawer3" pos="-0.03265699 0.0025189899999999987 -0.3561763" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.015027781017124653 -1.7991524146054871e-06 -0.016413865610957146" mass="23.896957397460938" diaginertia="0.5966867804527283 0.4138781726360321 0.2907105088233948"/>-->
+<!--							<geom name="fridge_drawer3_collision_1" pos="-0.165482 0.0 -0.037113" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.05887"/>-->
+<!--							<geom name="fridge_drawer3_collision_3" pos="-0.004962 0.197083 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.00732 0.095915"/>-->
+<!--							<geom name="fridge_drawer3_collision_2" pos="0.154928 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001555 0.204478 0.095915"/>-->
+<!--							<geom name="fridge_drawer3_collision_4" pos="-0.004962 -0.197083 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.00732 0.095915"/>-->
+<!--							<geom name="fridge_drawer3_collision_5" pos="-0.004962 0.0 -0.095072" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.161445 0.204478 0.000911"/>-->
+<!--							<geom name="fridge_drawer3_collision_0" pos="-0.165482 0.0 0.083453" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.012462"/>-->
+<!--							<joint name="fridge_drawer3_joint" pos="1.5933176641955753e-34 -1.3010426069826053e-18 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_drawer4" pos="-0.02885222999999998 0.005081679999999977 -0.53299805" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.016014786437153816 -2.3364809749182314e-06 -0.01388465240597725" mass="18.671113967895508" diaginertia="0.46840837597846985 0.30909407138824463 0.21107740700244904"/>-->
+<!--							<geom name="fridge_drawer4_collision_4" pos="0.0 -0.196311 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.008 0.075917"/>-->
+<!--							<geom name="fridge_drawer4_collision_5" pos="0.0 0.0 -0.074992" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.204478 0.001"/>-->
+<!--							<geom name="fridge_drawer4_collision_2" pos="0.155483 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.075917"/>-->
+<!--							<geom name="fridge_drawer4_collision_1" pos="-0.165482 0.0 -0.035978" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.04"/>-->
+<!--							<geom name="fridge_drawer4_collision_0" pos="-0.165482 0.0 0.063456" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204478 0.012462"/>-->
+<!--							<geom name="fridge_drawer4_collision_3" pos="0.0 0.196311 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.166408 0.008 0.075917"/>-->
+<!--							<joint name="fridge_drawer4_joint" pos="2.0816681711721688e-17 -2.255140518769849e-17 -0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_drawer5" pos="-0.06480766300000002 0.0 -0.712787175" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.01321667991578579 -4.888519811174774e-07 -0.011687368154525757" mass="17.044340133666992" diaginertia="0.34217938780784607 0.2994421124458313 0.11983069777488708"/>-->
+<!--							<geom name="fridge_drawer5_collision_1" pos="-0.118669 0.0 -0.03813" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204404 0.055353"/>-->
+<!--							<geom name="fridge_drawer5_collision_4" pos="0.0 -0.196942 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.007461 0.075917"/>-->
+<!--							<geom name="fridge_drawer5_collision_2" pos="0.108269 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.003217 0.204404 0.075917"/>-->
+<!--							<geom name="fridge_drawer5_collision_0" pos="-0.120488 0.0 0.08099" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.001 0.204404 0.012499"/>-->
+<!--							<geom name="fridge_drawer5_collision_5" pos="0.0 0.0 -0.09249" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.204404 0.001"/>-->
+<!--							<geom name="fridge_drawer5_collision_3" pos="0.0 0.196942 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.120421 0.007461 0.075917"/>-->
+<!--							<joint name="fridge_drawer5_joint" pos="-1.3877787807814457e-17 -1.6995388418086138e-33 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>-->
+<!--						</body>-->
+<!--						<body name="fridge_shelf1" pos="-0.0010274399999999906 0.002043159999999933 0.5454509700000001" quat="1.0 0.0 0.0 0.0">-->
+<!--							<inertial pos="-0.02025615982711315 -2.7698994209401917e-09 0.0002445956342853606" mass="1.9237642288208008" diaginertia="0.04772718623280525 0.03511981666088104 0.012628650292754173"/>-->
+<!--							<geom name="fridge_shelf1_collision_0" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.133991 0.234134 0.004544"/>-->
+<!--						</body>-->
 					</body>
 				</body>
 				<body name="cabinet4" pos="0.18224365 3.29388123 1.82711395" quat="6.123233995736766e-17 0.0 0.0 1.0">

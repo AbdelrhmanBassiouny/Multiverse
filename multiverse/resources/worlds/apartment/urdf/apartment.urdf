@@ -1683,107 +1683,107 @@
       </geometry>
     </collision>
   </link>
-  <joint name="fridge_door_tray1_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="0.10379066 -0.29726078 -0.01565247"/>
-    <parent link="fridge_door1"/>
-    <child link="fridge_door_tray1"/>
-  </joint>
-  <link name="fridge_door_tray1">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Door_Tray_01.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.054273 0.0 0.0"/>
-      <geometry>
-        <box size="0.002 0.421854 0.095574"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.054273 0.0 0.0"/>
-      <geometry>
-        <box size="0.002 0.421854 0.095574"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.209978 0.0"/>
-      <geometry>
-        <box size="0.10942 0.002 0.095574"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.209978 0.0"/>
-      <geometry>
-        <box size="0.10942 0.002 0.095574"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.047166"/>
-      <geometry>
-        <box size="0.10942 0.421854 0.002"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_door_tray2_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="0.10176933 -0.29847088 0.22387222"/>
-    <parent link="fridge_door1"/>
-    <child link="fridge_door_tray2"/>
-  </joint>
-  <link name="fridge_door_tray2">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Door_Tray_02.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.054019 0.0 0.0"/>
-      <geometry>
-        <box size="0.002 0.421954 0.053802"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.054019 0.0 0.0"/>
-      <geometry>
-        <box size="0.002 0.421954 0.053802"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.209978 0.0"/>
-      <geometry>
-        <box size="0.109988 0.002 0.053802"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.209978 0.0"/>
-      <geometry>
-        <box size="0.109988 0.002 0.053802"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.025903"/>
-      <geometry>
-        <box size="0.109988 0.421954 0.002"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_egg_tray_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.00226576 0.0853089 0.00069855"/>
-    <parent link="fridge_door_tray2"/>
-    <child link="fridge_egg_tray"/>
-  </joint>
-  <link name="fridge_egg_tray">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Egg_Tray.dae"/>
-      </geometry>
-    </visual>
-    <!-- <collision>
-        <geometry>
-          <mesh filename="file://../meshes/dae/SM_Fridge_Egg_Tray.stl" />
-        </geometry>
-      </collision> -->
-  </link>
+<!--  <joint name="fridge_door_tray1_joint" type="fixed">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="0.10379066 -0.29726078 -0.01565247"/>-->
+<!--    <parent link="fridge_door1"/>-->
+<!--    <child link="fridge_door_tray1"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_door_tray1">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Door_Tray_01.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.054273 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.421854 0.095574"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.054273 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.421854 0.095574"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.209978 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.10942 0.002 0.095574"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.209978 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.10942 0.002 0.095574"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.047166"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.10942 0.421854 0.002"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_door_tray2_joint" type="fixed">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="0.10176933 -0.29847088 0.22387222"/>-->
+<!--    <parent link="fridge_door1"/>-->
+<!--    <child link="fridge_door_tray2"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_door_tray2">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Door_Tray_02.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.054019 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.421954 0.053802"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.054019 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.421954 0.053802"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.209978 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.109988 0.002 0.053802"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.209978 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.109988 0.002 0.053802"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.025903"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.109988 0.421954 0.002"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_egg_tray_joint" type="fixed">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.00226576 0.0853089 0.00069855"/>-->
+<!--    <parent link="fridge_door_tray2"/>-->
+<!--    <child link="fridge_egg_tray"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_egg_tray">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Egg_Tray.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    &lt;!&ndash; <collision>-->
+<!--        <geometry>-->
+<!--          <mesh filename="file://../meshes/dae/SM_Fridge_Egg_Tray.stl" />-->
+<!--        </geometry>-->
+<!--      </collision> &ndash;&gt;-->
+<!--  </link>-->
   <joint name="fridge_door2_joint" type="revolute">
     <origin rpy="0.0 0.0 0.0" xyz="-0.29725901 0.2990897 -0.63800789"/>
     <parent link="cabinet3"/>
@@ -1918,292 +1918,292 @@
       </geometry>
     </collision>
   </link>
-  <joint name="fridge_shelf1_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.00102744 0.00204316 0.54545097"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_shelf1"/>
-  </joint>
-  <link name="fridge_shelf1">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Shelf.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <box size="0.267982 0.468268 0.009088"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_shelf2_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.00102744 0.00204316 0.41123558"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_shelf2"/>
-  </joint>
-  <link name="fridge_shelf2">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Shelf.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <box size="0.267982 0.468268 0.009088"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_drawer1_joint" type="prismatic">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.01209006 0.00223595 0.11025719"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_drawer1"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>
-  </joint>
-  <link name="fridge_drawer1">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_01.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.169309 0.0 0.070506"/>
-      <geometry>
-        <box size="0.005 0.454234 0.023842"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.169309 0.0 -0.034598"/>
-      <geometry>
-        <box size="0.002896 0.454234 0.095728"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.16468 0.0 0.0"/>
-      <geometry>
-        <box size="0.004246 0.454234 0.164152"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.217307 0.0"/>
-      <geometry>
-        <box size="0.343522 0.01966 0.164152"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.217307 0.0"/>
-      <geometry>
-        <box size="0.343522 0.01966 0.164152"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.080999"/>
-      <geometry>
-        <box size="0.343522 0.454234 0.002744"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_drawer2_joint" type="prismatic">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.01548341 -0.00198811 -0.0496125"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_drawer2"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>
-  </joint>
-  <link name="fridge_drawer2">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_02.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.169309 0.0 0.057007"/>
-      <geometry>
-        <box size="0.005 0.454234 0.023602"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.169309 0.0 -0.036775"/>
-      <geometry>
-        <box size="0.002896 0.454234 0.064222"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.16468 0.0 0.0"/>
-      <geometry>
-        <box size="0.004246 0.454234 0.137882"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.217307 0.0"/>
-      <geometry>
-        <box size="0.343522 0.01966 0.137882"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.217307 0.0"/>
-      <geometry>
-        <box size="0.343522 0.01966 0.137882"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.066161"/>
-      <geometry>
-        <box size="0.343522 0.454234 0.002744"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_drawer3_joint" type="prismatic">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.03265699 0.00251899 -0.3561763"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_drawer3"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>
-  </joint>
-  <link name="fridge_drawer3">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_03.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.165482 0.0 0.083453"/>
-      <geometry>
-        <box size="0.002 0.408956 0.024924"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.165482 0.0 -0.037113"/>
-      <geometry>
-        <box size="0.002 0.408956 0.11774"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.154928 0.0 0.0"/>
-      <geometry>
-        <box size="0.00311 0.408956 0.19183"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.004962 0.197083 0.0"/>
-      <geometry>
-        <box size="0.32289 0.01464 0.19183"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.004962 -0.197083 0.0"/>
-      <geometry>
-        <box size="0.32289 0.01464 0.19183"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.004962 0.0 -0.095072"/>
-      <geometry>
-        <box size="0.32289 0.408956 0.001822"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_drawer4_joint" type="prismatic">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.02885223 0.00508168 -0.53299805"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_drawer4"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>
-  </joint>
-  <link name="fridge_drawer4">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_04.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.165482 0.0 0.063456"/>
-      <geometry>
-        <box size="0.002 0.408956 0.024924"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.165482 0.0 -0.035978"/>
-      <geometry>
-        <box size="0.002 0.408956 0.08"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.155483 0.0 0.0"/>
-      <geometry>
-        <box size="0.002 0.408956 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.196311 0.0"/>
-      <geometry>
-        <box size="0.332816 0.016 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.196311 0.0"/>
-      <geometry>
-        <box size="0.332816 0.016 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.074992"/>
-      <geometry>
-        <box size="0.332816 0.408956 0.002"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="fridge_drawer5_joint" type="prismatic">
-    <origin rpy="0.0 0.0 0.0" xyz="-0.064807663 0.0 -0.712787175"/>
-    <parent link="fridge_base"/>
-    <child link="fridge_drawer5"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>
-  </joint>
-  <link name="fridge_drawer5">
-    <visual>
-      <geometry>
-        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_05.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.120488 0.0 0.08099"/>
-      <geometry>
-        <box size="0.002 0.408808 0.024998"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="-0.118669 0.0 -0.03813"/>
-      <geometry>
-        <box size="0.002 0.408808 0.110706"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.108269 0.0 0.0"/>
-      <geometry>
-        <box size="0.006434 0.408808 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.196942 0.0"/>
-      <geometry>
-        <box size="0.240842 0.014922 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 -0.196942 0.0"/>
-      <geometry>
-        <box size="0.240842 0.014922 0.151834"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.09249"/>
-      <geometry>
-        <box size="0.240842 0.408808 0.002"/>
-      </geometry>
-    </collision>
-  </link>
+<!--  <joint name="fridge_shelf1_joint" type="fixed">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.00102744 0.00204316 0.54545097"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_shelf1"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_shelf1">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Shelf.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.267982 0.468268 0.009088"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_shelf2_joint" type="fixed">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.00102744 0.00204316 0.41123558"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_shelf2"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_shelf2">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Shelf.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.267982 0.468268 0.009088"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_drawer1_joint" type="prismatic">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.01209006 0.00223595 0.11025719"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_drawer1"/>-->
+<!--    <axis xyz="-1 0 0"/>-->
+<!--    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_drawer1">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_01.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.169309 0.0 0.070506"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.005 0.454234 0.023842"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.169309 0.0 -0.034598"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002896 0.454234 0.095728"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.16468 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.004246 0.454234 0.164152"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.217307 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.01966 0.164152"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.217307 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.01966 0.164152"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.080999"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.454234 0.002744"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_drawer2_joint" type="prismatic">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.01548341 -0.00198811 -0.0496125"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_drawer2"/>-->
+<!--    <axis xyz="-1 0 0"/>-->
+<!--    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_drawer2">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_02.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.169309 0.0 0.057007"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.005 0.454234 0.023602"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.169309 0.0 -0.036775"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002896 0.454234 0.064222"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.16468 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.004246 0.454234 0.137882"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.217307 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.01966 0.137882"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.217307 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.01966 0.137882"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.066161"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.343522 0.454234 0.002744"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_drawer3_joint" type="prismatic">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.03265699 0.00251899 -0.3561763"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_drawer3"/>-->
+<!--    <axis xyz="-1 0 0"/>-->
+<!--    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_drawer3">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_03.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.165482 0.0 0.083453"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408956 0.024924"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.165482 0.0 -0.037113"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408956 0.11774"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.154928 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.00311 0.408956 0.19183"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.004962 0.197083 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.32289 0.01464 0.19183"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.004962 -0.197083 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.32289 0.01464 0.19183"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.004962 0.0 -0.095072"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.32289 0.408956 0.001822"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_drawer4_joint" type="prismatic">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.02885223 0.00508168 -0.53299805"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_drawer4"/>-->
+<!--    <axis xyz="-1 0 0"/>-->
+<!--    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_drawer4">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_04.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.165482 0.0 0.063456"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408956 0.024924"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.165482 0.0 -0.035978"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408956 0.08"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.155483 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408956 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.196311 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.332816 0.016 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.196311 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.332816 0.016 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.074992"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.332816 0.408956 0.002"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="fridge_drawer5_joint" type="prismatic">-->
+<!--    <origin rpy="0.0 0.0 0.0" xyz="-0.064807663 0.0 -0.712787175"/>-->
+<!--    <parent link="fridge_base"/>-->
+<!--    <child link="fridge_drawer5"/>-->
+<!--    <axis xyz="-1 0 0"/>-->
+<!--    <limit effort="1000.0" lower="0.0" upper="0.30" velocity="0.5"/>-->
+<!--  </joint>-->
+<!--  <link name="fridge_drawer5">-->
+<!--    <visual>-->
+<!--      <geometry>-->
+<!--        <mesh filename="file://../meshes/dae/SM_Fridge_Drawer_05.dae"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.120488 0.0 0.08099"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408808 0.024998"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="-0.118669 0.0 -0.03813"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.002 0.408808 0.110706"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.108269 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.006434 0.408808 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.196942 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.240842 0.014922 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 -0.196942 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.240842 0.014922 0.151834"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 -0.09249"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.240842 0.408808 0.002"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
   <!-- Cabinet4 -->
   <joint name="cabinet4_joint" type="fixed">
     <origin rpy="0.0 0.0 3.141592653589793" xyz="0.18224365 3.29388123 1.82711395"/>
