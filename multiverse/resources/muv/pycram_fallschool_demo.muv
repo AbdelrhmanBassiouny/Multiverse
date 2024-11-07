@@ -23,8 +23,7 @@ simulations:
           gravcomp: 1
     robots:
       pr2:
-        path: pr2/pr2_with_vel_control.xml
-        # path: pr2/pr2_with_pos_control.xml
+        path: pr2/pr2_with_pos_control.xml
         apply:
           body:
             pr2:
@@ -104,6 +103,8 @@ multiverse_clients:
       torso_lift_actuator: ["cmd_joint_tvalue"]
       head_pan_actuator: ["cmd_joint_rvalue"]
       head_tilt_actuator: ["cmd_joint_rvalue"]
+      l_gripper_actuator: [ "cmd_joint_rvalue" ]
+      r_gripper_actuator: [ "cmd_joint_rvalue" ]
 
   belief_state:
     port: 7500
@@ -119,7 +120,23 @@ multiverse_clients:
 
   ros:
     ros_nodes:
+      services:
+        socket:
+          - port: 4889
+
       publishers:
+        tf:
+          - meta_data:
+              world_name: real
+              length_unit: m
+              angle_unit: rad
+              mass_unit: kg
+              time_unit: s
+              handedness: rhs
+            port: 7301
+            topic: /tf
+            rate: 60
+            root_frame_id: map
         odom:
           - meta_data:
               world_name: real
@@ -180,6 +197,8 @@ multiverse_clients:
             torso_lift_actuator: torso_lift_joint
             head_pan_actuator: head_pan_joint
             head_tilt_actuator: head_tilt_joint
+            l_gripper_actuator: l_gripper_l_finger_joint
+            r_gripper_actuator: r_gripper_l_finger_joint
           controllers:
             spawn:
               - joint_state_controller
@@ -187,3 +206,5 @@ multiverse_clients:
                 right_arm_controller
                 torso_controller
                 head_controller
+                left_gripper_controller
+                right_gripper_controller
