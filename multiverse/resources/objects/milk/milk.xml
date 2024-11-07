@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<mujoco model="milk">
+	<compiler meshdir="milk/meshes" texturedir="milk/textures" angle="radian" autolimits="true" balanceinertia="true" boundmass="0.000001" boundinertia="0.000001"/>
+	<default>
+		<default class="milk_visual">
+			<geom contype="0" conaffinity="0"/>
+		</default>
+		<default class="milk_collision">
+			<geom rgba="1 1 1 1"/>
+		</default>
+	</default>
+	<asset>
+		<mesh name="milk" file="stl/milk.stl" scale="1.0 1.0 1.0"/>
+	</asset>
+	<worldbody>
+		<body name="milk" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+			<inertial mass="0.5931721925735474" pos="-0.0002407325227977708 0.00019318319391459227 0.004190846811980009" quat="-0.6914591193199158 0.1289946585893631 0.6945163607597351 0.15129996836185455" diaginertia="0.00030648973188363016 0.001739033730700612 0.0017434534383937716"/>
+			<freejoint/>
+			<geom name="SM_milk_mesh_0" type="mesh" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="milk" class="milk_visual" />
+			<geom name="SM_milk_box_1" type="box" size="0.03 0.03 0.2" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" mesh="milk" class="milk_collision" />
+		</body>
+	</worldbody>
+	<equality/>
+</mujoco>

@@ -330,13 +330,13 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
     def test_attach_and_detach_object_with_a_world_link(self):
         # create world clients
         multiverse_client_test_receive = self.create_multiverse_client_receive("1337", "", [""],
-                                                                               "world", "receiver")
-        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", "world",
+                                                                               "belief_state", "receiver")
+        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", "belief_state",
                                                                            "writer")
-        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", "world", {},
+        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", "belief_state", {},
                                                                          "sim_test_callapi")
 
-        simulation_name = "pycram_test"
+        simulation_name = "belief_state"
 
         # pause simulation
         self.pause_simulation(multiverse_test_call_api, simulation_name)
@@ -353,6 +353,14 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
                             },
                             simulation_name)
 
+        self.send_body_data(multiverse_client_test_spawn, obj_name,
+                            {
+                                "position": [-2.0, -2.0, 1.0],
+                                "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                "relative_velocity": [0.0] * 6
+                            },
+                            simulation_name)
+
         # Attach object to a world link
         self.attach(multiverse_test_call_api, obj_name, world_link_name,
                     simulation_name=simulation_name)
@@ -360,6 +368,14 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         # Detach object from a world link
         self.detach(multiverse_test_call_api, obj_name, world_link_name,
                     simulation_name=simulation_name)
+
+        self.send_body_data(multiverse_client_test_spawn, obj_name,
+                            {
+                                "position": [-2.0, -2.0, 0.0],
+                                "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                "relative_velocity": [0.0] * 6
+                            },
+                            simulation_name)
 
         # stop all clients
         multiverse_client_test_receive.stop()

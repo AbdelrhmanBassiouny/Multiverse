@@ -188,6 +188,7 @@
 						</body>
 					</body>
 					<body name="dishwasher_tray1" pos="0.22401426000000013 0.007359259999999868 0.22713593000000004" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="1.8562225103378296" pos="-0.00011599354911595583 -0.037206199020147324 -0.04113486409187317" quat="0.9998481273651123 -0.017389830201864243 -0.00011636961426120251 0.0011355173774063587" diaginertia="0.05677398666739464 0.09537962824106216 0.12405645847320557"/>
 						<geom name="dishwasher_tray1_collision_4" pos="-0.280937 0.0 -0.035299" quat="0.5894866410700077 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.004289 0.269203 0.116486"/>
 						<geom name="dishwasher_tray1_collision_0" pos="-0.03859 0.0 -0.144673" quat="0.6161270161257336 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.242135 0.269203 0.007112"/>
 						<geom name="dishwasher_tray1_collision_2" pos="-0.03859 -0.255159 -0.035299" quat="0.5839668226877277 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.242135 0.005448 0.116486"/>
@@ -196,6 +197,7 @@
 						<joint name="dishwasher_tray1_joint" pos="-1.3877787807814457e-16 1.3270634591222574e-16 -2.7755575615628914e-17" type="slide" range="0.0 0.5" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
 					</body>
 					<body name="dishwasher_tray2" pos="0.20742001999999982 0.007357980000000097 0.40232784000000005" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="1.8562225103378296" pos="-0.00011599354911595583 -0.037206199020147324 -0.04113486409187317" quat="0.9998481273651123 -0.017389830201864243 -0.00011636961426120251 0.0011355173774063587" diaginertia="0.05677398666739464 0.09537962824106216 0.12405645847320557"/>
 						<geom name="dishwasher_tray2_collision_0" pos="0.0 0.0 -0.051928" quat="0.6087749994866741 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.231314 0.23732 0.013794"/>
 						<geom name="dishwasher_tray2_collision_1" pos="0.0 -0.243352 0.023995" quat="0.5761293257594167 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.231314 0.008574 0.087812"/>
 						<geom name="dishwasher_tray2_collision_3" pos="-0.225859 0.0 0.023995" quat="0.5764794011931389 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.004182 0.23732 0.087812"/>
@@ -204,6 +206,7 @@
 						<joint name="dishwasher_tray2_joint" pos="1.942890293094024e-16 -9.71445146547012e-17 -5.551115123125783e-17" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
 					</body>
 					<body name="dishwasher_tray3" pos="0.2278721199999998 0.013125249999999866 0.61131351" quat="1.0 0.0 0.0 0.0">
+						<inertial mass="1.8562225103378296" pos="-0.00011599354911595583 -0.037206199020147324 -0.04113486409187317" quat="0.9998481273651123 -0.017389830201864243 -0.00011636961426120251 0.0011355173774063587" diaginertia="0.05677398666739464 0.09537962824106216 0.12405645847320557"/>
 						<geom name="dishwasher_tray3_collision_0" pos="0.0 0.0 0.0" quat="0.6176568626672904 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.22 0.27 0.036"/>
 						<joint name="dishwasher_tray3_joint" pos="2.220446049250313e-16 1.3357370765021415e-16 0.0" type="slide" range="0.0 0.30000001192092896" axis="-0.9999999999999998 0.0 2.220446049250313e-16"/>
 					</body>
@@ -650,14 +653,14 @@
 					<geom name="cabinet3_collision_0" pos="0.003155 -0.291968 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.277193 0.01 1.06382"/>
 					<body name="fridge_door1" pos="-0.29725901000000005 0.29914525999999997 0.25673996" quat="1.0 0.0 0.0 0.0">
 						<inertial pos="0.024266717955470085 -0.291368305683136 0.06509967893362045" mass="63.56070327758789" diaginertia="8.890583992004395 7.118878364562988 1.8036528825759888"/>
-						<geom name="fridge_door1_collision_0" pos="0.006948 -0.297325 0.139709" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.009277 0.298246 0.668339"/>
-						<geom name="fridge_door1_collision_1" pos="0.03605 -0.295455 -0.001115" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0125 0.276867 0.494447"/>
+<!--						<geom name="fridge_door1_collision_0" pos="0.006948 -0.297325 0.139709" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.009277 0.298246 0.668339"/>-->
+<!--						<geom name="fridge_door1_collision_1" pos="0.03605 -0.295455 -0.001115" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0125 0.276867 0.494447"/>-->
 						<joint name="fridge_door1_joint" pos="-5.551115123125782e-17 -5.551115123125784e-17 0.0" type="hinge" range="0.0 1.5707963267948966" axis="0.0 0.0 -1.0000000000000004"/>
 						<body name="fridge_door1_handle" pos="-0.027991029999999806 -0.4653432099999999 -0.3615999999999999" quat="0.7071067811865476 0.7071067811865475 0.0 0.0">
 							<inertial pos="0.006275401916354895 8.123279258143157e-06 0.0002337352925678715" mass="0.11501903831958771" diaginertia="0.00037916426663286984 0.0003701346577145159 1.1858560355904046e-05"/>
-							<geom name="fridge_door1_handle_collision_0" pos="0.0164985 0.0 0.08" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.01 0.0065 0.0065"/>
-							<geom name="fridge_door1_handle_collision_1" pos="0.0164985 0.0 -0.08" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.01 0.0065 0.0065"/>
-							<geom name="fridge_door1_handle_collision_2" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0065 0.0065 0.086516"/>
+<!--							<geom name="fridge_door1_handle_collision_0" pos="0.0164985 0.0 0.08" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.01 0.0065 0.0065"/>-->
+<!--							<geom name="fridge_door1_handle_collision_1" pos="0.0164985 0.0 -0.08" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.01 0.0065 0.0065"/>-->
+<!--							<geom name="fridge_door1_handle_collision_2" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0" class="apartment_collision" type="box" size="0.0065 0.0065 0.086516"/>-->
 						</body>
 <!--						<body name="fridge_door_tray2" pos="0.10176933000000005 -0.29847088 0.22387222000000007" quat="1.0 0.0 0.0 0.0">-->
 <!--							<inertial pos="0.00036538255517371 -5.043889359512832e-06 -0.005287451669573784" mass="2.480499029159546" diaginertia="0.042593616992235184 0.040292028337717056 0.0032568746246397495"/>-->

@@ -21,13 +21,21 @@ simulations:
       apply:
         body:
           gravcomp: 1
+    objects:
+      milk:
+        path: milk/milk.xml
+        apply:
+          body:
+            milk:
+              pos: [ 0.454581610950408, 2.4827602281818915, 1.048840490170555 ]
+              quat: [ 0.000000, 0.000000, 0.000000, 1.000000 ]
     robots:
       pr2:
         path: pr2/pr2_with_pos_control.xml
         apply:
           body:
             pr2:
-              pos: [ 1.4, 2, 0 ]
+              pos: [ 1.4, 3.5, 0 ]
             gravcomp: 1
         joint_state:
           r_elbow_flex_joint: -0.15
