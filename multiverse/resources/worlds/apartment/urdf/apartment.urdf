@@ -1640,18 +1640,18 @@
         <mesh filename="file://../meshes/dae/SM_Fridge_Door_01.dae"/>
       </geometry>
     </visual>
-    <collision>
-      <origin xyz="0.006948 -0.297325 0.139709"/>
-      <geometry>
-        <box size="0.018554 0.596492 1.336678"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.03605 -0.295455 -0.001115"/>
-      <geometry>
-        <box size="0.025 0.553734 0.988894"/>
-      </geometry>
-    </collision>
+<!--    <collision>-->
+<!--      <origin xyz="0.006948 -0.297325 0.139709"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.018554 0.596492 1.336678"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.03605 -0.295455 -0.001115"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.025 0.553734 0.988894"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
   </link>
   <joint name="fridge_door1_handle_joint" type="fixed">
     <origin rpy="1.5707963267948966 0.0 0.0" xyz="-0.02799103 -0.46534321 -0.3616"/>
@@ -1664,24 +1664,24 @@
         <mesh filename="file://../meshes/dae/SM_Kitchen_Handle.dae"/>
       </geometry>
     </visual>
-    <collision>
-      <origin xyz="0.0164985 0.0 0.08"/>
-      <geometry>
-        <box size="0.02 0.013 0.013"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0164985 0.0 -0.08"/>
-      <geometry>
-        <box size="0.02 0.013 0.013"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <box size="0.013 0.013 0.173032"/>
-      </geometry>
-    </collision>
+<!--    <collision>-->
+<!--      <origin xyz="0.0164985 0.0 0.08"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.02 0.013 0.013"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0164985 0.0 -0.08"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.02 0.013 0.013"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--    <collision>-->
+<!--      <origin xyz="0.0 0.0 0.0"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.013 0.013 0.173032"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
   </link>
 <!--  <joint name="fridge_door_tray1_joint" type="fixed">-->
 <!--    <origin rpy="0.0 0.0 0.0" xyz="0.10379066 -0.29726078 -0.01565247"/>-->
