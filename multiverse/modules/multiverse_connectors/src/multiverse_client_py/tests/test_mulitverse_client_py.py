@@ -1,11 +1,13 @@
 import datetime
+import os
 import signal
 import subprocess
 import threading
 import unittest
 from time import sleep, time
+
+from tf.transformations import quaternion_from_euler
 from typing_extensions import List
-import os
 
 from multiverse_client_py import MultiverseClient, MultiverseMetaData, SocketAddress
 
@@ -384,22 +386,25 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
 
     def test_spawn_robot_and_two_objects_and_get_contact_points_and_contact_effort_multiple_times(self):
         # create world clients
+        world = "belief_state"
         multiverse_client_test_receive = self.create_multiverse_client_receive("1337", "", [""],
-                                                                                 "world", "receiver")
-        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", "world",
-                                                                            "writer")
-        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", "world", {},
-                                                                            "sim_test_callapi")
+                                                                               world, "receiver")
+        multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", world,
+                                                                           "writer")
+        multiverse_test_call_api = self.create_multiverse_client_callapi("1339", world, {},
+                                                                         "sim_test_callapi")
 
-        simulation_name = "empty_simulation"
+        simulation_name = "belief_state"
 
         # pause simulation
         self.pause_simulation(multiverse_test_call_api, simulation_name)
 
-        robot_name = "tiago_dual"
-        obj_name_1 = "milk_box"
+        robot_name = "pr2"
+        obj_name_1 = "milk"
         obj_name_2 = "cup"
-        n_repitions = 100
+        n_repitions = 3
+        rob_orientation = quaternion_from_euler(0, 0, 2.26).tolist()
+        rob_orientation = [rob_orientation[3], *rob_orientation[:3]]
 
         for _ in range(n_repitions):
             self.reset_spawn_request_meta_data(multiverse_client_test_spawn)
@@ -407,13 +412,19 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
             # Spawn robot
             self.send_body_data(multiverse_client_test_spawn, robot_name,
                                 {
-                                    "position": [-2.0, -2.0, 0.001],
-                                    "quaternion": [1.0, 0.0, 0.0, 0.0],
+                                    "position": [0.9345829872370865, 1.9027591011850133, 0.0],
+                                    "quaternion": rob_orientation,
                                     "relative_velocity": [0.0] * 6
                                 },
                                 simulation_name)
 
             sleep(0.5)
+
+            # Get Contact bodies of robot
+            contact_data = self.get_contact_points_and_contact_effort(multiverse_test_call_api, robot_name,
+                                                                      simulation_name)
+
+            self.assertEqual(contact_data[0], ['world'])
 
             # remove robot
             self.remove_object(multiverse_client_test_spawn, robot_name, simulation_name)
@@ -432,14 +443,14 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
             # Spawn object 2
             self.send_body_data(multiverse_client_test_spawn, obj_name_2,
                                 {
-                                    "position": [1, 1, 0.2],
+                                    "position": [1, 1, 0.01],
                                     "quaternion": [1.0, 0.0, 0.0, 0.0],
                                     "relative_velocity": [0.0] * 6
                                 },
                                 simulation_name)
 
             # Get contact points and contact effort for object 1
-            self.simulate(multiverse_test_call_api, simulation_name, datetime.timedelta(milliseconds=200))
+            # self.simulate(multiverse_test_call_api, simulation_name, datetime.timedelta(milliseconds=200))
             contact_data = self.get_contact_points_and_contact_effort(multiverse_test_call_api, obj_name_1,
                                                                       simulation_name)
 
