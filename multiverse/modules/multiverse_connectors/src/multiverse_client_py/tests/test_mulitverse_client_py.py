@@ -386,7 +386,8 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
 
     def test_spawn_robot_and_two_objects_and_get_contact_points_and_contact_effort_multiple_times(self):
         # create world clients
-        world = "belief_state"
+        # world = "belief_state"
+        world = "world"
         multiverse_client_test_receive = self.create_multiverse_client_receive("1337", "", [""],
                                                                                world, "receiver")
         multiverse_client_test_spawn = self.create_multiverse_client_spawn("1338", world,
@@ -394,7 +395,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         multiverse_test_call_api = self.create_multiverse_client_callapi("1339", world, {},
                                                                          "sim_test_callapi")
 
-        simulation_name = "belief_state"
+        simulation_name = "belief_state" if world == "belief_state" else "empty_simulation"
 
         # pause simulation
         self.pause_simulation(multiverse_test_call_api, simulation_name)
@@ -424,7 +425,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
             contact_data = self.get_contact_points_and_contact_effort(multiverse_test_call_api, robot_name,
                                                                       simulation_name)
 
-            self.assertEqual(contact_data[0], ['world'])
+            self.assertEqual(contact_data[0], [])
 
             # remove robot
             self.remove_object(multiverse_client_test_spawn, robot_name, simulation_name)
@@ -494,7 +495,7 @@ class MultiverseClientComplexTestCase(unittest.TestCase):
         api_callback_client.request_meta_data["receive"] = {}
         api_callback_client.request_meta_data["api_callbacks"] = {
             simulation_name: [
-                {"get_contact_bodies": [object_name]},
+                {"get_contact_bodies": [object_name, "with_children"]},
                 {"get_constraint_effort": [object_name]}
             ]
         }
