@@ -417,6 +417,8 @@
         <exclude name="l_gripper_l_finger_tip_link_l_gripper_r_finger_tip_link" body1="l_gripper_l_finger_tip_link" body2="l_gripper_r_finger_tip_link"/>
 		<exclude name="torso_lift_link_r_upper_arm_link" body1="torso_lift_link" body2="r_upper_arm_link"/>
 		<exclude name="torso_lift_link_l_upper_arm_link" body1="torso_lift_link" body2="l_upper_arm_link"/>
+		<exclude name="l_upper_arm_link_l_forearm_link" body1="l_upper_arm_link" body2="l_forearm_link"/>
+		<exclude name="r_upper_arm_link_r_forearm_link" body1="r_upper_arm_link" body2="r_forearm_link"/>
     </contact>
 
 	<equality>
