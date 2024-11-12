@@ -32,7 +32,7 @@ simulations:
             ur5e:
               pos: [0.0, 0.0, 1.05]
         attach:
-          wrist_3_link: 
+          wrist_3_link:
             gripper:
               pos: [0.0, 0.1, 0.0]
               quat: [-1.0, 1.0, 0.0, 0.0]
@@ -71,7 +71,7 @@ simulations:
   belief_state:
     simulator: mujoco
     world:
-      name: belief_state
+      name: world
       path: work_table.xml
     robots:
       gripper:
@@ -84,7 +84,7 @@ simulations:
         apply:
           body:
             ur5e:
-              pos: [ 0.0, 0.0, 1.05 ]
+              pos: [0.0, 0.0, 1.05]
         attach:
           wrist_3_link:
             gripper:
@@ -194,18 +194,6 @@ multiverse_clients:
       wrist_1: ["cmd_joint_rvalue"]
       wrist_2: ["cmd_joint_rvalue"]
       wrist_3: ["cmd_joint_rvalue"]
-
-  belief_state:
-    port: 7500
-    send:
-      body: [ "position", "quaternion" ]
-      joint: [ "joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque" ]
-
-  prospection:
-    port: 7600
-    send:
-      body: [ "position", "quaternion" ]
-      joint: [ "joint_rvalue", "joint_tvalue", "joint_linear_velocity", "joint_angular_velocity", "joint_force", "joint_torque" ]
 
   ros:
     ros_nodes:
