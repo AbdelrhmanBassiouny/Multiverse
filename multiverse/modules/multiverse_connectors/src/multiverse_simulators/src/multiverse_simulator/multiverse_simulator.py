@@ -294,7 +294,7 @@ class MultiverseViewer:
     def read_data(self, data: numpy.ndarray):
         if data.shape != self._read_data.shape:
             raise ValueError(
-                "Data length mismatch with read_objects, expected {self._read_data.shape}, got {data.shape}")
+                f"Data length mismatch with read_objects, expected {self._read_data.shape}, got {data.shape}")
         self._read_data[:] = data
 
     @property
